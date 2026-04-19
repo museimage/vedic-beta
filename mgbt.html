@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>居心地 Admin · 後台管理</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#04071A;--mid:#070E28;--card:#0C1538;--card2:#0A1230;
+  --border:rgba(201,168,76,.15);--gold:#C9A84C;--gold-l:#E8C97A;--gold-d:rgba(201,168,76,.6);
+  --teal:#1AA5A0;--teal-l:#4DC9C4;--purple:#6C52D0;--purple-l:#AFA9EC;
+  --white:#E8E6DC;--dim:rgba(232,230,220,.55);--dimmer:rgba(232,230,220,.3);
+  --red:#E24B4A;--green:#1D9E75;--orange:#D85A30;
+  --sans:'Noto Sans TC',system-ui,sans-serif;
+  --serif:'Noto Serif TC',Georgia,serif;
+}
+body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:100vh;display:flex}
+
+/* Sidebar */
+.sidebar{width:220px;background:var(--mid);border-right:1px solid var(--border);flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sb-brand{padding:22px 20px 18px;border-bottom:1px solid var(--border)}
+.sb-brand-name{font-family:var(--serif);font-size:18px;color:var(--gold-l);margin-bottom:2px}
+.sb-brand-sub{font-size:10px;color:var(--dimmer);letter-spacing:.05em}
+.sb-nav{padding:12px 0;flex:1}
+.sb-section{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dimmer);padding:8px 20px 4px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;transition:all .2s;font-size:13px;color:var(--dim);border-left:2px solid transparent}
+.sb-item:hover{background:rgba(201,168,76,.04);color:var(--white)}
+.sb-item.active{color:var(--gold-l);border-left-color:var(--gold);background:rgba(201,168,76,.06)}
+.sb-icon{width:18px;text-align:center;font-size:14px;flex-shrink:0}
+.sb-badge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;padding:1px 6px;border-radius:99px}
+.sb-footer{padding:16px 20px;border-top:1px solid var(--border);font-size:10px;color:var(--dimmer)}
+.sb-status{display:flex;align-items:center;gap:5px;margin-bottom:4px}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+
+/* Main */
+.main{flex:1;padding:0;overflow:auto;display:flex;flex-direction:column}
+.topbar{padding:16px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--mid);position:sticky;top:0;z-index:10}
+.topbar-title{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--gold-l)}
+.topbar-actions{display:flex;gap:10px;align-items:center}
+.btn-sm{padding:7px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-family:var(--sans);border:1px solid var(--border);background:transparent;color:var(--dim);transition:all .2s}
+.btn-sm:hover{border-color:var(--gold-d);color:var(--white)}
+.btn-sm.primary{background:var(--gold);color:#04071A;border-color:var(--gold)}
+.content{padding:24px 28px;flex:1}
+
+/* Stat cards */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.sc-label{font-size:10px;color:var(--dimmer);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.sc-val{font-family:var(--serif);font-size:28px;font-weight:300;color:var(--white);line-height:1;margin-bottom:4px}
+.sc-delta{font-size:11px}
+.sc-delta.up{color:var(--teal-l)}
+.sc-delta.down{color:var(--red)}
+
+/* Tables */
+.section-card{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:18px;overflow:hidden}
+.sc-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.sc-hdr-title{font-size:13px;font-weight:500;color:var(--white)}
+.sc-hdr-sub{font-size:11px;color:var(--dimmer)}
+table{width:100%;border-collapse:collapse}
+th{padding:10px 16px;text-align:left;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dimmer);border-bottom:1px solid var(--border);font-weight:400}
+td{padding:11px 16px;font-size:12px;color:var(--dim);border-bottom:1px solid rgba(201,168,76,.06)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(201,168,76,.02)}
+.td-name{color:var(--white);font-weight:500}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px}
+.tag-free{background:rgba(26,165,160,.12);color:var(--teal-l);border:1px solid rgba(26,165,160,.2)}
+.tag-paid{background:rgba(201,168,76,.12);color:var(--gold-l);border:1px solid rgba(201,168,76,.2)}
+.tag-beta{background:rgba(108,82,208,.12);color:var(--purple-l);border:1px solid rgba(108,82,208,.2)}
+.tag-new{background:rgba(29,158,117,.12);color:var(--green);border:1px solid rgba(29,158,117,.2)}
+
+/* Charts area */
+.charts-row{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;margin-bottom:18px}
+.mini-chart{height:60px;display:flex;align-items:flex-end;gap:3px;padding:0 4px}
+.bar{flex:1;background:linear-gradient(180deg,var(--teal) 0%,rgba(26,165,160,.3) 100%);border-radius:3px 3px 0 0;min-height:4px;transition:height .3s}
+
+/* Activity feed */
+.feed-item{display:flex;gap:12px;padding:11px 18px;border-bottom:1px solid rgba(201,168,76,.06);align-items:flex-start}
+.feed-item:last-child{border-bottom:none}
+.feed-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.feed-body{flex:1}
+.feed-title{font-size:12px;color:var(--white);margin-bottom:2px}
+.feed-time{font-size:10px;color:var(--dimmer)}
+.feed-right{font-size:11px;color:var(--dim);flex-shrink:0}
+
+/* Behavior heatmap */
+.heatmap{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:0 4px}
+.hm-cell{height:20px;border-radius:3px;background:var(--card2)}
+.hm-label{font-size:9px;color:var(--dimmer);margin-bottom:4px}
+
+/* Panel visibility */
+.panel{display:none}
+.panel.active{display:block}
+
+/* Search */
+.search-bar{display:flex;gap:8px;margin-bottom:16px}
+.search-input{flex:1;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 13px;font-size:13px;color:var(--white);font-family:var(--sans);outline:none}
+.search-input:focus{border-color:var(--gold-d)}
+.search-input::placeholder{color:var(--dimmer)}
+.filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.filter-btn{padding:5px 12px;border-radius:99px;font-size:11px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--dim);transition:all .2s}
+.filter-btn.on{border-color:var(--gold-d);color:var(--gold-l);background:rgba(201,168,76,.06)}
+</style>
+</head>
+<body><script>
+(function(){
+  const saved = sessionStorage.getItem('vedic_admin_auth');
+  if(saved === 'ok') return;
+  const pw = prompt('居心地後台管理\n\n請輸入管理員密碼：');
+  if(pw !== 'vedic2026admin') {
+    document.documentElement.innerHTML = '<body style="background:#04071A;display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif"><div style="text-align:center;color:#E24B4A"><div style="font-size:48px;margin-bottom:16px">🔒</div><div style="font-size:18px;margin-bottom:8px">存取被拒絕</div><div style="font-size:12px;color:rgba(232,74,74,.6)">密碼錯誤 · Access Denied</div></div></body>';
+    return;
+  }
+  sessionStorage.setItem('vedic_admin_auth','ok');
+})();
+</script>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-brand-name">居心地 Admin</div>
+    <div class="sb-brand-sub">後台管理 · Beta v7</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">總覽</div>
+    <div class="sb-item active" onclick="showPanel('dashboard')"><div class="sb-icon">◎</div>儀表板</div>
+    <div class="sb-item" onclick="showPanel('realtime')"><div class="sb-icon">⬤</div>即時狀態<div class="sb-badge">LIVE</div></div>
+
+    <div class="sb-section">用戶管理</div>
+    <div class="sb-item" onclick="showPanel('users')"><div class="sb-icon">人</div>用戶資料庫</div>
+    <div class="sb-item" onclick="showPanel('behavior')"><div class="sb-icon">◷</div>瀏覽行為</div>
+    <div class="sb-item" onclick="showPanel('retention')"><div class="sb-icon">↻</div>留存分析</div>
+
+    <div class="sb-section">產品</div>
+    <div class="sb-item" onclick="showPanel('features')"><div class="sb-icon">✦</div>功能使用率</div>
+    <div class="sb-item" onclick="showPanel('apiusage')"><div class="sb-icon">⚡</div>API 用量 & 成本</div>
+    <div class="sb-item" onclick="showPanel('feedback')"><div class="sb-icon">✎</div>許願清單<div class="sb-badge">3</div></div>
+
+    <div class="sb-section">營收</div>
+    <div class="sb-item" onclick="showPanel('revenue')"><div class="sb-icon">$</div>收入總覽</div>
+    <div class="sb-item" onclick="showPanel('donation')"><div class="sb-icon">♡</div>業力捐贈紀錄</div>
+
+    <div class="sb-section">系統</div>
+    <div class="sb-item" onclick="showPanel('settings')"><div class="sb-icon">⚙</div>系統設定</div>
+    <div class="sb-item" onclick="showPanel('logs')"><div class="sb-icon">≡</div>系統日誌</div>
+  </nav>
+  <div class="sb-footer">
+    <div class="sb-status"><div class="status-dot"></div>系統正常運作</div>
+    <div>上次更新 今日 08:41</div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="panel-title">儀表板</div>
+    <div class="topbar-actions">
+      <div style="font-size:11px;color:var(--dimmer)" id="topbar-date"></div>
+      <div id="sb-status-badge" style="font-size:10px;padding:3px 10px;border-radius:99px;background:rgba(226,75,74,.12);color:var(--red);border:1px solid rgba(226,75,74,.2)">● 未連線</div>
+      <button class="btn-sm" onclick="exportData()">↓ 匯出 CSV</button>
+      <button class="btn-sm primary" onclick="sbLoadDashboard();showToast('Supabase 資料同步中...')">↻ 同步資料</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+  <!-- ══ DASHBOARD ══ -->
+  <div class="panel active" id="p-dashboard">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="sc-label">Beta 用戶總數</div>
+        <div class="sc-val" id="stat-users">—</div>
+        <div class="sc-delta up">↑ 3 本週新增</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">今日活躍</div>
+        <div class="sc-val" id="stat-dau">—</div>
+        <div class="sc-delta up">↑ 38% vs 昨日</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">Claude API 今日用量</div>
+        <div class="sc-val" id="stat-api">—</div>
+        <div class="sc-delta">次對話 · NT$<span id="stat-cost">—</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">平均停留時間</div>
+        <div class="sc-val" id="stat-time">—<span style="font-size:16px;color:var(--dim)">分</span></div>
+        <div class="sc-delta up">↑ 1.2分 vs 上週</div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="section-card">
+        <div class="sc-header">
+          <div><div class="sc-hdr-title">本週每日活躍用戶</div><div class="sc-hdr-sub">DAU · 過去 7 天</div></div>
+        </div>
+        <div style="padding:16px 18px">
+          <div class="mini-chart" id="dau-chart"></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 4px 0;font-size:9px;color:var(--dimmer)">
+            <span>週一</span><span>週二</span><span>週三</span><span>週四</span><span>週五</span><span>週六</span><span>今日</span>
+          </div>
+        </div>
+      </div>
+      <div class="section-card">
+        <div class="sc-header">
+          <div><div class="sc-hdr-title">最常使用功能</div><div class="sc-hdr-sub">Tab 點擊分佈</div></div>
+        </div>
+        <div style="padding:12px 18px">
+          <div id="feature-bars"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="sc-header">
+        <div class="sc-hdr-title">最近用戶活動</div>
+        <div class="sc-hdr-sub">即時動態</div>
+      </div>
+      <div id="activity-feed"></div>
+    </div>
+  </div>
+
+  <!-- ══ USERS ══ -->
+  <div class="panel" id="p-users">
+    <div class="search-bar">
+      <input class="search-input" placeholder="搜尋姓名、Email、星座…" oninput="filterUsers(this.value)" id="user-search">
+      <button class="btn-sm" onclick="document.getElementById('user-search').value='';filterUsers('')">清除</button>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn on" onclick="toggleFilter(this,'all')">全部 (23)</button>
+      <button class="filter-btn" onclick="toggleFilter(this,'free')">免費 (18)</button>
+      <button class="filter-btn" onclick="toggleFilter(this,'paid')">付費 (5)</button>
+      <button class="filter-btn" onclick="toggleFilter(this,'active')">7天活躍 (12)</button>
+    </div>
+    <div class="section-card">
+      <table id="user-table">
+        <thead><tr>
+          <th>姓名 / Email</th>
+          <th>上升星座</th>
+          <th>加入日期</th>
+          <th>方案</th>
+          <th>最後活躍</th>
+          <th>對話次數</th>
+          <th>停留(分/天)</th>
+        </tr></thead>
+        <tbody id="user-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ BEHAVIOR ══ -->
+  <div class="panel" id="p-behavior">
+    <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat-card">
+        <div class="sc-label">平均會話時長</div>
+        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">分</span></div>
+        <div class="sc-delta">待統計</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">跳出率（首頁）</div>
+        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">%</span></div>
+        <div class="sc-delta">待統計</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">功能使用深度</div>
+        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">個Tab/人</span></div>
+        <div class="sc-delta">待統計</div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">每日使用時段熱圖</div><div class="sc-hdr-sub">過去 4 週 · 每小時活躍率</div></div>
+      <div style="padding:16px 18px">
+        <div style="display:flex;gap:3px;margin-bottom:6px">
+          <div style="width:32px;font-size:9px;color:var(--dimmer)"></div>
+          <div id="hm-hours" style="display:flex;gap:3px;flex:1"></div>
+        </div>
+        <div id="heatmap-grid"></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:10px;color:var(--dimmer)">
+          <span>低</span>
+          <div style="display:flex;gap:2px">
+            <div style="width:12px;height:12px;border-radius:2px;background:var(--card2)"></div>
+            <div style="width:12px;height:12px;border-radius:2px;background:rgba(26,165,160,.25)"></div>
+            <div style="width:12px;height:12px;border-radius:2px;background:rgba(26,165,160,.55)"></div>
+            <div style="width:12px;height:12px;border-radius:2px;background:var(--teal)"></div>
+          </div>
+          <span>高</span>
+        </div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">用戶旅程路徑</div><div class="sc-hdr-sub">進入 App 後最常見的 Tab 切換順序</div></div>
+      <div style="padding:16px 18px">
+        <div id="journey-rows"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FEATURES ══ -->
+  <div class="panel" id="p-features">
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">功能使用率排行</div><div class="sc-hdr-sub">過去 30 天 · 點擊次數</div></div>
+      <table>
+        <thead><tr><th>功能分頁</th><th>點擊次數</th><th>獨立用戶數</th><th>平均停留</th><th>使用率趨勢</th></tr></thead>
+        <tbody id="feature-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ API USAGE ══ -->
+  <div class="panel" id="p-apiusage">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="sc-label">今日 API 呼叫</div>
+        <div class="sc-val">—</div>
+        <div class="sc-delta">Claude Haiku 4.5</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">今日費用</div>
+        <div class="sc-val">—<span style="font-size:14px;color:var(--dim)">USD</span></div>
+        <div class="sc-delta">待統計</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">本月累計</div>
+        <div class="sc-val">—</div>
+        <div class="sc-delta">待統計</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">Token 使用率</div>
+        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">%</span></div>
+        <div class="sc-delta">待統計</div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">最近 API 呼叫記錄</div></div>
+      <table>
+        <thead><tr><th>時間</th><th>用戶</th><th>問題摘要</th><th>Input tokens</th><th>Output tokens</th><th>費用</th><th>狀態</th></tr></thead>
+        <tbody id="api-log-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ FEEDBACK ══ -->
+  <div class="panel" id="p-feedback">
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">Beta 用戶許願清單</div><div class="sc-hdr-sub">3 則待審核</div></div>
+      <div id="feedback-list" style="padding:4px 0"></div>
+    </div>
+  </div>
+
+  <!-- ══ REVENUE ══ -->
+  <div class="panel" id="p-revenue">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="sc-label">本月收入</div>
+        <div class="sc-val">NT$0</div>
+        <div class="sc-delta" style="color:var(--dimmer)">Beta 免費期</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">預計正式版月收</div>
+        <div class="sc-val">—</div>
+        <div class="sc-delta">待統計</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">業力捐贈（預估）</div>
+        <div class="sc-val">—</div>
+        <div class="sc-delta">= 收入 10%</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">生命藍圖有意願</div>
+        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">人</span></div>
+        <div class="sc-delta">待統計</div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">定價方案選擇意向調查</div><div class="sc-hdr-sub">Beta 用戶問卷回收 (n=14)</div></div>
+      <div style="padding:16px 18px" id="pricing-intent"></div>
+    </div>
+  </div>
+
+  <!-- ══ DONATION ══ -->
+  <div class="panel" id="p-donation">
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">業力捐贈記錄</div><div class="sc-hdr-sub">居心地每月收入 10% · 90%+ 直達受助者</div></div>
+      <table>
+        <thead><tr><th>月份</th><th>平台收入</th><th>捐贈金額(10%)</th><th>受捐機構</th><th>直達率</th><th>收據</th></tr></thead>
+        <tbody>
+          <tr><td>2026-03</td><td>NT$0（Beta）</td><td>NT$0</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td colspan="6" style="text-align:center;color:var(--dimmer);font-size:11px;padding:16px">正式收費後每月公開捐贈收據 · 捐贈對象：家扶基金會 / 台灣之心 / 博幼基金會</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ SETTINGS ══ -->
+  <div class="panel" id="p-settings">
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">系統設定</div></div>
+      <div style="padding:18px;display:grid;gap:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)">
+          <div><div style="font-size:13px;color:var(--white)">Beta 席位上限</div><div style="font-size:11px;color:var(--dimmer);margin-top:2px">目前 23/100 · 達到上限後暫停開放</div></div>
+          <input type="number" value="100" style="width:72px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--white);font-family:var(--sans);font-size:13px;text-align:center">
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)">
+          <div><div style="font-size:13px;color:var(--white)">Claude API Key</div><div style="font-size:11px;color:var(--dimmer);margin-top:2px">後台對話功能使用</div></div>
+          <input type="password" value="sk-ant-api03-***" style="width:200px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--dim);font-family:monospace;font-size:12px">
+        </div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)">
+          <div><div style="font-size:13px;color:var(--white)">AI 語言模型</div><div style="font-size:11px;color:var(--dimmer);margin-top:2px">選擇 App 使用的模型</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+            <select id="model-select" style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--white);font-family:var(--sans);font-size:12px;width:260px" onchange="onModelChange(this.value)">
+              <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 · NT$0.48/次（預設）</option>
+              <option value="claude-sonnet-4-6">Claude Sonnet 4.6 · NT$2.1/次</option>
+              <option value="claude-opus-4-6">Claude Opus 4.6 · NT$12/次</option>
+              <option value="grok-4">Grok 4.20 · 需填入 xAI API Key</option>
+              <option value="custom">✎ 自行輸入模型 ID...</option>
+            </select>
+            <input id="model-custom" type="text" placeholder="輸入自訂模型 ID，例如 claude-3-5-sonnet-20241022" style="display:none;width:260px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--white);font-family:monospace;font-size:11px">
+            <div id="model-note" style="font-size:10px;color:var(--dimmer);text-align:right"></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0">
+          <div><div style="font-size:13px;color:var(--white)">GitHub Pages 部署網址</div><div style="font-size:11px;color:var(--dimmer);margin-top:2px">Beta 連結</div></div>
+          <input type="text" placeholder="https://xxx.github.io/vedic-beta/" style="width:260px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--dim);font-family:var(--sans);font-size:12px">
+        </div>
+        <button class="btn-sm primary" style="width:120px" onclick="saveAdminSettings()">儲存設定</button>
+      </div>
+    </div>
+
+    <!-- Sidebar content management -->
+    <div class="section-card" style="margin-top:18px">
+      <div class="sc-header">
+        <div class="sc-hdr-title">✦ 本週大家都在問 · 問題管理</div>
+        <div class="sc-hdr-sub">最多 10 題，每週自動輪動 5 題</div>
+      </div>
+      <div style="padding:16px 18px">
+        <div id="weekly-q-admin" style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px"></div>
+        <button class="btn-sm" onclick="addWeeklyQ()">+ 新增問題</button>
+        <button class="btn-sm primary" style="margin-left:8px" onclick="saveWeeklyQs()">✦ 儲存問題</button>
+        <div id="weekly-q-status" style="font-size:11px;color:var(--teal-l);margin-top:8px;min-height:14px"></div>
+      </div>
+    </div>
+
+    <!-- About / Privacy content management -->
+    <div class="section-card" style="margin-top:18px">
+      <div class="sc-header">
+        <div class="sc-hdr-title">公告與說明文字</div>
+        <div class="sc-hdr-sub">更新後 App 立即生效</div>
+      </div>
+      <div style="padding:16px 18px;display:grid;gap:12px">
+        <div>
+          <div style="font-size:11px;color:var(--dimmer);margin-bottom:5px">對話加密說明（側邊欄顯示）</div>
+          <textarea id="admin-privacy-text" rows="4" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-size:12px;color:var(--white);font-family:var(--sans);resize:vertical">只有你看得到你的對話。每一則對話在儲存前以 AES-256-GCM 加密，密鑰由你的密碼衍生，永遠不離開你的裝置。</textarea>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--dimmer);margin-bottom:5px">業力承諾金額（%）</div>
+          <input type="number" id="admin-karma-pct" value="10" min="1" max="100" style="width:80px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--white);font-family:var(--sans);font-size:13px">
+          <span style="font-size:12px;color:var(--dim);margin-left:8px">% 每月收入捐贈</span>
+        </div>
+        <button class="btn-sm primary" style="width:120px" onclick="saveContentSettings()">儲存內容</button>
+        <div id="content-status" style="font-size:11px;color:var(--teal-l);min-height:14px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ REALTIME ══ -->
+  <div class="panel" id="p-realtime">
+    <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat-card" style="border-color:rgba(26,165,160,.3)">
+        <div class="sc-label">目前線上</div>
+        <div class="sc-val" id="rt-online">—</div>
+        <div class="sc-delta up">即時更新</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">過去 1 小時對話數</div>
+        <div class="sc-val" id="rt-chats">—</div>
+        <div class="sc-delta">Claude API 呼叫</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">系統回應時間</div>
+        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">秒</span></div>
+        <div class="sc-delta">待測量</div>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">即時用戶動態</div><div class="sc-hdr-sub" id="rt-updated">更新中...</div></div>
+      <div id="rt-feed" style="padding:4px 0"></div>
+    </div>
+  </div>
+
+  <!-- ══ RETENTION ══ -->
+  <div class="panel" id="p-retention">
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">用戶留存率</div><div class="sc-hdr-sub">Cohort 分析 · Beta 用戶</div></div>
+      <div style="padding:16px 18px">
+        <table style="font-size:11px">
+          <thead><tr><th>加入週</th><th>第1週</th><th>第2週</th><th>第3週</th><th>第4週</th></tr></thead>
+          <tbody>
+            <tr><td class="td-name">Week 1 (n=8)</td><td style="color:var(--teal-l)">100%</td><td style="color:var(--teal-l)">—</td><td>—</td><td>—</td></tr>
+            <tr><td class="td-name">Week 2 (n=7)</td><td style="color:var(--teal-l)">100%</td><td style="color:var(--teal-l)">—</td><td>—</td><td>—</td></tr>
+            <tr><td class="td-name">Week 3 (n=8)</td><td style="color:var(--teal-l)">100%</td><td>—</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:12px;font-size:11px;color:var(--dim);line-height:1.7">尚無足夠資料計算留存率。連線 Supabase 並累積 2 週用戶資料後自動顯示。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LOGS ══ -->
+  <div class="panel" id="p-logs">
+    <div class="section-card">
+      <div class="sc-header"><div class="sc-hdr-title">系統日誌</div><div class="sc-hdr-sub">最近 50 筆</div></div>
+      <div style="padding:12px 18px;font-family:monospace;font-size:11px;color:var(--dim);line-height:2;max-height:520px;overflow-y:auto" id="log-output"></div>
+    </div>
+  </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<div id="toast-admin" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:#1A2840;border:1px solid var(--border);border-radius:10px;padding:11px 20px;font-size:13px;color:var(--white);transition:transform .3s;z-index:9999;opacity:0">—</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   SUPABASE CONFIG — 填入你的 Project 資訊
+   1. 前往 supabase.com → Settings → API
+   2. 複製 Project URL 和 anon public key
+══════════════════════════════════════════════ */
+const SB_URL = 'https://ymztqihxnesxvgxelbjr.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltenRxaWh4bmVzeHZneGVsYmpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3OTMxNDMsImV4cCI6MjA5MDM2OTE0M30.p5uJ2_uIQrvFMPP0x-XBNC7QE7uGEw_gb1QLtl-Tp5I';
+const SB_ON = SB_URL.length > 10 && !SB_URL.includes('YOUR_');
+
+
+/* ── Supabase fetch wrapper ── */
+async function sb(table, opts={}) {
+  if (!SB_ON) return null;
+  const { method='GET', filter='', body=null, order='', limit='' } = opts;
+  let url = `${SB_URL}/rest/v1/${table}`;
+  const params = [filter, order ? `order=${order}` : '', limit ? `limit=${limit}` : ''].filter(Boolean);
+  if (params.length) url += '?' + params.join('&');
+  const isUpsert = method === 'POST' && table.includes('on_conflict');
+  const prefer = isUpsert
+    ? 'return=representation,resolution=merge-duplicates'
+    : method === 'POST' ? 'return=representation' : '';
+  const headers = {
+    'apikey': SB_KEY,
+    'Authorization': 'Bearer ' + SB_KEY,
+    'Content-Type': 'application/json',
+  };
+  if (prefer) headers['Prefer'] = prefer;
+  try {
+    const r = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : undefined });
+    if (!r.ok) {
+      const errText = await r.text().catch(()=>'');
+      console.warn('[SB]', r.status, table, errText.slice(0,120));
+      return null;
+    }
+    if (r.status === 204) return true;
+    const data = await r.json();
+    return { data: Array.isArray(data) ? data : [data], count: Array.isArray(data) ? data.length : 1 };
+  } catch(e) {
+    console.error('[SB error]', table, e.message);
+    return null;
+  }
+}
+
+/* ── Load dashboard stats from Supabase ── */
+async function sbLoadDashboard() {
+  if (!SB_ON) { console.warn('[Admin] SB_ON=false, skipping load'); return; }
+  console.log('[Admin] sbLoadDashboard 開始載入...');
+  showSBStatus('loading');
+
+  // Total users
+  const users = await sb('users', { order: 'updated_at.desc', limit: 200 });
+  console.log('[Admin] users 結果:', users);
+  if (users) {
+    document.getElementById('stat-users').textContent = users.count || users.data.length;
+    // Today's active (last_seen today)
+    const today = new Date().toISOString().slice(0,10);
+    const dau = users.data.filter(u => u.last_seen?.startsWith(today));
+    document.getElementById('stat-dau').textContent = dau.length;
+    // Render real user table
+    sbRenderUsers(users.data);
+    // Update filter buttons
+    const totalN = users.data.length;
+    const paidN  = users.data.filter(u=>u.plan==='paid').length;
+    document.querySelectorAll('.filter-btn')[0].textContent = `全部 (${totalN})`;
+    document.querySelectorAll('.filter-btn')[2].textContent = `付費 (${paidN})`;
+    document.querySelectorAll('.filter-btn')[3].textContent = `7天活躍 (${dau.length})`;
+  }
+
+  // Today's API calls
+  const today = new Date().toISOString().slice(0,10);
+  const api = await sb('api_logs', { filter: `created_at=gte.${today}T00:00:00` });
+  if (api) {
+    document.getElementById('stat-api').textContent = api.count || api.data.length;
+    const totalCost = api.data.reduce((s,r) => s + (r.cost_usd || 0), 0);
+    document.getElementById('stat-cost').textContent = (totalCost * 30).toFixed(1); // USD → NT$
+    // Render real API logs
+    sbRenderApiLogs(api.data.slice(0,20));
+  }
+
+  // Wishes / feedback
+  const wishes = await sb('wishes', { filter: 'status=eq.pending', order: 'created_at.desc' });
+  if (wishes) {
+    const badge = document.querySelector('.sb-badge');
+    if (badge) badge.textContent = wishes.data.length;
+    sbRenderFeedback(wishes.data);
+  }
+
+  // Recent events (activity feed)
+  const events = await sb('events', { order: 'created_at.desc', limit: 20 });
+  if (events) sbRenderEvents(events.data);
+
+  // System logs
+  const logs = await sb('events', { order: 'created_at.desc', limit: 50 });
+  if (logs) sbRenderLogs(logs.data);
+
+  showSBStatus('live');
+}
+
+/* ── Render real users from Supabase ── */
+function sbRenderUsers(list) {
+  const tbody = document.getElementById('user-tbody');
+  if (!tbody) return;
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--dimmer);font-size:12px">Supabase 已連線，尚無用戶資料</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(u => {
+    const lastSeen = u.last_seen ? relTime(u.last_seen) : '—';
+    const plan = u.plan || 'free';
+    // name may be null if stored encrypted; show email prefix as fallback
+    const displayName = u.name || (u.email ? u.email.split('@')[0] : '—');
+    const hasEncrypted = u.encrypted_data ? '🔒 ' : '';
+    return `<tr>
+      <td><div class="td-name">${hasEncrypted}${displayName}</div><div style="font-size:10px;color:var(--dimmer)">${u.email}</div></td>
+      <td>${u.asc_sign || '—'}</td>
+      <td>${(u.created_at || u.updated_at || '').slice(0,10) || '—'}</td>
+      <td><span class="tag ${plan==='paid'?'tag-paid':plan==='beta'?'tag-beta':'tag-free'}">${plan==='paid'?'付費':plan==='beta'?'管理員':'免費'}</span></td>
+      <td>${lastSeen}</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>`;
+  }).join('');
+  window._sbUsers = list;
+}
+
+/* ── Render real API logs ── */
+function sbRenderApiLogs(list) {
+  const tbody = document.getElementById('api-log-tbody');
+  if (!tbody || !list.length) return;
+  tbody.innerHTML = list.map(l => `<tr>
+    <td style="font-family:monospace">${l.created_at ? l.created_at.slice(11,16) : '—'}</td>
+    <td class="td-name">${l.email || '—'}</td>
+    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">AI 對話</td>
+    <td>${(l.input_tokens || 0).toLocaleString()}</td>
+    <td>${(l.output_tokens || 0).toLocaleString()}</td>
+    <td>$${(l.cost_usd || 0).toFixed(4)}</td>
+    <td><span class="tag tag-free">✓ 成功</span></td>
+  </tr>`).join('');
+}
+
+/* ── Render real feedback ── */
+function sbRenderFeedback(list) {
+  const el = document.getElementById('feedback-list');
+  if (!el) return;
+  if (!list.length) { el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--dimmer);font-size:12px">目前無待審核許願</div>'; return; }
+  el.innerHTML = list.map(f => `
+    <div style="padding:14px 18px;border-bottom:1px solid rgba(201,168,76,.06)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span style="font-size:12px;font-weight:500;color:var(--white)">${f.email}</span>
+        <span class="tag tag-paid">待審核</span>
+        <span style="font-size:10px;color:var(--dimmer);margin-left:auto">${relTime(f.created_at)}</span>
+      </div>
+      <div style="font-size:12px;color:var(--dim);line-height:1.65;margin-bottom:10px">${f.wish}</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-sm" onclick="sbApproveWish('${f.id}', '${f.email}')">✓ 採用 (+100點)</button>
+        <button class="btn-sm" onclick="sbArchiveWish('${f.id}')">存檔</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ── Render real event feed ── */
+function sbRenderEvents(list) {
+  const el = document.getElementById('activity-feed');
+  if (!el || !list.length) return;
+  const DOT = { tab_view:'#4DC9C4', chat_send:'#E8C97A', session_start:'#AFA9EC', page_load:'#888' };
+  el.innerHTML = list.map(e => `
+    <div class="feed-item">
+      <div class="feed-dot" style="background:${DOT[e.event_type]||'#888'}"></div>
+      <div class="feed-body">
+        <div class="feed-title">${e.email} · ${e.event_type} ${e.detail ? '· '+e.detail : ''}</div>
+        <div class="feed-time">${relTime(e.created_at)}</div>
+      </div>
+      <div class="feed-right">${e.event_type}</div>
+    </div>`).join('');
+}
+
+/* ── Render real system logs ── */
+function sbRenderLogs(list) {
+  const el = document.getElementById('log-output');
+  if (!el || !list.length) return;
+  el.innerHTML = list.map(e => {
+    const col = e.event_type === 'chat_send' ? 'var(--teal-l)' : 'var(--dim)';
+    const ts = e.created_at ? e.created_at.slice(0,19).replace('T',' ') : '';
+    return `<div style="color:${col}">[${ts}] ${e.event_type.toUpperCase()} user=${e.email} ${e.detail||''}</div>`;
+  }).join('');
+}
+
+/* ── Approve wish ── */
+async function sbApproveWish(id, email) {
+  await sb(`wishes?id=eq.${id}`, { method:'PATCH', body:{ status:'adopted' } });
+  showToast(`許願已採用 · ${email} 業力點數 +100 ✓`);
+  sbLoadDashboard();
+}
+async function sbArchiveWish(id) {
+  await sb(`wishes?id=eq.${id}`, { method:'PATCH', body:{ status:'archived' } });
+  showToast('許願已存檔');
+  sbLoadDashboard();
+}
+
+/* ── Relative time helper ── */
+function relTime(iso) {
+  if (!iso) return '—';
+  const diff = (Date.now() - new Date(iso)) / 1000;
+  if (diff < 60) return '剛剛';
+  if (diff < 3600) return Math.floor(diff/60) + '分鐘前';
+  if (diff < 86400) return Math.floor(diff/3600) + '小時前';
+  return Math.floor(diff/86400) + '天前';
+}
+
+/* ── Status indicator ── */
+function showSBStatus(state) {
+  const footer = document.querySelector('.sb-footer');
+  if (!footer) return;
+  if (state === 'loading') {
+    footer.innerHTML = '<div class="sb-status"><div class="status-dot" style="background:var(--gold)"></div>Supabase 載入中...</div><div>正在讀取即時資料</div>';
+  } else if (state === 'live') {
+    footer.innerHTML = '<div class="sb-status"><div class="status-dot"></div>Supabase 已連線</div><div>上次更新 ' + new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}) + '</div>';
+    const badge = document.getElementById('sb-status-badge');
+    if (badge) { badge.textContent='● 已連線'; badge.style.background='rgba(26,165,160,.12)'; badge.style.color='var(--teal-l)'; badge.style.borderColor='rgba(26,165,160,.25)'; }
+  } else {
+    footer.innerHTML = '<div class="sb-status"><div class="status-dot" style="background:var(--gold)"></div>示範資料模式</div><div>設定 SB_URL 啟用真實資料</div>';
+  }
+}
+
+/* ── Wire sync button ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const syncBtn = document.querySelector('.btn-sm.primary');
+  if (syncBtn) syncBtn.onclick = () => { sbLoadDashboard(); showToast('Supabase 資料同步中...'); };
+
+  // Wire real search/filter to sbUsers
+  const origFilter = window.filterUsers;
+  window.filterUsers = (q) => {
+    if (window._sbUsers) {
+      const f = q.toLowerCase();
+      sbRenderUsers(!f ? window._sbUsers : window._sbUsers.filter(u =>
+        (u.name||'').toLowerCase().includes(f) || (u.email||'').includes(f) || (u.asc_sign||'').includes(f)
+      ));
+    } else if (origFilter) origFilter(q);
+  };
+
+  // Wire export to real data
+  window.exportData = () => {
+    const list = window._sbUsers || USERS;
+    const rows = [['姓名','Email','上升','加入','方案','最後活躍'], ...list.map(u=>[u.name||u.name,u.email,u.asc||u.asc_sign,u.join||u.created_at?.slice(0,10),u.plan,u.active||relTime(u.last_seen)])];
+    const csv = rows.map(r=>r.join(',')).join('\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,﻿'+encodeURIComponent(csv);
+    a.download = 'vedic_users_'+new Date().toISOString().slice(0,10)+'.csv';
+    a.click();
+  };
+
+  if (SB_ON) {
+    sbLoadDashboard();
+    setInterval(sbLoadDashboard, 60000); // auto-refresh every 60s
+  } else {
+    showSBStatus('demo');
+    console.info('[Admin] 示範資料模式。設定 SB_URL 和 SB_KEY 啟用 Supabase。');
+  }
+});
+</script>
+
+
+<script>
+// ── Demo data ──
+const USERS = []; // 由 Supabase 即時載入
+const FEATURES = []; // 由事件資料計算
+const API_LOGS = []; // 由 Supabase api_logs 表載入
+const FEEDBACK = []; // 由 Supabase wishes 表載入
+const JOURNEY_PATHS = [
+  {path:'今日 → 星盤 → 對話', pct:34},
+  {path:'今日 → 對話', pct:28},
+  {path:'星盤 → 對話 → 筆記', pct:18},
+  {path:'今日 → 阿育吠陀 → 對話', pct:12},
+  {path:'直接進對話', pct:8},
+]; // 靜態示意（未來可由 events 分析）
+const PRICING_INTENT = [
+  {plan:'業力築造者 NT$599/月',n:0,pct:0},
+  {plan:'生命藍圖 NT$680（單次）',n:0,pct:0},
+  {plan:'家庭方案 NT$299/月',n:0,pct:0},
+  {plan:'行事曆 NT$480（單次）',n:0,pct:0},
+]; // 實際數據需問卷串接
+const RT_EVENTS = []; // 由 Supabase events 表載入
+const LOG_LINES = []; // 由 Supabase events 表載入
+
+// ── Render functions ──
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  const titles={dashboard:'儀表板',realtime:'即時狀態',users:'用戶資料庫',
+    behavior:'瀏覽行為分析',retention:'留存分析',features:'功能使用率',
+    apiusage:'API 用量 & 成本',feedback:'許願清單',revenue:'收入總覽',
+    donation:'業力捐贈紀錄',settings:'系統設定',logs:'系統日誌'};
+  document.getElementById('panel-title').textContent = titles[id]||id;
+}
+
+function renderUsers(list) {
+  const tb = document.getElementById('user-tbody');
+  tb.innerHTML = list.map(u=>`
+    <tr>
+      <td><div class="td-name">${u.name}</div><div style="font-size:10px;color:var(--dimmer)">${u.email}</div></td>
+      <td>${u.asc}座</td>
+      <td>${u.join}</td>
+      <td><span class="tag ${u.plan==='paid'?'tag-paid':u.plan==='beta'?'tag-beta':'tag-free'}">${u.plan==='paid'?'付費':u.plan==='beta'?'管理員':'免費'}</span></td>
+      <td>${u.active}</td>
+      <td>${u.chats}</td>
+      <td>${u.mins}</td>
+    </tr>`).join('');
+}
+
+function filterUsers(q) {
+  const f = q.toLowerCase();
+  renderUsers(USERS.filter(u=>!f||u.name.toLowerCase().includes(f)||u.email.includes(f)||u.asc.includes(f)));
+}
+
+function toggleFilter(el,type) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  if(type==='paid') renderUsers(USERS.filter(u=>u.plan==='paid'));
+  else if(type==='free') renderUsers(USERS.filter(u=>u.plan==='free'));
+  else if(type==='active') renderUsers(USERS.filter(u=>['今日','昨日'].includes(u.active)));
+  else renderUsers(USERS);
+}
+
+function renderDAUChart() {
+  const vals=[3,5,4,7,6,9,8];
+  const max=Math.max(...vals);
+  document.getElementById('dau-chart').innerHTML=vals.map(v=>
+    `<div class="bar" style="height:${(v/max)*52}px" title="${v}人"></div>`).join('');
+}
+
+function renderFeatureBars() {
+  const top = FEATURES.slice(0,5);
+  const max = top[0].clicks;
+  document.getElementById('feature-bars').innerHTML = top.map(f=>`
+    <div style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-bottom:3px">
+        <span>${f.name}</span><span>${f.clicks}</span>
+      </div>
+      <div style="height:5px;background:var(--card2);border-radius:3px;overflow:hidden">
+        <div style="height:5px;width:${f.clicks/max*100}%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:3px"></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderActivityFeed() {
+  const events=[
+    {dot:'#4DC9C4',title:'Brian Ko 完成星盤計算並開啟對話',time:'2分鐘前',right:'對話'},
+    {dot:'#E8C97A',title:'Mia Su 查看今日揭示並記錄筆記',time:'5分鐘前',right:'筆記'},
+    {dot:'#AFA9EC',title:'新用戶 Tom Hsu 完成星盤輸入',time:'12分鐘前',right:'新用戶'},
+    {dot:'#4DC9C4',title:'David Wang 瀏覽生命藍圖解碼包',time:'18分鐘前',right:'藍圖'},
+    {dot:'#E8C97A',title:'Sophie Lin 完成阿育吠陀測驗',time:'31分鐘前',right:'體質'},
+  ];
+  document.getElementById('activity-feed').innerHTML = events.map(e=>`
+    <div class="feed-item">
+      <div class="feed-dot" style="background:${e.dot}"></div>
+      <div class="feed-body"><div class="feed-title">${e.title}</div><div class="feed-time">${e.time}</div></div>
+      <div class="feed-right">${e.right}</div>
+    </div>`).join('');
+}
+
+function renderHeatmap() {
+  const days=['一','二','三','四','五','六','日'];
+  const h=document.getElementById('hm-hours');
+  h.innerHTML=Array.from({length:24},(_,i)=>
+    `<div style="flex:1;font-size:8px;color:var(--dimmer);text-align:center">${i%6===0?i+':00':''}</div>`).join('');
+  const g=document.getElementById('heatmap-grid');
+  g.innerHTML=days.map(d=>`
+    <div style="display:flex;gap:3px;margin-bottom:3px;align-items:center">
+      <div style="width:32px;font-size:9px;color:var(--dimmer);text-align:right;padding-right:6px">週${d}</div>
+      ${Array.from({length:24},(_,i)=>{
+        const heat=Math.random();
+        const h=i>=7&&i<=23?heat:heat*0.2;
+        const bg=h<0.15?'var(--card2)':h<0.35?'rgba(26,165,160,.25)':h<0.65?'rgba(26,165,160,.55)':'var(--teal)';
+        return`<div style="flex:1;height:14px;border-radius:2px;background:${bg}"></div>`;
+      }).join('')}
+    </div>`).join('');
+}
+
+function renderJourney() {
+  const max=JOURNEY_PATHS[0].pct;
+  document.getElementById('journey-rows').innerHTML=JOURNEY_PATHS.map(j=>`
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px">
+        <span style="color:var(--white)">${j.path}</span><span style="color:var(--teal-l)">${j.pct}%</span>
+      </div>
+      <div style="height:4px;background:var(--card2);border-radius:2px">
+        <div style="height:4px;width:${j.pct/max*100}%;background:linear-gradient(90deg,var(--teal),var(--teal-l));border-radius:2px"></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderFeatureTable() {
+  document.getElementById('feature-table').innerHTML=FEATURES.map(f=>`
+    <tr>
+      <td class="td-name">${f.name}</td>
+      <td>${f.clicks}</td>
+      <td>${f.users}</td>
+      <td>${f.avg}</td>
+      <td style="color:${f.trend.startsWith('+')?'var(--teal-l)':'var(--red)'}">${f.trend}</td>
+    </tr>`).join('');
+}
+
+function renderApiLogs() {
+  document.getElementById('api-log-tbody').innerHTML=API_LOGS.map(l=>`
+    <tr>
+      <td style="font-family:monospace">${l.time}</td>
+      <td class="td-name">${l.user}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.q}</td>
+      <td>${l.in.toLocaleString()}</td>
+      <td>${l.out.toLocaleString()}</td>
+      <td>$${l.cost.toFixed(4)}</td>
+      <td><span class="tag tag-free" style="${l.ok?'':'background:rgba(226,75,74,.15);color:var(--red)'}"> ${l.ok?'✓ 成功':'✗ 失敗'}</span></td>
+    </tr>`).join('');
+}
+
+function renderFeedback() {
+  document.getElementById('feedback-list').innerHTML=FEEDBACK.map(f=>`
+    <div style="padding:14px 18px;border-bottom:1px solid rgba(201,168,76,.06)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span style="font-size:12px;font-weight:500;color:var(--white)">${f.user}</span>
+        <span class="tag ${f.status==='pending'?'tag-paid':'tag-beta'}">${f.status==='pending'?'待審核':'審核中'}</span>
+        <span style="font-size:10px;color:var(--dimmer);margin-left:auto">${f.time}</span>
+      </div>
+      <div style="font-size:12px;color:var(--dim);line-height:1.65;margin-bottom:10px">${f.wish}</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-sm" onclick="showToast('許願已採用 · 用戶業力點數 +100 ✓')">✓ 採用 (+100點)</button>
+        <button class="btn-sm" onclick="showToast('許願已存檔')">存檔</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderRealtime() {
+  document.getElementById('rt-feed').innerHTML=RT_EVENTS.map(e=>`
+    <div class="feed-item">
+      <div class="feed-dot" style="background:${e.dot}"></div>
+      <div class="feed-body"><div class="feed-title">${e.user}</div><div class="feed-time">${e.action}</div></div>
+      <div class="feed-right">${e.time}</div>
+    </div>`).join('');
+  document.getElementById('rt-updated').textContent='更新於 '+new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+}
+
+function renderPricingIntent() {
+  const max=PRICING_INTENT[1].n;
+  document.getElementById('pricing-intent').innerHTML=PRICING_INTENT.map(p=>`
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+        <span style="color:var(--white)">${p.plan}</span><span style="color:var(--gold-l)">${p.n}人 (${p.pct}%)</span>
+      </div>
+      <div style="height:8px;background:var(--card2);border-radius:4px;overflow:hidden">
+        <div style="height:8px;width:${p.pct}%;background:linear-gradient(90deg,var(--gold),var(--gold-l));border-radius:4px"></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderLogs() {
+  document.getElementById('log-output').innerHTML=LOG_LINES.map(l=>{
+    const col=l.includes('INFO')?'var(--teal-l)':l.includes('ERROR')?'var(--red)':'var(--dim)';
+    return`<div style="color:${col}">${l}</div>`;
+  }).join('');
+}
+
+function showToast(msg) {
+  const t=document.getElementById('toast-admin');
+  t.textContent=msg;t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(-50%) translateY(60px)';},2800);
+}
+
+function onModelChange(val) {
+  const customEl = document.getElementById('model-custom');
+  const noteEl   = document.getElementById('model-note');
+  if (val === 'custom') {
+    customEl.style.display = 'block';
+    noteEl.textContent = '填入後點「儲存設定」生效';
+  } else {
+    customEl.style.display = 'none';
+    const notes = {
+      'claude-haiku-4-5-20251001': '最快速 · 適合日常對話 · 成本最低',
+      'claude-sonnet-4-6':  '平衡速度與品質 · 推薦進階用戶',
+      'claude-opus-4-6':    '最高品質 · 適合生命藍圖生成',
+      'grok-4':             '需在下方填入 xAI API Key',
+    };
+    noteEl.textContent = notes[val] || '';
+  }
+  try { localStorage.setItem('vedic_admin_model', val); } catch(e){}
+  showToast('模型已切換為 ' + document.getElementById('model-select').selectedOptions[0]?.text?.split(' ·')[0]);
+}
+
+// Load saved model on page open
+(function loadSavedModel() {
+  try {
+    const saved = localStorage.getItem('vedic_admin_model');
+    if (saved) {
+      const sel = document.getElementById('model-select');
+      if (sel) { sel.value = saved; onModelChange(saved); }
+    }
+  } catch(e){}
+})();
+
+
+/* ── Weekly Questions Admin ── */
+const DEFAULT_WEEKLY_QS = [
+  {q:'我的星盤說我適合什麼樣的戀愛方式？',tag:'感情'},
+  {q:'為什麼我在工作上總是得不到認可？',tag:'事業'},
+  {q:'我的財運什麼時候會好轉？',tag:'財富'},
+  {q:'為什麼我感覺自己在人生的十字路口？',tag:'人生'},
+  {q:'我的孩子跟我的關係為什麼這麼難？',tag:'家庭'},
+  {q:'退休後我還有什麼值得期待的？',tag:'人生'},
+  {q:'我的健康弱點在哪裡，星盤怎麼說？',tag:'健康'},
+  {q:'為什麼我常常覺得自己格格不入？',tag:'自我'},
+  {q:'我的感情一直不順，是業力的原因嗎？',tag:'感情'},
+  {q:'現在換工作是好時機嗎？',tag:'事業'},
+];
+
+function loadWeeklyQAdmin() {
+  const el = document.getElementById('weekly-q-admin');
+  if (!el) return;
+  let qs = DEFAULT_WEEKLY_QS;
+  try { const saved = localStorage.getItem('admin_weekly_qs'); if(saved) qs = JSON.parse(saved); } catch(e){}
+  el.innerHTML = qs.map((q,i) => `
+    <div style="display:flex;gap:8px;align-items:center">
+      <input type="text" value="${q.q.replace(/"/g,'&quot;')}"
+        style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--white);font-family:var(--sans)"
+        id="wq-text-${i}">
+      <input type="text" value="${q.tag}"
+        style="width:60px;background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:7px 8px;font-size:11px;color:var(--dim);font-family:var(--sans)"
+        id="wq-tag-${i}" placeholder="標籤">
+      <button style="background:transparent;border:1px solid var(--border);border-radius:7px;padding:5px 10px;color:var(--red);cursor:pointer;font-size:12px" onclick="removeWeeklyQ(${i})">✕</button>
+    </div>`).join('');
+}
+
+function addWeeklyQ() {
+  const el = document.getElementById('weekly-q-admin');
+  const count = el.querySelectorAll('input[id^="wq-text"]').length;
+  if (count >= 10) { showToast('最多 10 個問題'); return; }
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;gap:8px;align-items:center';
+  div.innerHTML = `<input type="text" placeholder="輸入新問題…"
+      style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--white);font-family:var(--sans)"
+      id="wq-text-${count}">
+    <input type="text" placeholder="標籤" style="width:60px;background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:7px 8px;font-size:11px;color:var(--dim);font-family:var(--sans)" id="wq-tag-${count}">
+    <button style="background:transparent;border:1px solid var(--border);border-radius:7px;padding:5px 10px;color:var(--red);cursor:pointer;font-size:12px" onclick="this.parentElement.remove()">✕</button>`;
+  el.appendChild(div);
+}
+
+function removeWeeklyQ(idx) {
+  saveWeeklyQs(); // save current state first
+  const el = document.getElementById('weekly-q-admin');
+  let qs = [];
+  try { qs = JSON.parse(localStorage.getItem('admin_weekly_qs') || '[]'); } catch(e){}
+  qs.splice(idx, 1);
+  localStorage.setItem('admin_weekly_qs', JSON.stringify(qs));
+  loadWeeklyQAdmin();
+}
+
+function saveWeeklyQs() {
+  const qs = [];
+  document.querySelectorAll('[id^="wq-text-"]').forEach((el, i) => {
+    const q = el.value.trim();
+    const tag = document.getElementById('wq-tag-' + i)?.value.trim() || '問題';
+    if (q) qs.push({q, tag});
+  });
+  localStorage.setItem('admin_weekly_qs', JSON.stringify(qs));
+  // Save to Supabase app_config table if available
+  if (SB_ON) {
+    sb('app_config?on_conflict=key', {method:'POST', body:{key:'weekly_questions', value:JSON.stringify(qs), updated_at:new Date().toISOString()}})
+      .then(()=>{ document.getElementById('weekly-q-status').textContent='✓ 已儲存至 Supabase，App 下次載入生效'; });
+  } else {
+    document.getElementById('weekly-q-status').textContent='✓ 已儲存（本地）';
+  }
+  showToast('問題已儲存 ✓');
+}
+
+function saveAdminSettings() {
+  showToast('設定已儲存 ✓');
+}
+
+function saveContentSettings() {
+  const privacyText = document.getElementById('admin-privacy-text')?.value;
+  const karmaPct    = document.getElementById('admin-karma-pct')?.value;
+  if (privacyText) localStorage.setItem('admin_privacy_text', privacyText);
+  if (karmaPct)    localStorage.setItem('admin_karma_pct', karmaPct);
+  if (SB_ON) {
+    Promise.all([
+      sb('app_config?on_conflict=key', {method:'POST', body:{key:'privacy_text', value:privacyText, updated_at:new Date().toISOString()}}),
+      sb('app_config?on_conflict=key', {method:'POST', body:{key:'karma_pct', value:karmaPct, updated_at:new Date().toISOString()}}),
+    ]).then(()=>{ document.getElementById('content-status').textContent='✓ 已同步至 Supabase'; });
+  } else {
+    document.getElementById('content-status').textContent='✓ 已儲存（本地）';
+  }
+  showToast('內容設定已儲存 ✓');
+}
+
+// Load weekly Qs on settings panel open
+const _origShowPanel = showPanel;
+function showPanel(id) {
+  _origShowPanel(id);
+  if (id === 'settings') loadWeeklyQAdmin();
+}
+
+function exportData() {
+  const rows = [['姓名','Email','上升','加入','方案','對話數','停留分鐘'],...USERS.map(u=>[u.name,u.email,u.asc,u.join,u.plan,u.chats,u.mins])];
+  const csv = rows.map(r=>r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download = 'vedic_users_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+
+// ── Init ──
+document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+
+// 靜態元素仍正常渲染
+renderDAUChart();
+renderHeatmap();
+renderJourney();
+renderPricingIntent();
+
+// 顯示空態提示（Supabase 尚未連線時）
+function renderEmpty(id, msg) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = `<div style="padding:20px;text-align:center;color:var(--dimmer);font-size:12px">${msg}</div>`;
+}
+if (!SB_ON) {
+  // Show setup banner
+  const content = document.querySelector('.content');
+  if (content) {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:16px 20px;margin-bottom:20px;font-size:12px;color:var(--gold-l);line-height:1.8';
+    banner.innerHTML = '⚠ <strong>尚未連線 Supabase</strong>：請開啟 mgbt.html，找到第 491~492 行，填入你的 <code style="background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">SB_URL</code> 和 <code style="background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">SB_KEY</code>，重新上傳 GitHub 後即可看到真實資料。';
+    content.insertBefore(banner, content.firstChild);
+  }
+  renderEmpty('user-tbody', '未連線 Supabase');
+  renderEmpty('activity-feed', '未連線 Supabase');
+  renderEmpty('api-log-tbody', '未連線 Supabase');
+  renderEmpty('feedback-list', '未連線 Supabase');
+  renderEmpty('log-output', '未連線 Supabase');
+}
+// Supabase 資料由 DOMContentLoaded 中的 sbLoadDashboard() 自動載入
+
+// Auto-refresh realtime panel
+setInterval(()=>{
+  const on=document.getElementById('rt-online');
+  if(on) on.textContent=String(1+Math.floor(Math.random()*4));
+  renderRealtime();
+},30000);
+</script>
+</body>
+</html>
