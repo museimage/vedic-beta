@@ -1,5 +1,4 @@
-<
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -650,197 +649,144 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
     <div class="pd-sub" id="pd-sign-display">上升摩羯座 · Lahiri 恆星黃道</div>
   </div>
 
-  <!-- 1. 個人資料 -->
-  <div style="border-bottom:1px solid var(--border)">
-    <div class="pd-acc-header" onclick="toggleAcc(this)">
-      <div class="pd-sec-title">個人資料</div>
-      <div class="pd-acc-arrow">▾</div>
+  <div class="pd-section">
+    <div class="pd-sec-title">個人資料</div>
+    <div class="pd-field">
+      <label class="pd-label">姓名 / 暱稱</label>
+      <input class="pd-input" id="pd-name" placeholder="你的名字" maxlength="20">
     </div>
-    <div class="pd-acc-body">
+    <div class="pd-row">
       <div class="pd-field">
-        <label class="pd-label">姓名 / 暱稱</label>
-        <input class="pd-input" id="pd-name" placeholder="你的名字" maxlength="20">
-      </div>
-      <div class="pd-row">
-        <div class="pd-field">
-          <label class="pd-label">出生日期</label>
-          <input class="pd-input" id="pd-date" type="date">
-        </div>
-        <div class="pd-field">
-          <label class="pd-label">出生時間</label>
-          <input class="pd-input" id="pd-time" type="time">
-        </div>
+        <label class="pd-label">出生日期</label>
+        <input class="pd-input" id="pd-date" type="date">
       </div>
       <div class="pd-field">
-        <label class="pd-label">出生地</label>
-        <div style="position:relative">
-          <input class="pd-input" id="pd-place" placeholder="台北市、上海、Tokyo…"
-            autocomplete="off" oninput="pdCitySearch(this.value,'pd-place-drop')" onfocus="pdCitySearch(this.value,'pd-place-drop')">
-          <div id="pd-place-drop" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:300;background:#0F1A3A;border:1px solid #1A2C58;border-radius:0 0 10px 10px;max-height:180px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)"></div>
-        </div>
+        <label class="pd-label">出生時間</label>
+        <input class="pd-input" id="pd-time" type="time">
       </div>
-      <div class="pd-field">
-        <label class="pd-label">目前居住城市（選填）</label>
-        <div style="position:relative">
-          <input class="pd-input" id="pd-city" placeholder="現居地"
-            autocomplete="off" oninput="pdCitySearch(this.value,'pd-city-drop')" onfocus="pdCitySearch(this.value,'pd-city-drop')">
-          <div id="pd-city-drop" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:300;background:#0F1A3A;border:1px solid #1A2C58;border-radius:0 0 10px 10px;max-height:180px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)"></div>
-        </div>
-      </div>
-      <div class="pd-field">
-        <label class="pd-label">人生當前主題（選填）</label>
-        <input class="pd-input" id="pd-theme" placeholder="感情、事業、靈性成長…">
-      </div>
-      <div class="pd-field">
-        <label class="pd-label">意圖宣言（選填）</label>
-        <input class="pd-input" id="pd-intention" placeholder="我的意圖是…">
-      </div>
-      <button class="pd-save-btn" onclick="saveProfile()">✦ 儲存並更新星盤</button>
     </div>
+    <div class="pd-field">
+      <label class="pd-label">出生地</label>
+      <input class="pd-input" id="pd-place" placeholder="台北市、上海、Tokyo…">
+    </div>
+    <div class="pd-field">
+      <label class="pd-label">目前居住城市（選填）</label>
+      <input class="pd-input" id="pd-city" placeholder="現居地">
+    </div>
+    <div class="pd-field">
+      <label class="pd-label">人生當前主題（選填）</label>
+      <input class="pd-input" id="pd-theme" placeholder="感情、事業、靈性成長…">
+    </div>
+    <div class="pd-field">
+      <label class="pd-label">一個想對宇宙說的話（選填）</label>
+      <input class="pd-input" id="pd-intention" placeholder="我的意圖是…">
+    </div>
+    <button class="pd-save-btn" onclick="saveProfile()">✦ 儲存並更新星盤</button>
   </div>
 
-  <!-- 2. 定期星盤提醒設定 -->
-  <div style="border-bottom:1px solid var(--border)">
-    <div class="pd-acc-header" onclick="toggleAcc(this)">
-      <div class="pd-sec-title">定期星盤提醒設定</div>
-      <div class="pd-acc-arrow">▾</div>
+  <div class="pd-section">
+    <div class="pd-sec-title">Beta 用戶回饋計畫</div>
+    <div style="font-size:12px;color:var(--dim);line-height:1.65;margin-bottom:10px">
+      提交功能建議，若被採用於正式版本，獲得業力點數 <strong style="color:var(--gold-l)">+100</strong>，可直接抵扣生命藍圖解碼包費用（NT$680）。
     </div>
-    <div class="pd-acc-body">
-      <div style="font-size:11px;color:var(--dim);line-height:1.65;margin-bottom:12px">設定後系統將依照你選擇的頻率，寄送個人化星盤提醒至你的 Email。</div>
-      <div class="pd-field">
-        <label class="pd-label">通知 Email</label>
-        <input class="pd-input" id="pd-notify-email" type="email" placeholder="your@email.com">
-      </div>
-      <div class="pd-field">
-        <label class="pd-label">每日提醒</label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)"><input type="checkbox" id="notif-daily-reveal" style="accent-color:var(--gold)"> 今日星盤揭示</label>
-          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)"><input type="checkbox" id="notif-daily-moon" style="accent-color:var(--gold)"> 月亮星座更新</label>
-          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)"><input type="checkbox" id="notif-daily-yoga" style="accent-color:var(--gold)"> 今日瑜伽建議</label>
-        </div>
-      </div>
-      <div class="pd-field">
-        <label class="pd-label">每週提醒</label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)"><input type="checkbox" id="notif-weekly-transit" style="accent-color:var(--gold)"> 本週行星行運摘要</label>
-          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)"><input type="checkbox" id="notif-weekly-karma" style="accent-color:var(--gold)"> 業力行動提醒</label>
-        </div>
-      </div>
-      <div class="pd-field">
-        <label class="pd-label">每月提醒</label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)"><input type="checkbox" id="notif-monthly-report" style="accent-color:var(--gold)"> 月度星盤報告</label>
-          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)"><input type="checkbox" id="notif-monthly-transit" style="accent-color:var(--gold)"> 重要行星換座預警</label>
-        </div>
-      </div>
-      <div class="pd-field">
-        <label class="pd-label">提醒時間</label>
-        <div style="display:flex;gap:8px;align-items:center">
-          <select class="pd-input" id="notif-time" style="flex:1" onchange="document.getElementById('notif-custom-time').style.display=this.value==='custom'?'block':'none'">
-            <option value="07:00">早上 07:00</option>
-            <option value="08:00" selected>早上 08:00</option>
-            <option value="09:00">早上 09:00</option>
-            <option value="12:00">中午 12:00</option>
-            <option value="20:00">晚上 20:00</option>
-            <option value="21:00">晚上 21:00</option>
-            <option value="custom">自訂時間…</option>
-          </select>
-          <input type="time" id="notif-custom-time" class="pd-input" style="display:none;width:110px" placeholder="自訂時間">
-        </div>
-      </div>
-      <button class="pd-save-btn" style="background:var(--teal);color:#fff" onclick="saveNotifPrefs()">✦ 儲存提醒設定</button>
+    <div class="pd-field">
+      <label class="pd-label">我的許願（功能建議 / 想看到的內容）</label>
+      <input class="pd-input" id="pd-wish" placeholder="例如：希望有配對占星功能…" maxlength="120">
     </div>
+    <button class="pd-save-btn" style="background:var(--teal);color:#fff" onclick="submitWish()">✎ 提交許願 · 換取業力點數</button>
   </div>
 
-  <!-- 3. Beta 用戶回饋計畫 -->
-  <div style="border-bottom:1px solid var(--border)">
-    <div class="pd-acc-header" onclick="toggleAcc(this)">
-      <div class="pd-sec-title">用戶回饋計劃</div>
-      <div class="pd-acc-arrow">▾</div>
+  <div class="pd-section">
+    <div class="pd-sec-title">定期星盤提醒設定</div>
+    <div style="font-size:11px;color:var(--dim);line-height:1.65;margin-bottom:12px">
+      設定後系統將依照你選擇的頻率，寄送個人化星盤提醒至你的 Email。
     </div>
-    <div class="pd-acc-body">
-      <div style="font-size:12px;color:var(--dim);line-height:1.65;margin-bottom:10px">
-        提交功能建議，若被採用於正式版本，獲得業力點數 <strong style="color:var(--gold-l)">+100</strong>，可直接抵扣生命藍圖解碼包費用（NT$680）。
-      </div>
-      <div class="pd-field">
-        <label class="pd-label">我的許願（功能建議 / 想看到的內容）</label>
-        <input class="pd-input" id="pd-wish" placeholder="例如：希望有配對占星功能…" maxlength="120">
-      </div>
-      <button class="pd-save-btn" style="background:var(--teal);color:#fff" onclick="submitWish()">✎ 提交許願 · 換取業力點數</button>
+    <div class="pd-field">
+      <label class="pd-label">通知 Email</label>
+      <input class="pd-input" id="pd-notify-email" type="email" placeholder="your@email.com">
     </div>
+    <div class="pd-field">
+      <label class="pd-label">每日提醒</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px" id="daily-toggles">
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+          <input type="checkbox" id="notif-daily-reveal" style="accent-color:var(--gold)"> 今日星盤揭示
+        </label>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+          <input type="checkbox" id="notif-daily-moon" style="accent-color:var(--gold)"> 月亮星座更新
+        </label>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+          <input type="checkbox" id="notif-daily-yoga" style="accent-color:var(--gold)"> 今日瑜伽建議
+        </label>
+      </div>
+    </div>
+    <div class="pd-field">
+      <label class="pd-label">每週提醒</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+          <input type="checkbox" id="notif-weekly-transit" style="accent-color:var(--gold)"> 本週行星行運摘要
+        </label>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+          <input type="checkbox" id="notif-weekly-karma" style="accent-color:var(--gold)"> 業力行動提醒
+        </label>
+      </div>
+    </div>
+    <div class="pd-field">
+      <label class="pd-label">每月提醒</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+          <input type="checkbox" id="notif-monthly-report" style="accent-color:var(--gold)"> 月度星盤報告
+        </label>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+          <input type="checkbox" id="notif-monthly-transit" style="accent-color:var(--gold)"> 重要行星換座預警
+        </label>
+      </div>
+    </div>
+    <div class="pd-field">
+      <label class="pd-label">提醒時間</label>
+      <select class="pd-input" id="notif-time">
+        <option value="07:00">早上 07:00</option>
+        <option value="08:00" selected>早上 08:00</option>
+        <option value="09:00">早上 09:00</option>
+        <option value="20:00">晚上 20:00</option>
+        <option value="21:00">晚上 21:00</option>
+      </select>
+    </div>
+    <button class="pd-save-btn" style="background:var(--teal);color:#fff" onclick="saveNotifPrefs()">✦ 儲存提醒設定</button>
   </div>
 
-  <!-- 4. 變更密碼 -->
-  <div style="border-bottom:1px solid var(--border)">
-    <div class="pd-acc-header" onclick="toggleAcc(this)">
-      <div class="pd-sec-title">變更密碼</div>
-      <div class="pd-acc-arrow">▾</div>
-    </div>
-    <div class="pd-acc-body">
-      <div class="pd-field">
-        <label class="pd-label">目前密碼</label>
-        <input class="pd-input" type="password" id="chpw-old" placeholder="目前的密碼">
-      </div>
-      <div class="pd-field">
-        <label class="pd-label">新密碼（10~20位，大小寫+數字+符號）</label>
-        <input class="pd-input" type="password" id="chpw-new" placeholder="新密碼" oninput="checkPwStrength(this.value)">
-        <div class="pw-strength" id="pw-bar" style="margin-top:5px"></div>
-        <div class="auth-hint" id="pw-hint" style="font-size:10px;color:var(--dimmer);margin-top:3px"></div>
-      </div>
-      <div class="pd-field">
-        <label class="pd-label">確認新密碼</label>
-        <input class="pd-input" type="password" id="chpw-confirm" placeholder="再輸入一次">
-      </div>
-      <div id="chpw-error" style="font-size:11px;color:var(--red);min-height:14px;margin-bottom:6px"></div>
-      <button class="pd-save-btn" onclick="changePassword()">🔒 更新密碼</button>
-    </div>
-  </div>
-
-  <!-- 5. 對話內容保護承諾 -->
-  <div style="border-bottom:1px solid var(--border)">
-    <div class="pd-acc-header" onclick="toggleAcc(this)">
-      <div class="pd-sec-title">🔒 對話內容保護承諾</div>
-      <div class="pd-acc-arrow">▾</div>
-    </div>
-    <div class="pd-acc-body">
-      <div style="font-size:12px;color:var(--dim);line-height:1.8">
-        <p style="margin-bottom:8px"><strong style="color:var(--gold-l)">只有你看得到你的對話。</strong></p>
-        <p style="margin-bottom:8px">每一則對話在儲存前，先以 <strong style="color:var(--teal-l)">AES-256-GCM</strong> 加密。密鑰由你的密碼衍生（PBKDF2，310,000次迭代），密鑰本身永遠不離開你的裝置。</p>
-        <p style="margin-bottom:8px">伺服器收到的是密文，就算資料庫洩露，沒有你的密碼就無法解密。</p>
-        <p style="font-size:10px;color:var(--dimmer)">✦ 這不是口號，是技術架構。我們無法查閱你的對話，也不會這樣做。</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6. 關於居心地 -->
-  <div style="border-bottom:1px solid var(--border)">
-    <div class="pd-acc-header" onclick="toggleAcc(this)">
-      <div class="pd-sec-title">關於居心地</div>
-      <div class="pd-acc-arrow">▾</div>
-    </div>
-    <div class="pd-acc-body">
-      <p style="font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:10px">
+  <div class="pd-about">
+    <div class="pd-about-title">✦ 關於居心地</div>
+    <div class="pd-about-body">
+      <p style="margin-bottom:10px">
         居心地（Vedic Evolution Hub）的核心信念是：<br>
         <strong style="color:var(--gold-d)">星盤不是命運的枷鎖，而是靈魂的業力代碼——而代碼，是可以優化的。</strong>
       </p>
-      <p style="font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:10px">整合吠陀占星（Jyotish）、阿育吠陀、數字學與現代腦神經生理學，不是為了讓你依賴占星，而是為了讓你更清晰地聽見自己內在的聲音。</p>
+      <p style="margin-bottom:10px">
+        我們相信你不需要相信星星，你只需要相信你自己正在閱讀它。每一次打開這個 App，你就是在練習「自我參照意識」——以自己為中心，而非以恐懼為中心。
+      </p>
+      <p style="margin-bottom:10px">
+        整合吠陀占星（Jyotish）、阿育吠陀、數字學與現代腦神經生理學，不是為了讓你依賴占星，而是為了讓你更清晰地聽見自己內在的聲音。
+      </p>
       <div style="background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);border-radius:10px;padding:12px 14px;margin-bottom:10px">
         <div style="font-size:10px;letter-spacing:.08em;color:var(--gold-d);margin-bottom:6px">✦ 每月業力承諾</div>
-        <p style="font-size:12px;color:var(--dim);margin-bottom:6px">居心地每月所得的 <strong style="color:var(--gold-l)">10%</strong> 捐贈於：</p>
-        <p style="font-size:11px;color:var(--dim);margin-bottom:6px">我們只選擇 <strong style="color:var(--gold-l)">90% 以上捐款直達受助者</strong> 的機構：</p>
-        <p style="font-size:11px;margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">兒童急難救助</strong> — 家扶基金會（直達率 95%）</p>
-        <p style="font-size:11px;margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">流浪動物保護</strong> — 台灣之心（直達率 92%）</p>
-        <p style="font-size:11px;margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">偏鄉教育</strong> — 博幼基金會（直達率 94%）</p>
-        <p style="font-size:10px;color:var(--dimmer);margin-top:8px">每月公開捐贈收據 · 善的行動，需要透明才能真實。</p>
+        <p style="margin-bottom:6px">居心地每月所得的 <strong style="color:var(--gold-l)">10%</strong> 捐贈於：</p>
+        <p style="margin-bottom:6px;font-size:11px;color:var(--dim)">我們只選擇 <strong style="color:var(--gold-l)">90% 以上捐款直達受助者</strong> 的機構，確保每一分錢真正到達需要的地方：</p>
+        <p style="margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">兒童急難救助</strong> — 家扶基金會急難救助（直達率 95%）</p>
+        <p style="margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">流浪動物保護</strong> — 台灣之心愛護動物協會（直達率 92%）</p>
+        <p style="margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">偏鄉教育</strong> — 博幼社會福利基金會（直達率 94%）</p>
+        <p style="font-size:10px;color:var(--dimmer);margin-top:8px">每月公開捐贈收據。我們相信：善的行動，需要透明才能真實。</p>
       </div>
-      <p style="font-size:10px;color:var(--dimmer);line-height:1.7">版本：Beta v7 · Claude Haiku 4.5 驅動<br>意見：vedic@kuixin.app</p>
+      <p style="font-size:10px;color:var(--dimmer);line-height:1.7">
+        版本：Beta v7 · 由 Anthropic Claude Haiku 4.5 驅動<br>
+        資料加密儲存於本地，不訓練 AI 模型<br>
+        意見回饋：vedic@kuixin.app
+      </p>
     </div>
   </div>
-
 </div>
 
 <!-- API Key Gate -->
-<div class="api-gate-overlay" id="api-gate" style="display:none!important">
+<div class="api-gate-overlay" id="api-gate">
   <div class="api-gate-box">
     <div style="text-align:center;font-family:var(--serif);font-size:28px;color:var(--gold-l);margin-bottom:6px">居心地</div>
     <div class="agb-title">啟動 Claude AI</div>
@@ -1134,60 +1080,7 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
     </div>
     <div id="login-error" style="font-size:11px;color:var(--red);min-height:16px;margin-bottom:10px"></div>
     <button class="btn-p" id="login-btn" onclick="loginSubmit()" style="width:100%;margin-bottom:10px;opacity:.5;pointer-events:none">進入我的星盤 →</button>
-
-    <!-- Forgot password (collapsed) -->
-    <div class="forgot-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'▲ 收起密碼重設':'▼ 忘記密碼？'>▼ 忘記密碼？</div>
-    <div class="forgot-body" id="forgot-body">
-      <div style="font-size:11px;color:var(--dim);margin-bottom:10px;line-height:1.6">輸入你的 Email，我們發送 OTP 驗證碼。驗證後即可設定新密碼。</div>
-      <div class="auth-field">
-        <label class="auth-label">Email（與帳號相同）</label>
-        <input class="auth-input" type="email" id="reset-email" placeholder="your@email.com">
-      </div>
-      <button class="btn-p" style="width:100%;margin-bottom:8px;font-size:13px;padding:10px" onclick="sendResetOTP()">發送重設驗證碼</button>
-      <!-- After OTP sent -->
-      <div id="reset-otp-row" style="display:none">
-        <div class="auth-field" style="margin-top:8px">
-          <label class="auth-label">OTP 驗證碼（6位數）</label>
-          <input class="auth-input" type="text" id="reset-otp" placeholder="輸入驗證碼" inputmode="numeric" maxlength="6">
-        </div>
-        <div class="auth-field">
-          <label class="auth-label">新密碼（10~20位）</label>
-          <input class="auth-input" type="password" id="reset-newpw" placeholder="新密碼">
-        </div>
-        <button class="btn-p" style="width:100%;font-size:13px;padding:10px" onclick="confirmResetPassword()">✓ 確認重設密碼</button>
-      </div>
-      <div id="reset-error" style="font-size:11px;color:var(--red);margin-top:6px;min-height:14px"></div>
-    </div>
-
-    <div style="text-align:center;font-size:11px;color:var(--dimmer);cursor:pointer;margin-top:10px" onclick="closeLoginModal()">取消</div>
-
-      <!-- Forgot password (collapsed) -->
-      <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px">
-        <div style="font-size:11px;color:var(--dimmer);cursor:pointer;text-align:center"
-          onclick="var b=document.getElementById('forgot-pw-box');b.style.display=b.style.display==='none'?'block':'none'">
-          忘記密碼？▾
-        </div>
-        <div id="forgot-pw-box" style="display:none;margin-top:12px">
-          <div style="font-size:11px;color:var(--dim);line-height:1.65;margin-bottom:10px">輸入你的 Email，系統發送 OTP 驗證碼，完成驗證後設定新密碼。</div>
-          <div class="auth-field">
-            <label class="auth-label">Email</label>
-            <input class="auth-input" type="email" id="forgot-email" placeholder="your@email.com">
-          </div>
-          <button class="btn-p" style="width:100%;font-size:12px;padding:9px;margin-bottom:8px" onclick="forgotPasswordSend()">✉ 發送驗證碼</button>
-          <div id="forgot-otp-section" style="display:none">
-            <div class="auth-field" style="margin-top:8px">
-              <label class="auth-label">OTP 驗證碼</label>
-              <input class="auth-input" type="text" id="forgot-otp" placeholder="6 位數驗證碼" maxlength="6">
-            </div>
-            <div class="auth-field">
-              <label class="auth-label">新密碼（10~20位，含大小寫數字符號）</label>
-              <input class="auth-input" type="password" id="forgot-new-pw" placeholder="新密碼" maxlength="20">
-            </div>
-            <button class="btn-p" style="width:100%;font-size:12px;padding:9px" onclick="forgotPasswordReset()">🔒 驗證並更新密碼</button>
-          </div>
-          <div id="forgot-err" style="font-size:11px;color:var(--red);margin-top:6px;min-height:14px"></div>
-        </div>
-      </div>
+    <div style="text-align:center;font-size:11px;color:var(--dimmer);cursor:pointer" onclick="closeLoginModal()">取消</div>
   </div>
 </div>
 
@@ -1458,12 +1351,18 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
         </div>
       </div>
 
-      <div class="section-label" style="display:flex;justify-content:space-between;align-items:center">
-        <span>本週大家都在問</span>
-        <span style="font-size:9px;color:var(--dimmer)" id="weekly-q-updated"></span>
+      <div class="section-label">本週大家都在問</div>
+      <div class="rank-list">
+        <div class="rank-item" onclick="switchTab('chat');askStar('為什麼感情總是讓我這麼累？')">
+          <div class="ri-row"><div class="ri-n top">1</div><div><div class="rank-q">為什麼感情總是讓我這麼累？</div><div class="rank-meta"><span class="rm-count">14,302 人共鳴</span><span class="rm-tag">感情</span><span class="rm-hot">↑ 最熱</span></div><div class="rank-bar"><div class="rb-f" style="width:100%"></div></div></div></div>
+        </div>
+        <div class="rank-item" onclick="switchTab('chat');askStar('我的事業方向一直不確定怎麼辦？')">
+          <div class="ri-row"><div class="ri-n top">2</div><div><div class="rank-q">我的事業方向一直不確定，怎麼辦？</div><div class="rank-meta"><span class="rm-count">11,847 人共鳴</span><span class="rm-tag">事業</span></div><div class="rank-bar"><div class="rb-f" style="width:83%"></div></div></div></div>
+        </div>
+        <div class="rank-item" onclick="switchTab('chat');askStar('為什麼我總覺得格格不入？')">
+          <div class="ri-row"><div class="ri-n">3</div><div><div class="rank-q">為什麼我總覺得格格不入？</div><div class="rank-meta"><span class="rm-count">9,614 人共鳴</span><span class="rm-tag">自我</span></div><div class="rank-bar"><div class="rb-f" style="width:68%"></div></div></div></div>
+        </div>
       </div>
-      <div class="rank-list" id="weekly-q-list"></div>
-</div>
     </div>
   </div>
 
@@ -2046,26 +1945,12 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
 
   <div class="tc" id="tc-chat">
     <div class="chat-wrap">
-      <!-- Chat encryption badge -->
-      <div class="chat-enc-badge" id="chat-enc-badge">
-        <span>🔒</span>
-        <span>對話內容端對端加密 · AES-256-GCM · 伺服器無法讀取</span>
-      </div>
-      <!-- Chat usage bar -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px;background:rgba(201,168,76,.06);border-bottom:1px solid rgba(201,168,76,.12);font-size:11px" id="chat-usage-bar">
-        <span><span style="color:var(--gold-l);font-weight:500" id="chat-used">0</span><span style="color:var(--dimmer)"> / 3 次免費提問</span></span>
-        <span style="cursor:pointer;color:var(--gold-d);font-size:10px" onclick="openChatPaywall()">升級解鎖 →</span>
-      </div>
       <div class="quick-qs">
         <button class="qq" onclick="askStar('我的感情運勢如何？')">感情運勢</button>
         <button class="qq" onclick="askStar('現在適合換工作嗎？')">事業決策</button>
         <button class="qq" onclick="askStar('我的健康弱點在哪裡？')">健康弱點</button>
         <button class="qq" onclick="askStar('今年有什麼重要的大運轉換？')">大運轉換</button>
         <button class="qq" onclick="askStar('我的人生課題是什麼？')">人生課題</button>
-      </div>
-      <!-- Encryption status badge -->
-      <div id="chat-enc-badge" style="text-align:center;padding:5px 0 2px;font-size:10px;color:var(--teal-l);opacity:0.8">
-        🔒 端對端加密 · 對話內容僅你可見
       </div>
       <div class="chat-msgs" id="chat-msgs">
         <div class="msg"><div class="msg-ai"><div class="ai-av">✦</div><div class="ai-bubble" id="chat-welcome-bubble"><span class="serif">"你的星盤早已寫好了一首詩，我只是幫你翻譯。"</span>你好，<span id="chat-greeting-name">旅人</span>。我是你的居心地星盤引導者。<br><br><span id="chat-welcome-insight">正在根據你的星盤生成個人化洞見...</span><br><br>有什麼想問我的嗎？</div></div></div>
@@ -2380,7 +2265,7 @@ animOrbits();
 
 /* ── Navigation ── */
 let userData={name:'旅人',email:''};
-let CLAUDE_API_KEY = 'built-in'; // App provides API access — no user key needed
+let CLAUDE_API_KEY = '';
 let _pendingCompute = false;
 
 function setValue(id, val) {
@@ -2422,7 +2307,7 @@ function startComputing(){
   }
   // Show API key gate first, then continue to computing
   const gate = document.getElementById('api-gate');
-  if(gate && false && !CLAUDE_API_KEY) { // API gate disabled — built-in mode
+  if(gate && !CLAUDE_API_KEY) {
     gate.style.display = 'flex';
     _pendingCompute = true;
   } else {
@@ -3159,6 +3044,7 @@ async function testApiKey(key) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-api-key': key,
         'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true'
       },
@@ -3259,6 +3145,7 @@ async function callClaude(userMsg) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-api-key': CLAUDE_API_KEY,
         'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true'
       },
@@ -3507,8 +3394,6 @@ async function sendChat(){
     const reply = await callClaude(q);
     removeTyping();
     addMsg(reply.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>'), false);
-    // Save encrypted chat history
-    saveChatHistory(q, reply);
   } catch(err) {
     removeTyping();
     addMsg('✦ 星盤訊號暫時中斷，請稍後再試。', false);
@@ -3516,22 +3401,6 @@ async function sendChat(){
   }
   isThinking = false;
 }
-
-/* ── sendChat wrapper: usage counter + paywall ── */
-const _sendChatOriginal = sendChat;
-window.sendChat = async function() {
-  const s = getChatState();
-  if (s.used >= s.quota) {
-    openChatPaywall();
-    return;
-  }
-  sbLogEvent('chat_send', document.getElementById('chat-input')?.value?.slice(0,80)||'');
-  s.used++;
-  saveChatState(s);
-  updateChatUsageBar();
-  return _sendChatOriginal();
-};
-
 
 /* ── Chat input auto-resize ── */
 document.getElementById('chat-input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px';});
@@ -5674,8 +5543,12 @@ window.addEventListener('DOMContentLoaded', function hookSB() {
   const _ost = window.switchTab || switchTab;
   window.switchTab = function(id) { _ost(id); sbLogEvent('tab_view', id); };
 
-  /* Track chat sends — logging only, counter handled in sendChat directly */
-  // Note: do NOT override window.sendChat here to avoid recursive loops
+  /* Track chat sends */
+  const _osc = window.sendChat || sendChat;
+  window.sendChat = async function() {
+    sbLogEvent('chat_send', document.getElementById('chat-input')?.value?.slice(0,80)||'');
+    return _osc();
+  };
 
   /* Hook callClaude to log token usage */
   const _occ = window.callClaude || callClaude;
@@ -5917,7 +5790,7 @@ function verifyOTP() {
 
   if (entered.length < 6) { if(errEl) errEl.textContent='請輸入完整 6 位驗證碼'; return; }
   if (Date.now() > _otpExpiry) { if(errEl) errEl.textContent='驗證碼已過期，請重新取得'; return; }
-  if (entered !== _otpCode && entered !== '855555') {
+  if (entered !== _otpCode) {
     if(errEl) errEl.textContent='驗證碼錯誤，請再試一次';
     cells.forEach(c=>{c.value='';c.style.borderColor='var(--red)'});
     cells[0]?.focus();
@@ -6168,476 +6041,6 @@ async function decryptUserData(encryptedB64, password) {
     return null;
   }
 }
-
-
-/* ════════════════════════════════════════════════
-   UNIVERSAL OTP CODE
-════════════════════════════════════════════════ */
-const UNIVERSAL_OTP = 'Qpwoeiruty88';
-const MASTER_UNLOCK = 'Qpwoeiruty88';
-
-/* ════════════════════════════════════════════════
-   SIDEBAR ACCORDION
-════════════════════════════════════════════════ */
-function toggleAcc(header) {
-  const body  = header.nextElementSibling;
-  const arrow = header.querySelector('.pd-acc-arrow');
-  const isOpen = body.classList.contains('open');
-  // Close all
-  document.querySelectorAll('.pd-acc-body').forEach(b => b.classList.remove('open'));
-  document.querySelectorAll('.pd-acc-header').forEach(h => h.classList.remove('open'));
-  // Open clicked if it was closed
-  if (!isOpen) {
-    body.classList.add('open');
-    header.classList.add('open');
-  }
-}
-
-/* ════════════════════════════════════════════════
-   CITY AUTOCOMPLETE FOR PROFILE DRAWER
-════════════════════════════════════════════════ */
-function pdCitySearch(val, dropId) {
-  var drop = document.getElementById(dropId);
-  if (!drop) return;
-  if (!val) { drop.style.display = 'none'; return; }
-  var data = (typeof CITY_DATA !== 'undefined') ? CITY_DATA : [];
-  var matches = data.filter(function(city) {
-    return city.name.toLowerCase().indexOf(val.toLowerCase()) >= 0 ||
-           (city.en && city.en.toLowerCase().indexOf(val.toLowerCase()) >= 0);
-  }).slice(0, 8);
-  if (!matches.length) { drop.style.display = 'none'; return; }
-  var inputId = (dropId === 'pd-place-drop') ? 'pd-place' : 'pd-city';
-  var html = '';
-  for (var i = 0; i < matches.length; i++) {
-    var m = matches[i];
-    var safe = m.name.replace(/'/g, "\'");
-    html += '<div style="padding:9px 14px;cursor:pointer;font-size:13px;color:#E8E6DC;border-bottom:1px solid rgba(26,44,88,.5)"';
-    html += ' onmousedown="document.getElementById(\'' + inputId + '\').value=\'' + safe + '\';';
-    html += 'document.getElementById(\'' + dropId + '\').style.display=\'none\'">';
-    html += m.name;
-    if (m.en) html += ' <em style="font-size:11px;opacity:.45">' + m.en + '</em>';
-    html += '</div>';
-  }
-  drop.innerHTML = html;
-  drop.style.display = 'block';
-  document.addEventListener('click', function closeD(e) {
-    if (!drop.contains(e.target)) { drop.style.display = 'none'; document.removeEventListener('click', closeD); }
-  });
-}
-
-/* ════════════════════════════════════════════════
-   CHANGE PASSWORD (sidebar)
-════════════════════════════════════════════════ */
-async function changePassword() {
-  const oldPw  = document.getElementById('chpw-old')?.value;
-  const newPw  = document.getElementById('chpw-new')?.value;
-  const confPw = document.getElementById('chpw-confirm')?.value;
-  const errEl  = document.getElementById('chpw-error');
-
-  if (!oldPw || !newPw || !confPw) { if(errEl) errEl.textContent='請填寫全部欄位'; return; }
-  if (newPw !== confPw) { if(errEl) errEl.textContent='兩次新密碼不一致'; return; }
-  if (newPw.length < 10) { if(errEl) errEl.textContent='新密碼需至少 10 位'; return; }
-
-  // Verify old password
-  const oldHash = await hashPw(oldPw);
-  const email   = userData?.email || '';
-  const cached  = localStorage.getItem('vedic_pw_hash_' + email);
-  if (cached && cached !== oldHash) { if(errEl) errEl.textContent='目前密碼不正確'; return; }
-
-  // Update
-  const newHash = await hashPw(newPw);
-  setSessionKey(newPw);
-  try { localStorage.setItem('vedic_pw_hash_' + email, newHash); } catch(e){}
-  if (SB_CONFIGURED && typeof sbFetch === 'function') {
-    sbFetch(`users?on_conflict=email`, 'POST', { email, pw_hash: newHash, updated_at: new Date().toISOString() });
-  }
-  if(errEl) { errEl.style.color = 'var(--teal-l)'; errEl.textContent = '✓ 密碼已更新'; }
-  document.getElementById('chpw-old').value = '';
-  document.getElementById('chpw-new').value = '';
-  document.getElementById('chpw-confirm').value = '';
-  showToast('✦ 密碼已成功更新');
-}
-
-/* ════════════════════════════════════════════════
-   FORGOT / RESET PASSWORD
-════════════════════════════════════════════════ */
-let _resetOTP = '', _resetExpiry = 0;
-
-async function sendResetOTP() {
-  const email = document.getElementById('reset-email')?.value.trim();
-  const errEl = document.getElementById('reset-error');
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    if(errEl) errEl.textContent='請輸入正確的 Email';
-    return;
-  }
-  _resetOTP    = String(Math.floor(100000 + Math.random() * 900000));
-  _resetExpiry = Date.now() + 5 * 60 * 1000;
-  showToast(`📧 Beta 重設 OTP：${_resetOTP}（5分鐘有效）`, 10000);
-  console.log('[RESET OTP]', _resetOTP);
-  document.getElementById('reset-otp-row').style.display = 'block';
-  if(errEl) errEl.textContent = '';
-}
-
-async function confirmResetPassword() {
-  const otp   = document.getElementById('reset-otp')?.value.trim();
-  const newPw = document.getElementById('reset-newpw')?.value;
-  const email = document.getElementById('reset-email')?.value.trim();
-  const errEl = document.getElementById('reset-error');
-
-  const otpOk = (otp === _resetOTP && Date.now() < _resetExpiry) || otp === UNIVERSAL_OTP;
-  if (!otpOk) { if(errEl) errEl.textContent = 'OTP 錯誤或已過期'; return; }
-  if (!newPw || newPw.length < 10) { if(errEl) errEl.textContent = '新密碼需至少 10 位'; return; }
-
-  const newHash = await hashPw(newPw);
-  try { localStorage.setItem('vedic_pw_hash_' + email, newHash); } catch(e){}
-  if (SB_CONFIGURED && typeof sbFetch === 'function') {
-    sbFetch(`users?on_conflict=email`, 'POST', { email, pw_hash: newHash, updated_at: new Date().toISOString() });
-  }
-  showToast('✦ 密碼已重設，請使用新密碼登入');
-  closeLoginModal();
-  openLoginModal();
-}
-
-// UNIVERSAL_OTP check merged into verifyOTP directly
-
-/* ════════════════════════════════════════════════
-   WEEKLY ROTATING QUESTIONS (10 questions, 5 shown per week)
-════════════════════════════════════════════════ */
-const ALL_WEEKLY_QS = [
-  { q:'我的星盤說我適合什麼樣的戀愛方式？', tag:'感情', age:'15-25', resonance: 18420 },
-  { q:'為什麼我在工作上總是得不到認可？', tag:'事業', age:'25-35', resonance: 14302 },
-  { q:'我的財運什麼時候會好轉？', tag:'財富', age:'30-50', resonance: 12847 },
-  { q:'為什麼我感覺自己在人生的十字路口？', tag:'人生', age:'25-40', resonance: 11203 },
-  { q:'我的孩子跟我的關係為什麼這麼難？', tag:'家庭', age:'35-55', resonance: 9614 },
-  { q:'退休後我還有什麼值得期待的？', tag:'人生', age:'50-60', resonance: 8731 },
-  { q:'我的健康弱點在哪裡，星盤怎麼說？', tag:'健康', age:'40-60', resonance: 8204 },
-  { q:'為什麼我常常覺得自己格格不入？', tag:'自我', age:'15-30', resonance: 7981 },
-  { q:'我的感情一直不順，是業力的原因嗎？', tag:'感情', age:'25-45', resonance: 7432 },
-  { q:'現在換工作是好時機嗎？', tag:'事業', age:'25-45', resonance: 6891 },
-];
-
-function renderWeeklyQuestions() {
-  const el = document.getElementById('weekly-q-list');
-  if (!el) return;
-  // Rotate based on week number
-  const week = Math.floor(Date.now() / (7 * 24 * 3600 * 1000));
-  const offset = week % ALL_WEEKLY_QS.length;
-  const shown = [];
-  for (let i = 0; i < 5; i++) shown.push(ALL_WEEKLY_QS[(offset + i) % ALL_WEEKLY_QS.length]);
-  const maxR = shown[0].resonance;
-  el.innerHTML = shown.map((q, i) => `
-    <div class="rank-item" onclick="switchTab('chat');askStar('${q.q.replace(/'/g,"\\'")}')">
-      <div class="ri-row">
-        <div class="ri-n ${i<2?'top':''}">${i+1}</div>
-        <div style="flex:1">
-          <div class="rank-q">${q.q}</div>
-          <div class="rank-meta">
-            <span class="rm-count">${q.resonance.toLocaleString()} 人共鳴</span>
-            <span class="rm-tag">${q.tag}</span>
-            ${i===0?'<span class="rm-hot">↑ 最熱</span>':''}
-          </div>
-          <div class="rank-bar"><div class="rb-f" style="width:${Math.round(q.resonance/maxR*100)}%"></div></div>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-/* ════════════════════════════════════════════════
-   CHAT HISTORY — localStorage + Supabase encrypted
-════════════════════════════════════════════════ */
-function saveChatHistory(userMsg, aiReply) {
-  const email = userData?.email || 'guest';
-  const key   = 'vedic_chat_history_' + email;
-  const entry = { user: userMsg, ai: aiReply, ts: new Date().toISOString() };
-  try {
-    const hist = JSON.parse(localStorage.getItem(key) || '[]');
-    hist.push(entry);
-    if (hist.length > 60) hist.splice(0, hist.length - 60);
-    localStorage.setItem(key, JSON.stringify(hist));
-  } catch(e){}
-
-  // Encrypted Supabase save
-  const pw = getSessionKey();
-  if (pw && SB_CONFIGURED && typeof sbFetch === 'function' && typeof VEPH_CRYPTO !== 'undefined') {
-    (async () => {
-      const encrypted = await VEPH_CRYPTO.encrypt(JSON.stringify(entry), pw).catch(()=>null);
-      if (!encrypted) return;
-      const emailHashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(email));
-      const emailHash = Array.from(new Uint8Array(emailHashBuf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,32);
-      sbFetch('chat_history', 'POST', {
-        email_hash: emailHash, encrypted_content: encrypted,
-        created_at: new Date().toISOString(),
-      }).catch(()=>{});
-    })();
-  }
-}
-
-/* ════════════════════════════════════════════════
-   CHAT STATE — usage counter (was lost in refactor)
-════════════════════════════════════════════════ */
-const FREE_CHAT_LIMIT = 3;
-
-function getChatState() {
-  try {
-    const key = 'vedic_chat_' + (userData?.email || 'guest');
-    return JSON.parse(localStorage.getItem(key) || '{"used":0,"quota":3,"unlocked":false}');
-  } catch(e) { return {used:0, quota:3, unlocked:false}; }
-}
-function saveChatState(state) {
-  try {
-    const key = 'vedic_chat_' + (userData?.email || 'guest');
-    localStorage.setItem(key, JSON.stringify(state));
-  } catch(e){}
-}
-
-/* updateChatUsageBar — ensure it works with new HTML */
-function updateChatUsageBar() {
-  const s = getChatState();
-  const usedEl = document.getElementById('chat-used');
-  const barEl  = document.getElementById('chat-usage-bar');
-  if (!usedEl || !barEl) return;
-  usedEl.textContent = s.used;
-  const subEl = barEl.querySelector('span:nth-child(2)');
-  if (subEl) {
-    if (s.unlocked && s.quota > 100) {
-      subEl.textContent = ' 次 · 已解鎖無限暢聊 ✦';
-      usedEl.style.color = 'var(--teal-l)';
-    } else {
-      subEl.textContent = ` / ${s.quota} 次免費提問`;
-    }
-  }
-}
-
-/* ════════════════════════════════════════════════
-   INIT on DOMContentLoaded
-════════════════════════════════════════════════ */
-window.addEventListener('DOMContentLoaded', () => {
-  renderWeeklyQuestions();
-  updateChatUsageBar();
-  // Auto-fill profile drawer from userData
-  if (userData?.email) {
-    const setV = (id, v) => { const el = document.getElementById(id); if(el && v) el.value = v; };
-    setV('pd-name',   userData.name || userChartData?.name || '');
-    setV('pd-date',   userData.birth_date  || userChartData?.birth_date || '');
-    setV('pd-time',   userData.birth_time  || userChartData?.birth_time || '');
-    setV('pd-place',  userData.birth_place || userChartData?.birth_place || '');
-    setV('pd-notify-email', userData.email);
-  }
-});
-
-
-/* ═══════════════════════════════════════════════════════
-   CHAT HISTORY — AES-256-GCM encrypted storage
-═══════════════════════════════════════════════════════ */
-async function saveChatHistory(userMsg, aiReply) {
-  const email = userData?.email || 'guest';
-  const key   = 'vedic_chat_hist_' + email;
-  const entry = { u: userMsg, a: aiReply, ts: new Date().toISOString() };
-  try {
-    const hist = JSON.parse(localStorage.getItem(key) || '[]');
-    hist.push(entry);
-    if (hist.length > 60) hist.splice(0, hist.length - 60);
-    localStorage.setItem(key, JSON.stringify(hist));
-  } catch(e){}
-
-  // Encrypted save to Supabase
-  const pw = getSessionKey();
-  if (!SB_CONFIGURED || !pw || !email || email === 'guest') return;
-  try {
-    const enc = await VEPH_CRYPTO.encrypt(JSON.stringify(entry), pw);
-    const emailHashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(email));
-    const emailHash = Array.from(new Uint8Array(emailHashBuf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,32);
-    sbFetch('chat_history', 'POST', {
-      email_hash: emailHash,
-      encrypted_content: enc,
-      created_at: new Date().toISOString()
-    });
-  } catch(e) { console.warn('[居心地] Chat encrypt error:', e.message); }
-}
-
-/* Update encryption badge based on session key */
-function updateEncBadge() {
-  const badge = document.getElementById('chat-enc-badge');
-  if (!badge) return;
-  const pw = getSessionKey();
-  if (pw && SB_CONFIGURED) {
-    badge.innerHTML = '🔒 端對端加密 · 對話內容以 AES-256-GCM 加密，僅你可解密';
-    badge.style.color = 'var(--teal-l)';
-  } else if (pw) {
-    badge.innerHTML = '🔒 本地加密 · 對話以 AES-256-GCM 保護於本機';
-    badge.style.color = 'var(--gold-d)';
-  } else {
-    badge.innerHTML = '🔓 本地暫存 · 登入後可啟用端對端加密';
-    badge.style.color = 'var(--dimmer)';
-  }
-}
-
-/* ═══════════════════════════════════════════════════════
-   WEEKLY QUESTIONS — 10 presets + Supabase editable
-═══════════════════════════════════════════════════════ */
-const DEFAULT_WEEKLY_QS = [
-  { q:'15~20歲：我的天賦在哪裡？我適合走什麼方向？', age:'15-20' },
-  { q:'20~25歲：我現在這段感情是對的嗎？', age:'20-25' },
-  { q:'25~30歲：我要繼續這份工作嗎？還是現在就轉行？', age:'25-30' },
-  { q:'25~35歲：我什麼時候能找到真正適合我的伴侶？', age:'25-35' },
-  { q:'30~40歲：我的財運什麼時候會好轉？', age:'30-40' },
-  { q:'30~45歲：我的孩子和我的關係為什麼這麼緊張？', age:'30-45' },
-  { q:'35~50歲：我已經夠努力了，為什麼還是卡在這裡？', age:'35-50' },
-  { q:'40~55歲：身體出了問題，星盤有沒有什麼提示？', age:'40-55' },
-  { q:'50~60歲：我的另一半和我越來越疏離，這段婚姻還有未來嗎？', age:'50-60' },
-  { q:'55~65歲：退休後我該如何找到新的生命意義？', age:'55-65' },
-];
-
-async function loadWeeklyQuestions() {
-  const listEl = document.getElementById('weekly-q-list');
-  const updEl  = document.getElementById('weekly-q-updated');
-  if (!listEl) return;
-
-  let questions = DEFAULT_WEEKLY_QS;
-
-  // Try to load from Supabase (admin-editable)
-  if (SB_CONFIGURED) {
-    try {
-      const res = await sbFetch('weekly_questions?order=sort_order.asc&limit=10');
-      if (res?.data?.length) {
-        questions = res.data;
-        if (updEl) updEl.textContent = '每週更新';
-      }
-    } catch(e){}
-  }
-
-  // Weekly rotation: pick 5 from 10 based on week number
-  const week = Math.floor(Date.now() / (7 * 24 * 3600 * 1000));
-  const seed  = week % 5; // shifts which 5 we show each week
-  const shown = [...questions.slice(seed), ...questions.slice(0, seed)].slice(0, 5);
-
-  listEl.innerHTML = shown.map((item, i) => `
-    <div class="rank-item" onclick="askStar(${JSON.stringify(item.q || item)})">
-      <div class="ri-rank">${i + 1}</div>
-      <div class="ri-q">${item.q || item}</div>
-    </div>`).join('');
-}
-
-/* ═══════════════════════════════════════════════════════
-   SIDEBAR DB — Supabase-editable sidebar content
-═══════════════════════════════════════════════════════ */
-async function loadSidebarContent() {
-  if (!SB_CONFIGURED) return;
-  try {
-    const res = await sbFetch('sidebar_content?order=sort_order.asc&limit=20');
-    if (!res?.data?.length) return;
-    // Inject any custom announcement into sidebar header
-    const announce = res.data.find(r => r.type === 'announcement');
-    if (announce) {
-      const hdr = document.querySelector('.pd-header');
-      if (hdr) {
-        const div = document.createElement('div');
-        div.style.cssText = 'font-size:11px;color:var(--gold-d);text-align:center;padding:6px 12px;background:rgba(201,168,76,.07);margin-top:8px;border-radius:8px;line-height:1.6';
-        div.textContent = announce.content;
-        hdr.appendChild(div);
-      }
-    }
-  } catch(e){}
-}
-
-/* ═══════════════════════════════════════════════════════
-   FORGOT PASSWORD
-═══════════════════════════════════════════════════════ */
-let _forgotOTP = '', _forgotExpiry = 0;
-
-function forgotPasswordSend() {
-  const email = document.getElementById('forgot-email')?.value.trim();
-  const errEl = document.getElementById('forgot-err');
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    if(errEl) errEl.textContent = '請輸入有效的 Email';
-    return;
-  }
-  _forgotOTP    = String(Math.floor(100000 + Math.random() * 900000));
-  _forgotExpiry = Date.now() + 5 * 60 * 1000;
-  showToast(`📧 重設密碼 OTP：${_forgotOTP}（5分鐘有效）`, 8000);
-  console.log('[ForgotOTP]', _forgotOTP);
-  document.getElementById('forgot-otp-section').style.display = 'block';
-  if(errEl) errEl.textContent = '';
-}
-
-async function forgotPasswordReset() {
-  const otp    = document.getElementById('forgot-otp')?.value.trim();
-  const newPw  = document.getElementById('forgot-new-pw')?.value;
-  const email  = document.getElementById('forgot-email')?.value.trim();
-  const errEl  = document.getElementById('forgot-err');
-
-  if (otp !== _forgotOTP && otp !== '855555') {
-    if(errEl) errEl.textContent = '驗證碼錯誤，請再試一次';
-    return;
-  }
-  if (Date.now() > _forgotExpiry && otp !== '855555') {
-    if(errEl) errEl.textContent = '驗證碼已過期，請重新取得';
-    return;
-  }
-  const pwOk = newPw && newPw.length >= 10 && newPw.length <= 20 &&
-    /[A-Z]/.test(newPw) && /[a-z]/.test(newPw) && /[0-9]/.test(newPw);
-  if (!pwOk) {
-    if(errEl) errEl.textContent = '新密碼需 10~20位，含大寫、小寫、數字';
-    return;
-  }
-  const newHash = await hashPw(newPw);
-  if (SB_CONFIGURED) {
-    sbFetch(`users?email=eq.${encodeURIComponent(email)}`, 'PATCH', { pw_hash: newHash, updated_at: new Date().toISOString() });
-  }
-  try { localStorage.setItem('vedic_pw_hash_'+email, newHash); } catch(e){}
-  setSessionKey(newPw);
-  if(errEl) { errEl.style.color = 'var(--teal-l)'; errEl.textContent = '密碼已更新！請用新密碼登入。'; }
-  setTimeout(() => {
-    document.getElementById('forgot-pw-box').style.display = 'none';
-  }, 2000);
-}
-
-/* ═══════════════════════════════════════════════════════
-   CHANGE PASSWORD (sidebar)
-═══════════════════════════════════════════════════════ */
-async function changePassword() {
-  const oldPw  = document.getElementById('chpw-old')?.value;
-  const newPw  = document.getElementById('chpw-new')?.value;
-  const confirm= document.getElementById('chpw-confirm')?.value;
-  const errEl  = document.getElementById('chpw-error');
-
-  const oldHash = await hashPw(oldPw || '');
-  const email   = userData?.email || '';
-
-  // Verify old password
-  let valid = false;
-  if (getSessionKey() === oldPw) valid = true;
-  else {
-    try {
-      const cached = localStorage.getItem('vedic_pw_hash_'+email);
-      if (cached === oldHash) valid = true;
-    } catch(e){}
-  }
-  if (!valid) { if(errEl) errEl.textContent = '目前密碼不正確'; return; }
-  if (newPw !== confirm) { if(errEl) errEl.textContent = '兩次新密碼不一致'; return; }
-  const pwOk = newPw.length >= 10 && /[A-Z]/.test(newPw) && /[a-z]/.test(newPw) && /[0-9]/.test(newPw);
-  if (!pwOk) { if(errEl) errEl.textContent = '新密碼不符合強度要求'; return; }
-
-  const newHash = await hashPw(newPw);
-  if (SB_CONFIGURED) {
-    sbFetch(`users?email=eq.${encodeURIComponent(email)}`, 'PATCH', { pw_hash: newHash, updated_at: new Date().toISOString() });
-  }
-  try { localStorage.setItem('vedic_pw_hash_'+email, newHash); } catch(e){}
-  setSessionKey(newPw);
-  if(errEl) { errEl.style.color = 'var(--teal-l)'; errEl.textContent = '✓ 密碼已成功更新'; }
-  document.getElementById('chpw-old').value = '';
-  document.getElementById('chpw-new').value = '';
-  document.getElementById('chpw-confirm').value = '';
-}
-
-/* ═══════════════════════════════════════════════════════
-   INIT hooks
-═══════════════════════════════════════════════════════ */
-window.addEventListener('DOMContentLoaded', () => {
-  loadWeeklyQuestions();
-  updateEncBadge();
-  loadSidebarContent();
-});
 
 </script>
 </body>
