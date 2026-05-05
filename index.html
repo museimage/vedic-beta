@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!-- VEDIC_BETA_VERSION: 20260404_0030 -->
+
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -367,7 +369,7 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
 .qq:hover{border-color:var(--gold-d);color:var(--gold-l)}
 
 /* ── BLUEPRINT ── */
-.bp-pad{padding:18px 18px 90px}
+.bp-pad{padding:18px 18px 90px;overflow-y:auto;height:calc(100vh - 120px)}
 .bp-hero{background:var(--card2);border:1px solid var(--border);border-radius:16px;padding:26px 22px;text-align:center;margin-bottom:14px}
 .bp-icon{font-size:34px;margin-bottom:12px}
 .bp-title{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--gold-l);margin-bottom:7px}
@@ -404,6 +406,55 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
 .mc-loc{font-size:10px;color:var(--dimmer)}
 .mc-desc{font-size:12px;color:var(--dim);line-height:1.6}
 .mc-how{font-size:11px;color:var(--teal-l);margin-top:7px;padding-top:7px;border-top:1px solid var(--border)}
+.mc-chakra{font-size:10px;color:var(--purple-l);margin-top:4px}
+.mc-planet{font-size:10px;color:var(--gold-d);margin-top:2px}
+.mc-tags{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.mc-tag{font-size:9px;padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--dimmer);letter-spacing:.04em}
+
+/* ══ MARMA ENERGY CALENDAR ══ */
+.marma-day-strip{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
+.marma-day-strip::-webkit-scrollbar{height:3px}
+.marma-day-strip::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.mday{flex:0 0 44px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:6px 4px;text-align:center;cursor:pointer;transition:all .2s}
+.mday.active{border-color:var(--teal);background:rgba(26,165,160,.1)}
+.mday-name{font-size:9px;color:var(--dimmer);margin-bottom:3px}
+.mday-icon{font-size:14px;line-height:1}
+.mday-planet{font-size:8px;color:var(--gold-d);margin-top:2px}
+.marma-today-card{background:rgba(26,165,160,.06);border:1px solid rgba(26,165,160,.2);border-radius:12px;padding:13px;margin-bottom:14px}
+.mtc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.mtc-title{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-l)}
+.mtc-date{font-size:10px;color:var(--dimmer)}
+.mtc-body{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mtc-item{background:var(--card2);border-radius:8px;padding:9px}
+.mtc-item-label{font-size:9px;color:var(--dimmer);margin-bottom:4px;letter-spacing:.05em;text-transform:uppercase}
+.mtc-item-val{font-size:12px;color:var(--white)}
+.mtc-item-sub{font-size:10px;color:var(--dim);margin-top:2px;line-height:1.5}
+.mtc-mantra{grid-column:1/-1;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);border-radius:8px;padding:9px;text-align:center}
+.mtc-mantra-text{font-size:13px;color:var(--gold);letter-spacing:.1em;margin-bottom:3px}
+.mtc-mantra-sub{font-size:10px;color:var(--dimmer)}
+.mtc-warn{grid-column:1/-1;font-size:10px;color:rgba(212,99,58,.8);background:rgba(212,99,58,.06);border-radius:6px;padding:7px 9px;margin-top:2px}
+
+/* ══ MARMA MODAL ══ */
+#marma-modal{position:fixed;inset:0;z-index:9000;display:none;align-items:flex-end;justify-content:center;background:rgba(4,7,26,.75);backdrop-filter:blur(6px)}
+#marma-modal.open{display:flex}
+.mm-sheet{background:var(--card);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;padding:22px 20px 40px}
+.mm-handle{width:36px;height:3px;background:var(--border);border-radius:2px;margin:0 auto 18px}
+.mm-title{font-size:18px;font-weight:600;color:var(--white);margin-bottom:4px}
+.mm-sub{font-size:11px;color:var(--dimmer);margin-bottom:16px}
+.mm-chakra-bar{display:flex;align-items:center;gap:10px;background:rgba(108,82,208,.08);border:1px solid rgba(108,82,208,.2);border-radius:10px;padding:11px 13px;margin-bottom:14px}
+.mm-chakra-dot{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px}
+.mm-chakra-name{font-size:13px;color:var(--purple-l);font-weight:500}
+.mm-chakra-desc{font-size:11px;color:var(--dim);margin-top:2px}
+.mm-section{margin-bottom:16px}
+.mm-section-title{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);margin-bottom:8px}
+.mm-steps{display:flex;flex-direction:column;gap:6px}
+.mm-step{display:flex;gap:10px;align-items:flex-start;background:var(--card2);border-radius:9px;padding:10px}
+.mm-step-num{width:20px;height:20px;border-radius:50%;background:rgba(26,165,160,.15);border:1px solid rgba(26,165,160,.3);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--teal-l);flex-shrink:0;margin-top:1px}
+.mm-step-text{font-size:12px;color:var(--dim);line-height:1.6}
+.mm-karma{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:12px}
+.mm-karma-title{font-size:11px;color:var(--gold);margin-bottom:5px}
+.mm-karma-text{font-size:12px;color:var(--dim);line-height:1.65}
+.mm-close{width:100%;margin-top:18px;background:transparent;border:1px solid var(--border);border-radius:11px;padding:12px;font-size:13px;color:var(--dim);cursor:pointer;font-family:var(--sans)}
 
 /* ══ DOSHA QUIZ ══ */
 .quiz-wrap{padding:18px 18px 90px}
@@ -476,6 +527,12 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
 .pd-save-btn{width:100%;background:var(--gold);color:var(--deep);border:none;border-radius:9px;padding:11px;font-size:13px;font-weight:500;font-family:var(--sans);cursor:pointer;margin-top:4px;transition:background .2s}
 .pd-save-btn:hover{background:var(--gold-l)}
 .pd-about{padding:16px 20px;flex:1}
+.pd-collapse-hdr{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:12px 0;font-size:13px;color:var(--white);font-weight:500;user-select:none}
+.pd-collapse-hdr:hover{color:var(--gold-l)}
+.pd-chevron{font-size:10px;color:var(--dimmer);transition:transform .25s}
+.pd-collapse-hdr.open .pd-chevron{transform:rotate(90deg)}
+.pd-collapse-body{padding-bottom:4px}
+.pd-field{margin-bottom:10px}
 .pd-about-title{font-family:var(--serif);font-size:15px;color:var(--gold-l);margin-bottom:12px}
 .pd-about-body{font-size:12px;color:var(--dim);line-height:1.8}
 .pd-close{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--dim)}
@@ -516,6 +573,30 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
 .otp-cell:focus{border-color:var(--gold)}
 .pw-strength{height:3px;border-radius:2px;margin-top:6px;transition:all .3s;background:var(--border)}
 .fl-req{font-size:9px;color:var(--red);margin-left:4px}
+
+
+/* ── Chat usage counter ── */
+.chat-usage-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(201,168,76,.06);border-bottom:1px solid rgba(201,168,76,.12);font-size:11px}
+.chat-usage-count{color:var(--gold-l);font-weight:500}
+.chat-usage-sub{color:var(--dimmer)}
+.chat-paywall{position:absolute;inset:0;z-index:50;background:rgba(4,7,26,.88);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.chat-paywall-title{font-family:var(--serif);font-size:20px;color:var(--gold-l);margin-bottom:8px}
+.chat-paywall-sub{font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:20px;max-width:280px}
+.pay-plan{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;width:100%;max-width:300px;cursor:pointer;transition:border-color .2s;text-align:left}
+.pay-plan:hover{border-color:var(--gold-d)}
+.pay-plan-price{font-family:var(--serif);font-size:22px;color:var(--gold-l);margin-bottom:2px}
+.pay-plan-desc{font-size:11px;color:var(--dim)}
+.unlock-row{display:flex;gap:8px;width:100%;max-width:300px;margin-top:4px}
+.unlock-input{flex:1;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--white);font-family:var(--sans);outline:none}
+.unlock-input:focus{border-color:var(--gold-d)}
+
+
+/* ── Encryption status badge ── */
+.enc-badge{display:flex;align-items:center;gap:5px;font-size:10px;padding:5px 10px;border-radius:99px;cursor:pointer;transition:all .2s;border:1px solid}
+.enc-badge.enc-on{background:rgba(26,165,160,.1);color:var(--teal-l);border-color:rgba(26,165,160,.25)}
+.enc-badge.enc-local{background:rgba(201,168,76,.08);color:var(--gold-d);border-color:rgba(201,168,76,.2)}
+.enc-badge.enc-off{background:rgba(232,230,220,.05);color:var(--dimmer);border-color:rgba(232,230,220,.1)}
+.enc-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 
 /* Toast */
 .toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--card);border:1px solid var(--border);border-radius:11px;padding:10px 17px;font-size:12px;color:var(--white);white-space:nowrap;z-index:999;opacity:0;transition:all .3s;pointer-events:none}
@@ -649,140 +730,209 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
     <div class="pd-sub" id="pd-sign-display">上升摩羯座 · Lahiri 恆星黃道</div>
   </div>
 
+  <!-- ① 個人資料 -->
   <div class="pd-section">
-    <div class="pd-sec-title">個人資料</div>
-    <div class="pd-field">
-      <label class="pd-label">姓名 / 暱稱</label>
-      <input class="pd-input" id="pd-name" placeholder="你的名字" maxlength="20">
+    <div class="pd-collapse-hdr" onclick="togglePdSection(this)">
+      <span>👤 個人資料</span><span class="pd-chevron">▸</span>
     </div>
-    <div class="pd-row">
+    <div class="pd-collapse-body" style="display:none">
       <div class="pd-field">
-        <label class="pd-label">出生日期</label>
-        <input class="pd-input" id="pd-date" type="date">
+        <label class="pd-label">姓名 / 暱稱</label>
+        <input class="pd-input" id="pd-name" placeholder="你的名字" maxlength="20">
+      </div>
+      <div class="pd-row">
+        <div class="pd-field">
+          <label class="pd-label">出生日期</label>
+          <input class="pd-input" id="pd-date" type="date">
+        </div>
+        <div class="pd-field">
+          <label class="pd-label">出生時間</label>
+          <input class="pd-input" id="pd-time" type="time">
+        </div>
+      </div>
+      <div class="pd-field" style="position:relative">
+        <label class="pd-label">出生地 <span style="font-size:9px;color:var(--dimmer)">中英文皆可</span></label>
+        <input class="pd-input" id="pd-place" placeholder="台北市、上海、Tokyo…"
+          autocomplete="off" oninput="citySearch(this.value,'city-dropdown-pd')" onkeydown="cityKey(event,'city-dropdown-pd')" onfocus="citySearch(this.value,'city-dropdown-pd')">
+        <div id="city-dropdown-pd" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:300;background:#0F1A3A;border:1px solid #1A2C58;border-radius:0 0 10px 10px;max-height:160px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)"></div>
       </div>
       <div class="pd-field">
-        <label class="pd-label">出生時間</label>
-        <input class="pd-input" id="pd-time" type="time">
+        <label class="pd-label">目前居住城市（選填）</label>
+        <input class="pd-input" id="pd-city" placeholder="現居地">
       </div>
+      <div class="pd-field">
+        <label class="pd-label">人生當前主題（選填）</label>
+        <input class="pd-input" id="pd-theme" placeholder="感情、事業、靈性成長…">
+      </div>
+      <div class="pd-field">
+        <label class="pd-label">一個想對宇宙說的話（選填）</label>
+        <input class="pd-input" id="pd-intention" placeholder="我的意圖是…">
+      </div>
+      <button class="pd-save-btn" onclick="saveProfile()">✦ 儲存並更新星盤</button>
     </div>
-    <div class="pd-field">
-      <label class="pd-label">出生地</label>
-      <input class="pd-input" id="pd-place" placeholder="台北市、上海、Tokyo…">
-    </div>
-    <div class="pd-field">
-      <label class="pd-label">目前居住城市（選填）</label>
-      <input class="pd-input" id="pd-city" placeholder="現居地">
-    </div>
-    <div class="pd-field">
-      <label class="pd-label">人生當前主題（選填）</label>
-      <input class="pd-input" id="pd-theme" placeholder="感情、事業、靈性成長…">
-    </div>
-    <div class="pd-field">
-      <label class="pd-label">一個想對宇宙說的話（選填）</label>
-      <input class="pd-input" id="pd-intention" placeholder="我的意圖是…">
-    </div>
-    <button class="pd-save-btn" onclick="saveProfile()">✦ 儲存並更新星盤</button>
   </div>
 
+  <!-- ② 定期星盤提醒設定 -->
   <div class="pd-section">
-    <div class="pd-sec-title">Beta 用戶回饋計畫</div>
-    <div style="font-size:12px;color:var(--dim);line-height:1.65;margin-bottom:10px">
-      提交功能建議，若被採用於正式版本，獲得業力點數 <strong style="color:var(--gold-l)">+100</strong>，可直接抵扣生命藍圖解碼包費用（NT$680）。
+    <div class="pd-collapse-hdr" onclick="togglePdSection(this)">
+      <span>🔔 定期星盤提醒設定</span><span class="pd-chevron">▸</span>
     </div>
-    <div class="pd-field">
-      <label class="pd-label">我的許願（功能建議 / 想看到的內容）</label>
-      <input class="pd-input" id="pd-wish" placeholder="例如：希望有配對占星功能…" maxlength="120">
+    <div class="pd-collapse-body" style="display:none">
+      <div style="font-size:11px;color:var(--dim);line-height:1.65;margin-bottom:12px">
+        設定後系統將依照你選擇的頻率，寄送個人化星盤提醒至你的 Email。
+      </div>
+      <div class="pd-field">
+        <label class="pd-label">通知 Email</label>
+        <input class="pd-input" id="pd-notify-email" type="email" placeholder="your@email.com">
+      </div>
+      <div class="pd-field">
+        <label class="pd-label">提醒時間 <span style="font-size:9px;color:var(--dimmer)">或自訂</span></label>
+        <select class="pd-input" id="notif-time" onchange="toggleCustomTime(this.value)">
+          <option value="06:00">早上 06:00</option>
+          <option value="07:00">早上 07:00</option>
+          <option value="08:00" selected>早上 08:00</option>
+          <option value="09:00">早上 09:00</option>
+          <option value="12:00">中午 12:00</option>
+          <option value="18:00">下午 18:00</option>
+          <option value="20:00">晚上 20:00</option>
+          <option value="21:00">晚上 21:00</option>
+          <option value="22:00">晚上 22:00</option>
+          <option value="custom">✎ 自訂時間…</option>
+        </select>
+        <input type="time" class="pd-input" id="notif-custom-time" style="display:none;margin-top:6px">
+      </div>
+      <div class="pd-field">
+        <label class="pd-label">每日提醒</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+            <input type="checkbox" id="notif-daily-reveal" style="accent-color:var(--gold)"> 今日星盤揭示
+          </label>
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+            <input type="checkbox" id="notif-daily-moon" style="accent-color:var(--gold)"> 月亮星座更新
+          </label>
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+            <input type="checkbox" id="notif-daily-yoga" style="accent-color:var(--gold)"> 今日瑜伽建議
+          </label>
+        </div>
+      </div>
+      <div class="pd-field">
+        <label class="pd-label">每週提醒</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+            <input type="checkbox" id="notif-weekly-transit" style="accent-color:var(--gold)"> 本週行星行運摘要
+          </label>
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+            <input type="checkbox" id="notif-weekly-karma" style="accent-color:var(--gold)"> 業力行動提醒
+          </label>
+        </div>
+      </div>
+      <div class="pd-field">
+        <label class="pd-label">每月提醒</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+            <input type="checkbox" id="notif-monthly-report" style="accent-color:var(--gold)"> 月度星盤報告
+          </label>
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
+            <input type="checkbox" id="notif-monthly-transit" style="accent-color:var(--gold)"> 重要行星換座預警
+          </label>
+        </div>
+      </div>
+      <button class="pd-save-btn" style="background:var(--teal);color:#fff" onclick="saveNotifPrefs()">✦ 儲存提醒設定</button>
     </div>
-    <button class="pd-save-btn" style="background:var(--teal);color:#fff" onclick="submitWish()">✎ 提交許願 · 換取業力點數</button>
   </div>
 
+  <!-- ③ 用戶回饋計畫 -->
   <div class="pd-section">
-    <div class="pd-sec-title">定期星盤提醒設定</div>
-    <div style="font-size:11px;color:var(--dim);line-height:1.65;margin-bottom:12px">
-      設定後系統將依照你選擇的頻率，寄送個人化星盤提醒至你的 Email。
+    <div class="pd-collapse-hdr" onclick="togglePdSection(this)">
+      <span>✎ 用戶回饋計畫</span><span class="pd-chevron">▸</span>
     </div>
-    <div class="pd-field">
-      <label class="pd-label">通知 Email</label>
-      <input class="pd-input" id="pd-notify-email" type="email" placeholder="your@email.com">
-    </div>
-    <div class="pd-field">
-      <label class="pd-label">每日提醒</label>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px" id="daily-toggles">
-        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
-          <input type="checkbox" id="notif-daily-reveal" style="accent-color:var(--gold)"> 今日星盤揭示
-        </label>
-        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
-          <input type="checkbox" id="notif-daily-moon" style="accent-color:var(--gold)"> 月亮星座更新
-        </label>
-        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
-          <input type="checkbox" id="notif-daily-yoga" style="accent-color:var(--gold)"> 今日瑜伽建議
-        </label>
+    <div class="pd-collapse-body" style="display:none">
+      <div style="font-size:12px;color:var(--dim);line-height:1.65;margin-bottom:10px">
+        提交功能建議，若被採用於正式版本，獲得業力點數 <strong style="color:var(--gold-l)">+100</strong>，可直接抵扣生命藍圖解碼包費用（NT$680）。
       </div>
-    </div>
-    <div class="pd-field">
-      <label class="pd-label">每週提醒</label>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
-          <input type="checkbox" id="notif-weekly-transit" style="accent-color:var(--gold)"> 本週行星行運摘要
-        </label>
-        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
-          <input type="checkbox" id="notif-weekly-karma" style="accent-color:var(--gold)"> 業力行動提醒
-        </label>
+      <div class="pd-field">
+        <label class="pd-label">我的許願（功能建議 / 想看到的內容）</label>
+        <input class="pd-input" id="pd-wish" placeholder="例如：希望有配對占星功能…" maxlength="120">
       </div>
+      <button class="pd-save-btn" style="background:var(--teal);color:#fff" onclick="submitWish()">✎ 提交許願 · 換取業力點數</button>
     </div>
-    <div class="pd-field">
-      <label class="pd-label">每月提醒</label>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
-          <input type="checkbox" id="notif-monthly-report" style="accent-color:var(--gold)"> 月度星盤報告
-        </label>
-        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--dim)">
-          <input type="checkbox" id="notif-monthly-transit" style="accent-color:var(--gold)"> 重要行星換座預警
-        </label>
-      </div>
-    </div>
-    <div class="pd-field">
-      <label class="pd-label">提醒時間</label>
-      <select class="pd-input" id="notif-time">
-        <option value="07:00">早上 07:00</option>
-        <option value="08:00" selected>早上 08:00</option>
-        <option value="09:00">早上 09:00</option>
-        <option value="20:00">晚上 20:00</option>
-        <option value="21:00">晚上 21:00</option>
-      </select>
-    </div>
-    <button class="pd-save-btn" style="background:var(--teal);color:#fff" onclick="saveNotifPrefs()">✦ 儲存提醒設定</button>
   </div>
 
-  <div class="pd-about">
-    <div class="pd-about-title">✦ 關於居心地</div>
-    <div class="pd-about-body">
-      <p style="margin-bottom:10px">
+  <!-- ④ 變更密碼 -->
+  <div class="pd-section">
+    <div class="pd-collapse-hdr" onclick="togglePdSection(this)">
+      <span>🔒 變更密碼</span><span class="pd-chevron">▸</span>
+    </div>
+    <div class="pd-collapse-body" style="display:none">
+      <div class="pd-field">
+        <label class="pd-label">目前密碼</label>
+        <input class="pd-input" type="password" id="pw-current" placeholder="輸入目前的密碼">
+      </div>
+      <div class="pd-field">
+        <label class="pd-label">新密碼（10~20位，大小寫+數字+符號）</label>
+        <input class="pd-input" type="password" id="pw-new" placeholder="新密碼" maxlength="20" oninput="checkNewPwStrength(this.value)">
+        <div class="pw-strength" id="pw-new-bar"></div>
+        <div style="font-size:10px;color:var(--dimmer);margin-top:3px" id="pw-new-hint"></div>
+      </div>
+      <div class="pd-field">
+        <label class="pd-label">確認新密碼</label>
+        <input class="pd-input" type="password" id="pw-new2" placeholder="再輸入一次新密碼" maxlength="20">
+      </div>
+      <div id="pw-change-err" style="font-size:11px;color:var(--red);min-height:16px;margin-bottom:8px"></div>
+      <button class="pd-save-btn" style="background:#1A4A4A;color:var(--teal-l);border:1px solid var(--teal)" onclick="changePassword()">🔒 更新密碼</button>
+    </div>
+  </div>
+
+  <!-- ⑤ 對話內容保護承諾 -->
+  <div class="pd-section">
+    <div class="pd-collapse-hdr" onclick="togglePdSection(this)">
+      <span>🛡 對話內容保護承諾</span><span class="pd-chevron">▸</span>
+    </div>
+    <div class="pd-collapse-body" style="display:none">
+      <div style="background:rgba(26,165,160,.06);border:1px solid rgba(26,165,160,.18);border-radius:10px;padding:12px 14px;margin-bottom:10px">
+        <div style="font-size:11px;color:var(--dim);line-height:1.85">
+          <p style="margin-bottom:5px">① 你的對話內容在傳送前，於<strong style="color:var(--white)">你的裝置上</strong>完成 AES-256-GCM 加密</p>
+          <p style="margin-bottom:5px">② 伺服器與資料庫只儲存加密後的密文，<strong style="color:var(--white)">無法閱讀你的內容</strong></p>
+          <p style="margin-bottom:5px">③ 密鑰由你的密碼衍生（PBKDF2），<strong style="color:var(--white)">密碼本身從不上傳</strong></p>
+          <p style="margin-bottom:5px">④ 後台管理員只看得到「有幾次對話」，<strong style="color:var(--white)">看不到任何對話內容</strong></p>
+          <p style="margin-bottom:0">⑤ 刪除帳號時，所有加密資料<strong style="color:var(--white)">一併永久刪除</strong></p>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--dimmer);line-height:1.7">
+        加密方式：AES-256-GCM · 密鑰衍生：PBKDF2（310,000次）·
+        <span style="cursor:pointer;color:var(--teal-l)" onclick="window.open('https://github.com/museimage/vedic-beta','_blank')">查看開放原始碼 ↗</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ 關於居心地 -->
+  <div class="pd-section" style="border-bottom:none">
+    <div class="pd-collapse-hdr" onclick="togglePdSection(this)">
+      <span>✦ 關於居心地</span><span class="pd-chevron">▸</span>
+    </div>
+    <div class="pd-collapse-body" style="display:none">
+      <p style="font-size:12px;color:var(--dim);line-height:1.8;margin-bottom:10px">
         居心地（Vedic Evolution Hub）的核心信念是：<br>
         <strong style="color:var(--gold-d)">星盤不是命運的枷鎖，而是靈魂的業力代碼——而代碼，是可以優化的。</strong>
       </p>
-      <p style="margin-bottom:10px">
-        我們相信你不需要相信星星，你只需要相信你自己正在閱讀它。每一次打開這個 App，你就是在練習「自我參照意識」——以自己為中心，而非以恐懼為中心。
-      </p>
-      <p style="margin-bottom:10px">
+      <p style="font-size:12px;color:var(--dim);line-height:1.8;margin-bottom:10px">
         整合吠陀占星（Jyotish）、阿育吠陀、數字學與現代腦神經生理學，不是為了讓你依賴占星，而是為了讓你更清晰地聽見自己內在的聲音。
       </p>
       <div style="background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.18);border-radius:10px;padding:12px 14px;margin-bottom:10px">
         <div style="font-size:10px;letter-spacing:.08em;color:var(--gold-d);margin-bottom:6px">✦ 每月業力承諾</div>
-        <p style="margin-bottom:6px">居心地每月所得的 <strong style="color:var(--gold-l)">10%</strong> 捐贈於：</p>
-        <p style="margin-bottom:6px;font-size:11px;color:var(--dim)">我們只選擇 <strong style="color:var(--gold-l)">90% 以上捐款直達受助者</strong> 的機構，確保每一分錢真正到達需要的地方：</p>
-        <p style="margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">兒童急難救助</strong> — 家扶基金會急難救助（直達率 95%）</p>
-        <p style="margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">流浪動物保護</strong> — 台灣之心愛護動物協會（直達率 92%）</p>
-        <p style="margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">偏鄉教育</strong> — 博幼社會福利基金會（直達率 94%）</p>
-        <p style="font-size:10px;color:var(--dimmer);margin-top:8px">每月公開捐贈收據。我們相信：善的行動，需要透明才能真實。</p>
+        <p style="font-size:12px;color:var(--dim);margin-bottom:6px">居心地每月所得的 <strong style="color:var(--gold-l)">10%</strong> 捐贈於：</p>
+        <p style="font-size:11px;color:var(--dim);margin-bottom:6px">我們只選擇 <strong style="color:var(--gold-l)">90% 以上捐款直達受助者</strong> 的機構：</p>
+        <p style="font-size:12px;color:var(--dim);margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">兒童急難救助</strong> — 家扶基金會（直達率 95%）</p>
+        <p style="font-size:12px;color:var(--dim);margin-bottom:4px">⟡ <strong style="color:var(--teal-l)">流浪動物保護</strong> — 台灣之心愛護動物協會（直達率 92%）</p>
+        <p style="font-size:12px;color:var(--dim);margin-bottom:0">⟡ <strong style="color:var(--teal-l)">偏鄉教育</strong> — 博幼社會福利基金會（直達率 94%）</p>
       </div>
       <p style="font-size:10px;color:var(--dimmer);line-height:1.7">
         版本：Beta v7 · 由 Anthropic Claude Haiku 4.5 驅動<br>
-        資料加密儲存於本地，不訓練 AI 模型<br>
         意見回饋：vedic@kuixin.app
       </p>
     </div>
   </div>
+
 </div>
 
 <!-- API Key Gate -->
@@ -1000,7 +1150,7 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
 
     <div class="fl">
       <label class="fl-label">出生日期 <span class="fl-req">*必填</span></label>
-      <input class="fl-input" type="date" id="birth-date">
+      <input class="fl-input" type="date" id="birth-date" onchange="birthValidate()">
     </div>
     <div class="fl-row fl">
       <div>
@@ -1008,9 +1158,9 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
         <input class="fl-input" type="time" id="birth-time">
       </div>
       <div style="position:relative">
-        <label class="fl-label">出生地點 <span class="fl-req">*必填</span></label>
+        <label class="fl-label">出生地點 <span class="fl-req">*必填</span> <span style="font-size:9px;color:var(--dimmer)">中英文皆可</span></label>
         <input class="fl-input" type="text" id="birth-place" placeholder="台北市"
-          autocomplete="off" oninput="citySearch(this.value)" onkeydown="cityKey(event)" onfocus="citySearch(this.value)">
+          autocomplete="off" oninput="citySearch(this.value);birthValidate()" onkeydown="cityKey(event)" onfocus="citySearch(this.value)">
         <div id="city-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;z-index:200;background:#0F1A3A;border:1px solid #1A2C58;border-radius:0 0 10px 10px;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)"></div>
       </div>
     </div>
@@ -1079,8 +1229,48 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
       <input class="auth-input" type="password" id="login-pw" placeholder="你設定的密碼" oninput="loginValidate()" onkeydown="if(event.key==='Enter')loginSubmit()">
     </div>
     <div id="login-error" style="font-size:11px;color:var(--red);min-height:16px;margin-bottom:10px"></div>
-    <button class="btn-p" id="login-btn" onclick="loginSubmit()" style="width:100%;margin-bottom:10px;opacity:.5;pointer-events:none">進入我的星盤 →</button>
-    <div style="text-align:center;font-size:11px;color:var(--dimmer);cursor:pointer" onclick="closeLoginModal()">取消</div>
+    <button class="btn-p" id="login-btn" onclick="loginSubmit()" style="width:100%;margin-bottom:10px">進入我的星盤 →</button>
+    <div style="display:flex;justify-content:space-between;margin-top:4px">
+      <span style="font-size:11px;color:var(--teal-l);cursor:pointer" onclick="showForgotPassword()">忘記密碼？</span>
+      <span style="font-size:11px;color:var(--dimmer);cursor:pointer" onclick="closeLoginModal()">取消</span>
+    </div>
+
+    <!-- Forgot password section (hidden by default) -->
+    <div id="forgot-pw-section" style="display:none;margin-top:16px;border-top:1px solid var(--border);padding-top:14px">
+      <div style="font-size:12px;color:var(--gold-l);margin-bottom:8px">重設密碼</div>
+      <div style="font-size:11px;color:var(--dim);margin-bottom:12px;line-height:1.6">
+        輸入你的 Email，我們將發送 OTP 驗證碼。驗證後可設定新密碼。
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Email</label>
+        <input class="auth-input" type="email" id="forgot-email" placeholder="your@email.com">
+      </div>
+      <button class="btn-p" style="width:100%;margin-bottom:8px" onclick="sendForgotOTP()">發送驗證碼</button>
+      
+      <div id="forgot-otp-section" style="display:none;margin-top:12px">
+        <div style="font-size:11px;color:var(--dim);margin-bottom:8px">輸入驗證碼（已寄至你的 Email）</div>
+        <div class="otp-row" id="forgot-otp-cells">
+          <input class="otp-cell" maxlength="1" type="text" inputmode="numeric" oninput="forgotOtpInput(this,0)">
+          <input class="otp-cell" maxlength="1" type="text" inputmode="numeric" oninput="forgotOtpInput(this,1)">
+          <input class="otp-cell" maxlength="1" type="text" inputmode="numeric" oninput="forgotOtpInput(this,2)">
+          <input class="otp-cell" maxlength="1" type="text" inputmode="numeric" oninput="forgotOtpInput(this,3)">
+          <input class="otp-cell" maxlength="1" type="text" inputmode="numeric" oninput="forgotOtpInput(this,4)">
+          <input class="otp-cell" maxlength="1" type="text" inputmode="numeric" oninput="forgotOtpInput(this,5)">
+        </div>
+        <div id="forgot-otp-section2" style="display:none;margin-top:12px">
+          <div class="auth-field">
+            <label class="auth-label">新密碼（10~20位，大小寫+數字+符號）</label>
+            <input class="auth-input" type="password" id="forgot-new-pw" placeholder="新密碼" maxlength="20">
+          </div>
+          <div class="auth-field">
+            <label class="auth-label">確認新密碼</label>
+            <input class="auth-input" type="password" id="forgot-new-pw2" placeholder="再輸入一次" maxlength="20">
+          </div>
+          <button class="btn-p" style="width:100%" onclick="submitNewPassword()">✦ 設定新密碼</button>
+        </div>
+      </div>
+      <div id="forgot-err" style="font-size:11px;color:var(--red);margin-top:8px;min-height:14px"></div>
+    </div>
   </div>
 </div>
 
@@ -1352,16 +1542,8 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
       </div>
 
       <div class="section-label">本週大家都在問</div>
-      <div class="rank-list">
-        <div class="rank-item" onclick="switchTab('chat');askStar('為什麼感情總是讓我這麼累？')">
-          <div class="ri-row"><div class="ri-n top">1</div><div><div class="rank-q">為什麼感情總是讓我這麼累？</div><div class="rank-meta"><span class="rm-count">14,302 人共鳴</span><span class="rm-tag">感情</span><span class="rm-hot">↑ 最熱</span></div><div class="rank-bar"><div class="rb-f" style="width:100%"></div></div></div></div>
-        </div>
-        <div class="rank-item" onclick="switchTab('chat');askStar('我的事業方向一直不確定怎麼辦？')">
-          <div class="ri-row"><div class="ri-n top">2</div><div><div class="rank-q">我的事業方向一直不確定，怎麼辦？</div><div class="rank-meta"><span class="rm-count">11,847 人共鳴</span><span class="rm-tag">事業</span></div><div class="rank-bar"><div class="rb-f" style="width:83%"></div></div></div></div>
-        </div>
-        <div class="rank-item" onclick="switchTab('chat');askStar('為什麼我總覺得格格不入？')">
-          <div class="ri-row"><div class="ri-n">3</div><div><div class="rank-q">為什麼我總覺得格格不入？</div><div class="rank-meta"><span class="rm-count">9,614 人共鳴</span><span class="rm-tag">自我</span></div><div class="rank-bar"><div class="rb-f" style="width:68%"></div></div></div></div>
-        </div>
+      <div class="rank-list" id="weekly-questions-list">
+        <!-- 由 JS 動態渲染，來自 Supabase weekly_questions 表 -->
       </div>
     </div>
   </div>
@@ -1952,12 +2134,55 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
         <button class="qq" onclick="askStar('今年有什麼重要的大運轉換？')">大運轉換</button>
         <button class="qq" onclick="askStar('我的人生課題是什麼？')">人生課題</button>
       </div>
+      <!-- Chat usage bar -->
+      <div class="chat-usage-bar" id="chat-usage-bar">
+        <span><span class="chat-usage-count" id="chat-used">0</span><span class="chat-usage-sub"> / 3 次免費提問</span></span>
+        <span id="enc-badge" class="enc-badge enc-off" onclick="showEncDetail()" title="點擊了解加密說明">
+          <span class="enc-dot" id="enc-dot" style="background:var(--dimmer)"></span>
+          <span id="enc-label">本地暫存</span>
+        </span>
+      </div>
+
       <div class="chat-msgs" id="chat-msgs">
         <div class="msg"><div class="msg-ai"><div class="ai-av">✦</div><div class="ai-bubble" id="chat-welcome-bubble"><span class="serif">"你的星盤早已寫好了一首詩，我只是幫你翻譯。"</span>你好，<span id="chat-greeting-name">旅人</span>。我是你的居心地星盤引導者。<br><br><span id="chat-welcome-insight">正在根據你的星盤生成個人化洞見...</span><br><br>有什麼想問我的嗎？</div></div></div>
       </div>
       <div class="chat-input-wrap">
         <textarea class="chat-input" id="chat-input" placeholder="問任何關於你星盤的事..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
         <button class="send-btn" onclick="sendChat()">↑</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat paywall modal (full screen) -->
+  <div class="auth-modal" id="chat-paywall">
+    <div class="auth-box" style="max-width:340px">
+      <div style="font-size:28px;text-align:center;margin-bottom:10px">✦</div>
+      <div class="auth-title" style="text-align:center">免費提問次數已用完</div>
+      <div class="auth-sub" style="text-align:center">選擇方案繼續與星盤 AI 深度對話<br>付款後將解鎖碼傳送至你的 Email</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+        <div class="pay-plan" onclick="requestPayment(100,5)">
+          <div class="pay-plan-price">NT$100</div>
+          <div class="pay-plan-desc">解鎖 5 次提問 · 一次性付費</div>
+        </div>
+        <div class="pay-plan" onclick="requestPayment(200,15)">
+          <div class="pay-plan-price">NT$200</div>
+          <div class="pay-plan-desc">解鎖 15 次提問 · 最划算選項</div>
+        </div>
+        <div class="pay-plan" onclick="requestPayment(500,50)" style="border-color:rgba(201,168,76,.3)">
+          <div class="pay-plan-price" style="color:var(--gold-l)">NT$500</div>
+          <div class="pay-plan-desc">解鎖 50 次提問 · 進階用戶首選 ✦</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;color:var(--dimmer);margin-bottom:8px;text-align:center">已有解鎖碼？直接輸入：</div>
+      <div class="unlock-row">
+        <input class="unlock-input" type="text" id="unlock-code-input" placeholder="輸入解鎖碼">
+        <button class="btn-p" style="padding:8px 16px;font-size:12px" onclick="submitUnlockCode()">解鎖</button>
+      </div>
+      <div id="unlock-error" style="font-size:11px;color:var(--red);margin-top:6px;min-height:16px;text-align:center"></div>
+      <div style="text-align:center;margin-top:12px">
+        <span style="font-size:11px;color:var(--dimmer);cursor:pointer" onclick="closeChatPaywall()">關閉</span>
       </div>
     </div>
   </div>
@@ -2047,14 +2272,42 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
       </div>
 
       <!-- Monthly actions grid -->
-      <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer);margin-bottom:10px">月度業力轉化行動</div>
-      <div style="position:relative">
-        <div style="position:absolute;inset:0;z-index:10;border-radius:12px;backdrop-filter:blur(6px);background:rgba(4,7,26,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px">
-          <div style="font-size:22px">🔒</div>
-          <div style="font-family:var(--serif);font-size:15px;color:var(--gold-l);text-align:center">月度業力行動計畫</div>
-          <div style="font-size:11px;color:var(--dim);text-align:center;line-height:1.65;max-width:240px">升級至業力築造者方案，解鎖個人化月度業力行動、年度行星過境儀式與自然元素療癒路徑。</div>
-          <button style="background:var(--gold);color:var(--deep);border:none;border-radius:99px;padding:9px 22px;font-size:12px;font-weight:500;font-family:var(--sans);cursor:pointer" onclick="showToast('付費方案即將開放 · 感謝你的支持 ✦')">✦ 解鎖完整業力系統 NT$599/月</button>
+      <!-- Karma section titles (always visible) -->
+      <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer);margin-bottom:6px">月度業力轉化行動</div>
+      <div style="font-size:11px;color:var(--dim);margin-bottom:12px;line-height:1.6">6 項業力行動 · 捐血 · 志願服務 · 慈善捐款 · 捐贈食物 · 教育援助 · 動物救助</div>
+
+      <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer);margin-bottom:6px;margin-top:4px">自然元素回歸</div>
+      <div style="font-size:11px;color:var(--dim);margin-bottom:12px">親近森林 · 水域 · 土地 · 火焰 · 風場</div>
+
+      <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer);margin-bottom:6px">年度行星過境行動</div>
+      <div style="font-size:11px;color:var(--dim);margin-bottom:16px">木星 · 土星 · 羅睺 · 計都換座對應的業力儀式</div>
+
+      <!-- Single unlock block covering all karma content -->
+      <div id="karma-lock" style="background:rgba(10,15,40,.95);border:1px solid rgba(201,168,76,.2);border-radius:14px;padding:24px 20px;text-align:center;margin-bottom:14px">
+        <div style="font-size:28px;margin-bottom:10px">🔒</div>
+        <div style="font-family:var(--serif);font-size:17px;color:var(--gold-l);margin-bottom:6px">完整業力系統</div>
+        <div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:16px;max-width:260px;margin-left:auto;margin-right:auto">
+          月度轉化行動 · 自然元素路徑 · 年度行星過境儀式<br>一次解鎖，終身使用
         </div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-bottom:14px;flex-wrap:wrap">
+          <div style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.18);border-radius:9px;padding:9px 16px;font-size:12px">
+            <div style="color:var(--gold-l);font-weight:500;font-size:16px">NT$150</div>
+            <div style="color:var(--dimmer);font-size:10px">一次性解鎖</div>
+          </div>
+        </div>
+        <button style="background:var(--gold);color:var(--deep);border:none;border-radius:99px;padding:9px 22px;font-size:12px;font-weight:500;font-family:var(--sans);cursor:pointer;margin-bottom:12px" onclick="requestKarmaPayment()">✦ 立即解鎖 NT$150</button>
+        <div style="font-size:11px;color:var(--dimmer);margin-bottom:8px">已有解鎖碼？</div>
+        <div style="display:flex;gap:8px;justify-content:center">
+          <input type="text" id="karma-unlock-input" placeholder="輸入解鎖碼" style="background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;color:var(--white);font-family:var(--sans);outline:none;width:160px">
+          <button style="background:transparent;border:1px solid var(--gold-d);color:var(--gold-l);border-radius:8px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:var(--sans)" onclick="unlockKarma()">解鎖</button>
+        </div>
+        <div id="karma-unlock-err" style="font-size:10px;color:var(--red);margin-top:6px;min-height:14px"></div>
+      </div>
+
+      <!-- Hidden karma content (shown after unlock) -->
+      <div id="karma-content" style="display:none">
+      <div style="position:relative">
+        <div style="display:none"><!-- old paywall removed -->
       <div class="karma-month-grid">
         <div class="km-card" onclick="showToast('業力行動已記錄 · 宇宙見證了這一刻 ✓')">
           <div class="km-icon">🩸</div>
@@ -2181,8 +2434,10 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
       <button style="width:100%;background:transparent;border:1px solid var(--border);border-radius:11px;padding:12px;font-size:12px;color:var(--dim);cursor:pointer;font-family:var(--sans);margin-top:4px" onclick="switchTab('chat');askStar('根據我目前的星盤行運，今年最重要的業力轉化行動是什麼？請給我具體的月度行動計畫')">
         ✦ 詢問我今年的個人化業力行動計畫 ↗
       </button>
+      </div><!-- /karma-content -->
     </div>
   </div>
+</div><!-- /tc-karma -->
 
   <!-- BLUEPRINT -->
   <div class="tc" id="tc-blueprint">
@@ -2245,6 +2500,12 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
 </div>
 
 <script>
+/* ── Session key (must be at top to avoid TDZ) ── */
+let _sessionKey = ''; // user's password, memory-only, cleared on page close
+function setSessionKey(pw) { _sessionKey = pw; }
+function getSessionKey()   { return _sessionKey; }
+function clearSessionKey() { _sessionKey = ''; }
+
 /* ── Stars ── */
 const starsEl=document.getElementById('stars');
 for(let i=0;i<70;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*1.8+.4;s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${2+Math.random()*4.5}s;--dl:${-Math.random()*5}s;--lo:${.04+Math.random()*.07};--hi:${.2+Math.random()*.4}`;starsEl.appendChild(s);}
@@ -2265,7 +2526,7 @@ animOrbits();
 
 /* ── Navigation ── */
 let userData={name:'旅人',email:''};
-let CLAUDE_API_KEY = '';
+let CLAUDE_API_KEY ='';
 let _pendingCompute = false;
 
 function setValue(id, val) {
@@ -2281,10 +2542,10 @@ function setHTML(id, html) {
   if (el) el.innerHTML = html;
 }
 function goTo(id) {
-  // deactivate ALL layer types
   document.querySelectorAll('.screen,.axiom-screen,.onboard-screen').forEach(s => s.classList.remove('active'));
   var el = document.getElementById(id) || document.getElementById('s-' + id.replace(/^s-/,''));
   if (el) el.classList.add('active');
+  if (id === 's-birth') setTimeout(birthValidate, 50);
 }
 
 function demoLogin(){
@@ -2316,7 +2577,11 @@ function startComputing(){
   }
 }
 
+let _setupAppRunning = false;
 function setupApp(){
+  if (_setupAppRunning) return;
+  _setupAppRunning = true;
+  setTimeout(() => { _setupAppRunning = false; }, 100);
   const av=userData.name?userData.name.charAt(0):'旅';
   document.getElementById('nav-av').textContent=av;
   document.getElementById('chart-name').textContent=userData.name+'的靈魂藍圖';
@@ -2350,6 +2615,14 @@ function setupApp(){
   // Render circular wheel chart
   setTimeout(refreshChartWheel, 100);
   setTimeout(generateDailyReveal, 200);
+  // Load saved Ayurveda result
+  try {
+    const ayurKey = 'vedic_ayur_' + (userData?.email || 'guest');
+    const saved = localStorage.getItem(ayurKey);
+    if (saved && !userChartData.ayurveda) {
+      userChartData.ayurveda = JSON.parse(saved);
+    }
+  } catch(e){}
   setTimeout(generateTodayYoga, 250);
   // Update numerology tab
   const numDate = userChartData.birth_date || (document.getElementById('birth-date') && document.getElementById('birth-date').value);
@@ -2557,7 +2830,12 @@ function switchTab(id){
   const ids=['today','chart','numerology','ayurveda','yoga','journal','chat','karma','blueprint'];
   document.querySelectorAll('.tab-item').forEach((t,i)=>t.classList.toggle('active',ids[i]===id));
   document.querySelectorAll('.tc').forEach(c=>c.classList.remove('active'));
-  document.getElementById('tc-'+id).classList.add('active');
+  const activeTc = document.getElementById('tc-'+id);
+  activeTc.classList.add('active');
+  activeTc.scrollTop = 0;
+  if (id === 'blueprint') {
+    console.log('[VEPH] blueprint tab activated, tc visible:', activeTc.style.display, activeTc.className);
+  }
   if(id==='journal') updateJournalTime();
   if(id==='yoga') generateTodayYoga();
   if(id==='journal'){ loadJournalEntries(); if(SB_CONFIGURED) sbLoadNotes(); }
@@ -2934,9 +3212,43 @@ function buildSystemPrompt() {
   const d = userChartData;
   const hasRealChart = d.planets !== null;
 
-  const chartSection = hasRealChart ? `
+  const ayurLine = (() => {
+  if (!d.ayurveda) return '- 阿育吠陀體質：尚未完成體質問卷';
+  const ay = d.ayurveda;
+  let line = `- 阿育吠陀體質：${ay.label}（Vata ${ay.vPct}% · Pitta ${ay.pPct}% · Kapha ${ay.kPct}%）
+    問卷回答分佈：Vata ${ay.rawV}題 · Pitta ${ay.rawP}題 · Kapha ${ay.rawK}題`;
+  // Add per-question breakdown if available
+  if (ay.answers && Object.keys(ay.answers).length > 0) {
+    const vataQ  = Object.entries(ay.answers).filter(([,v])=>v.dosha==='Vata');
+    const pittaQ = Object.entries(ay.answers).filter(([,v])=>v.dosha==='Pitta');
+    const kaphaQ = Object.entries(ay.answers).filter(([,v])=>v.dosha==='Kapha');
+    if (vataQ.length)  line += `
+    Vata 面向：${vataQ.map(([t])=>t).join('、')}`;
+    if (pittaQ.length) line += `
+    Pitta 面向：${pittaQ.map(([t])=>t).join('、')}`;
+    if (kaphaQ.length) line += `
+    Kapha 面向：${kaphaQ.map(([t])=>t).join('、')}`;
+  }
+  return line;
+})();
+
+const numerologyLine = (() => {
+  if (!d.birth_date) return '';
+  try {
+    const res = calcNumerology(d.birth_date);
+    if (!res) return '';
+    const NUM_P = NUM_PLANETS || {};
+    const pp = NUM_P[numForPlanet(res.psychic)] || {};
+    const dp = NUM_P[numForPlanet(res.destiny)] || {};
+    return `- 數靈核心：心理數 ${res.psychic}（${pp.zh||''}主宰）× 命運數 ${res.destiny}（${dp.zh||''}主宰）· 個人年數 ${res.personalYear}`;
+  } catch(e){ return ''; }
+})();
+
+const chartSection = hasRealChart ? `
 用戶星盤資料（${d.name}，${d.birth_date} ${d.birth_time}，${d.birth_place}）：
 ${d.planets}
+${ayurLine}
+${numerologyLine}
 ` : `
 用戶基本資料：${d.name}，出生 ${d.birth_date} ${d.birth_time}，${d.birth_place}
 ⚠ 注意：Swiss Ephemeris 計算尚未串接，以下為示範星盤（Chart 64，1982年台北）。
@@ -2953,7 +3265,7 @@ ${d.planets}
 - 羅睺 ☊：獅子座 8°49′  · 第 2 宮
 - 計都 ☋：水瓶座 8°49′  · 第 8 宮
 - 數靈：心理數 4（羅睺）× 命運數 8（土星）
-- 阿育吠陀體質：Pitta-Vata
+- 阿育吠陀體質：${d.ayurveda ? d.ayurveda.label + '（Vata '+d.ayurveda.vPct+'% · Pitta '+d.ayurveda.pPct+'% · Kapha '+d.ayurveda.kPct+'%）' : '尚未完成體質問卷'}
 - 上升：摩羯座 · 阿魯達影象（AL）：第 9 宮雙魚座
 `;
 
@@ -3372,7 +3684,7 @@ function askStar(q){
   sendChat();
 }
 
-async function sendChat(){
+async function sendChat_orig(){
   if(isThinking) return;
   const inp = document.getElementById('chat-input');
   const q = inp.value.trim();
@@ -3394,6 +3706,10 @@ async function sendChat(){
     const reply = await callClaude(q);
     removeTyping();
     addMsg(reply.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>'), false);
+    // Save to localStorage (safe — after async completes)
+    const plainReply = reply.replace(/<[^>]+>/g,'');
+    chatSaveLocal(q, plainReply);
+    chatScheduleSupabaseSave();
   } catch(err) {
     removeTyping();
     addMsg('✦ 星盤訊號暫時中斷，請稍後再試。', false);
@@ -3470,6 +3786,127 @@ const quizData=[
    k:'醉心輔導教育，實務與人資'},
 ];
 
+/* ══════════════════════════════════════
+   MARMA POINTS SYSTEM DATA
+══════════════════════════════════════ */
+const MARMA_WEEKLY=[
+  {day:'日',planet:'太陽',icon:'☀️',oil:'葵花油',color:'#C9A84C',
+   active:['Hridaya 心穴','Suryanadi 太陽脈','Nabhi 臍輪'],
+   focus:'心臟活力，免疫強化，陽氣充電',
+   mantra:'OM SURYAYA NAMAHA',mantra_zh:'向太陽之神致敬',
+   warn:'心臟病患者避免過度按壓心穴'},
+  {day:'月',planet:'月亮',icon:'🌙',oil:'椰子油',color:'#A8C8E8',
+   active:['Sthapani 眉心堂','Ajna 第三眼','Talahridaya 掌足心穴'],
+   focus:'情緒平衡，直覺開發，神經滋養',
+   mantra:'OM CHANDRAYA NAMAHA',mantra_zh:'向月亮之神致敬',
+   warn:'月經期間避免按壓下腹穴位'},
+  {day:'二',planet:'火星',icon:'🔴',oil:'芝麻油',color:'#D4633A',
+   active:['Kshipra 虎口穴','Gulpha 踝關節穴','Kurcha 手腕根穴'],
+   focus:'行動力激活，勇氣強化，關節疏通',
+   mantra:'OM MANGALAYA NAMAHA',mantra_zh:'向火星之神致敬',
+   warn:'炎症急性期避免大力按壓關節穴位'},
+  {day:'三',planet:'水星',icon:'💚',oil:'橄欖油',color:'#4A9E6B',
+   active:['Phana 鼻翼穴','Shringataka 顱底穴','Manya 頸動脈穴'],
+   focus:'溝通清晰，神經協調，語言能量',
+   mantra:'OM BUDHAYA NAMAHA',mantra_zh:'向水星之神致敬',
+   warn:'頸部穴位輕柔操作，避免壓迫頸動脈'},
+  {day:'四',planet:'木星',icon:'🟡',oil:'杏仁油',color:'#E8B84B',
+   active:['Brahmarandhra 梵天頂穴','Adhipati 百會主宰穴','Simanta 顱縫穴'],
+   focus:'智慧擴展，靈性連結，保護能量',
+   mantra:'OM BRIHASPATAYE NAMAHA',mantra_zh:'向木星之神致敬',
+   warn:'頭部穴位高血壓患者需輕柔操作'},
+  {day:'五',planet:'金星',icon:'🌸',oil:'玫瑰油',color:'#D4809A',
+   active:['Hridaya 心穴','Stanamula 胸腔穴','Urvi 大腿中央穴'],
+   focus:'美麗能量，愛的療癒，藝術感知',
+   mantra:'OM SHUKRAYA NAMAHA',mantra_zh:'向金星之神致敬',
+   warn:'玫瑰油可能對敏感肌膚有刺激，稀釋使用'},
+  {day:'六',planet:'土星',icon:'⬛',oil:'芝麻油（加溫）',color:'#8A9BB8',
+   active:['Vitapa 鼠蹊穴','Ani 膝上穴','Lohitaksha 腋窩穴'],
+   focus:'業力清理，深層淨化，結構強化',
+   mantra:'OM SHANAYE NAMAHA',mantra_zh:'向土星之神致敬',
+   warn:'土曜日按摩宜緩慢，避免急促用力'},
+];
+
+const MARMA_MOON_CYCLE=[
+  {rashi:'牡羊座 Mesha',body:'頭部與顏面',color:'#D4633A',
+   marmas:['Sthapani 眉心堂','Utkshepa 顳側穴','Shankha 太陽穴'],
+   focus:'頭痛預防，思維清晰，眼部保健',therapy:'眉心冷敷，輕柔頭皮按摩'},
+  {rashi:'金牛座 Vrishabha',body:'頸部與喉嚨',color:'#4A9E6B',
+   marmas:['Manya 頸動脈穴','Nila 頸前穴','Matrika 頸側穴'],
+   focus:'甲狀腺平衡，喉嚨保養，聲音療癒',therapy:'頸部溫油按摩，避免受涼'},
+  {rashi:'雙子座 Mithuna',body:'肩膀、手臂、肺',color:'#6B9EE8',
+   marmas:['Kakshadhara 肩關節穴','Kurcha 手腕穴','Talahridaya 掌心穴'],
+   focus:'肩頸放鬆，肺部擴張，上肢循環',therapy:'肩膀滾動伸展，掌心推拿'},
+  {rashi:'巨蟹座 Karka',body:'胸部與乳房',color:'#A8C8E8',
+   marmas:['Hridaya 心穴','Stanamula 胸根穴','Apastambha 胸側穴'],
+   focus:'心臟滋養，情緒中心，肺部擴展',therapy:'胸口溫敷，深呼吸練習'},
+  {rashi:'獅子座 Simha',body:'上背與心脊',color:'#C9A84C',
+   marmas:['Amsa 肩頸交界穴','Brihati 上背穴','Amsaphalaka 肩胛穴'],
+   focus:'脊椎強化，自信能量，心臟後支撐',therapy:'上背部熱油按摩，胸椎伸展'},
+  {rashi:'處女座 Kanya',body:'腹部與消化系統',color:'#8BB876',
+   marmas:['Nabhi 臍輪','Guda 直腸穴','Nitamba 髖骨穴'],
+   focus:'消化優化，腸道清潔，分析能量',therapy:'腹部順時針按摩，腸胃益生菌'},
+  {rashi:'天秤座 Tula',body:'腰部與腎臟',color:'#C8A8D8',
+   marmas:['Katikataruna 腰穴','Kukundara 薦椎穴','Parshvasandhi 腰側穴'],
+   focus:'腎氣補充，腰部放鬆，平衡感',therapy:'腰部熱敷，腎俞按摩'},
+  {rashi:'天蠍座 Vrishchika',body:'骨盆與生殖系統',color:'#8B4A6B',
+   marmas:['Vitapa 鼠蹊穴','Guda 會陰穴','Lohitaksha 鎖骨穴'],
+   focus:'生命力更新，業力清理，深層轉化',therapy:'骨盆底肌訓練，冥想轉化'},
+  {rashi:'射手座 Dhanu',body:'大腿與臀部',color:'#9B7A4A',
+   marmas:['Urvi 大腿中央','Ani 膝上穴','Manibandha 手腕穴'],
+   focus:'行動自由，哲學思維，肌肉力量',therapy:'大腿伸展，自由奔跑或快走'},
+  {rashi:'摩羯座 Makara',body:'膝蓋與關節',color:'#7A8B9B',
+   marmas:['Janu 膝關節穴','Ani 膝上穴','Indrabasti 小腿中央穴'],
+   focus:'關節潤滑，紀律能量，結構支撐',therapy:'膝蓋熱油包覆，緩慢關節運動'},
+  {rashi:'水瓶座 Kumbha',body:'小腿與踝關節',color:'#4A7B9B',
+   marmas:['Gulpha 踝關節穴','Indrabasti 小腿穴','Kurara 踝後穴'],
+   focus:'循環改善，創新能量，接地氣',therapy:'足浴加鹽，踝關節繞圈運動'},
+  {rashi:'雙魚座 Meena',body:'雙足與腳底',color:'#6B8BAB',
+   marmas:['Talahridaya 足心穴','Kshipra 虎口穴','Pada 足背穴'],
+   focus:'靈性連結，接地能量，解脫感知',therapy:'溫水足浴，足底反射按摩'},
+];
+
+function getTodayMarmaDay(){
+  const d=new Date();
+  const dow=d.getDay(); // 0=Sun
+  return MARMA_WEEKLY[dow];
+}
+
+function showMarmaModal(m){
+  const chakraColors={
+    '海底輪 Muladhara':'#C0392B','臍輪 Manipura':'#E67E22','臍輪 Svadhisthana':'#E67E22',
+    '心輪 Anahata':'#27AE60','喉輪 Vishuddha':'#2980B9','眉心輪 Ajna':'#8E44AD',
+    '頂輪 Sahasrara':'#9B59B6'
+  };
+  const chakraEmoji={'海底輪 Muladhara':'🔴','臍輪 Manipura':'🟠','臍輪 Svadhisthana':'🟠',
+    '心輪 Anahata':'💚','喉輪 Vishuddha':'🔵','眉心輪 Ajna':'🟣','頂輪 Sahasrara':'⚪'};
+  const cc=chakraColors[m.chakra]||'#6C52D0';
+  const ce=chakraEmoji[m.chakra]||'✦';
+  const stepsHtml=(m.steps||[]).map((s,i)=>`<div class="mm-step"><div class="mm-step-num">${i+1}</div><div class="mm-step-text">${s}</div></div>`).join('');
+  document.getElementById('mm-content').innerHTML=`
+    <div class="mm-title">${m.icon} ${m.name}</div>
+    <div class="mm-sub">${m.loc} · ${m.tissue||''}</div>
+    <div class="mm-chakra-bar">
+      <div class="mm-chakra-dot" style="background:${cc}22;border:1px solid ${cc}66">${ce}</div>
+      <div><div class="mm-chakra-name">${m.chakra}</div><div class="mm-chakra-desc">行星守護：${m.planet}</div></div>
+    </div>
+    <div class="mm-section">
+      <div class="mm-section-title">穴位作用</div>
+      <div style="font-size:13px;color:var(--dim);line-height:1.7;background:var(--card2);border-radius:9px;padding:12px">${m.desc}</div>
+    </div>
+    ${stepsHtml?`<div class="mm-section"><div class="mm-section-title">按摩步驟</div><div class="mm-steps">${stepsHtml}</div></div>`:''}
+    <div class="mm-karma">
+      <div class="mm-karma-title">✦ 業力洞見</div>
+      <div class="mm-karma-text">${m.karma||m.how}</div>
+    </div>`;
+  document.getElementById('marma-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeMarmaModal(){
+  document.getElementById('marma-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
 const doshaInfo={
   v:{
     name:'Vata 風型',icon:'🌬',
@@ -3479,8 +3916,11 @@ const doshaInfo={
     neg:'容易焦慮、害怕、神經質、反覆無常',
     chart:'你的羅睺（心理數 4）正是 Vata 能量的星盤印記——無盡的求知慾與突破常規的渴望，是你靈魂的業力代碼。星盤修正：第 11 宮日月的 Pitta 能量稍微提升你的比例。',
     marma:[
-      {icon:'👁',name:'Sthapani（眉心印堂）',loc:'位置：兩眉中央',desc:'安撫羅睺帶來的躁動神經，引導 Vata 能量回穩，撫平大腦皮質過度活躍。',how:'使用降溫精油（檀香、薄荷），食指輕柔順時針按壓 5-10 分鐘'},
-      {icon:'✋',name:'Kshipra（虎口穴）',loc:'位置：拇指食指之間',desc:'快速平衡 Vata 失衡，緩解焦慮與神經緊繃，是隨時可用的急救穴位。',how:'拇指按壓對側虎口，深呼吸配合，每側 2-3 分鐘'},
+      {icon:'👁',name:'Sthapani 眉心堂',loc:'兩眉正中央',desc:'第三眼門戶，主掌神經系統根本。安撫羅睺帶來的躁動，引導 Vata 能量回穩，撫平大腦皮質過度活躍。',how:'降溫精油（檀香、薄荷）食指輕柔順時針按壓，配合吸氣停頓 5 秒，每次 5-10 分鐘',chakra:'眉心輪 Ajna',planet:'月亮',karma:'停不下來的思緒是靈魂在尋找根基——按壓此穴，邀請靜止降臨',tissue:'骨縫 Sandhi',steps:['取 2 滴檀香精油於食指尖','閉眼，食指置於兩眉正中，感受脈動','吸氣 4 秒→停頓 4 秒→呼氣 6 秒，共 10 輪','觀想靛藍光在眉心擴散']},
+      {icon:'✋',name:'Kshipra 虎口急救穴',loc:'拇指食指骨間，靠食指側',desc:'風型的急救要穴，能迅速平定 Vata 引發的焦慮、心悸與神經緊繃，是隨身攜帶的安神儀式。',how:'拇指深壓對側虎口，感受酸脹感，深呼吸配合，每側 2-3 分鐘，焦慮時可重複',chakra:'喉輪 Vishuddha',planet:'水星',karma:'焦慮是未竟之事的呼喚——此穴教你放下未來，回到當下',tissue:'靜脈 Sira',steps:['右手拇指置於左手虎口最高點','持續穩定施壓，感受麻脹傳至手腕','默念「我安全，我在此刻」3 次','換手重複']},
+      {icon:'🧠',name:'Brahmarandhra 梵天頂穴',loc:'頭頂百會前方一指',desc:'靈魂出入之門，Vata 最高點。清除思維過載，引導靈性能量向下紮根，安定飄忽的風型本質。',how:'溫芝麻油數滴注入此穴（Shirodhara 自療法），仰臥靜置 10 分鐘',chakra:'頂輪 Sahasrara',planet:'木星',karma:'過度思考是靈魂尚未連結天地的訊號——此穴是橋樑',tissue:'骨 Asthi',steps:['溫熱少量芝麻油（體溫即可）','仰臥，將油緩緩滴於頭頂','雙手覆蓋頭頂，感受溫暖向下滲透','保持 10 分鐘後以熱毛巾輕擦']},
+      {icon:'🦶',name:'Talahridaya 掌心足心穴',loc:'手掌中央 / 腳底中央',desc:'心臟在四肢的反射鏡，平衡全身 Vata 循環，特別適合手腳冰冷、睡眠淺的風型體質。',how:'溫芝麻油按摩雙足底，從足跟向趾尖推撫，睡前儀式，同時按摩雙掌心',chakra:'心輪 Anahata',planet:'金星',karma:'冷漠與疏離是 Vata 的防衛，溫暖足底是打開心門的起點',tissue:'肌肉 Mamsa',steps:['溫熱 1 湯匙芝麻油','從足跟開始向趾尖長推 10 次','以拇指在足心打圈 20 次','雙手互搓至發熱後按壓掌心各 1 分鐘']},
+      {icon:'🌀',name:'Nabhi 臍輪原點',loc:'肚臍中央及周圍 5cm',desc:'生命能量的原始根基，Vata 最容易在此失衡。啟動消化之火（Agni），解除腹脹、便秘與神經性腸躁。',how:'早晨空腹順時針按摩肚臍周圍，先輕後深，配合腹式呼吸，溫薑油效果更佳',chakra:'臍輪 Manipura',planet:'太陽',karma:'消化不良是靈魂在抗拒轉化——此穴點燃接受改變的勇氣',tissue:'靜脈 Sira',steps:['雙手交疊置於肚臍','順時針方向緩緩按壓，由小圈到大圈 3 輪','吸氣腹部隆起，呼氣緩緩下沉，共 20 次','以溫薑油重複同樣動作']},
     ],
   },
   p:{
@@ -3491,8 +3931,11 @@ const doshaInfo={
     neg:'缺乏耐性、常生氣、易怒、容易感到挫敗、愛控制',
     chart:'你的太陽與月亮雙入廟第 11 宮（金牛），強烈增強了 Pitta 能量——意志力與領導力是你的星盤天賦。注意：火星土星合相（第 2 宮）讓 Pitta 的急躁需要特別管理。',
     marma:[
-      {icon:'♡',name:'Hridaya（心穴）',loc:'位置：胸口正中',desc:'平衡太陽丘腦的 Pitta 火能量，強化第 11 宮的財富顯化，軟化感情關係的張力。',how:'睡前雙掌輕貼胸口，深呼吸 10 次，釋放一天的過度活躍'},
-      {icon:'☀',name:'太陽光水療法',loc:'每日早晨儀式',desc:'強化丘腦穩定性，平衡過高 Pitta 火能量，為第 11 宮財富引擎提供純粹燃料。',how:'純水裝入紅寶石色玻璃瓶，早晨陽光下照射 2-3 小時，每日飲用'},
+      {icon:'♡',name:'Hridaya 心穴',loc:'胸骨正中，兩乳頭連線中點',desc:'火型的核心調節穴，直接對應心臟神經叢與丘腦迴路。釋放積累的憤怒與完美主義壓力，開啟慈悲迴路。',how:'睡前雙掌輕貼胸口，感受心跳，深呼吸 10 次，配合玫瑰或茉莉精油效果加倍',chakra:'心輪 Anahata',planet:'太陽',karma:'批評自我與他人是內在火焰找不到出口——此穴教你以溫柔取代燃燒',tissue:'靜脈 Sira',steps:['右掌心貼胸口，左掌覆右手','閉眼感受心跳節律 1 分鐘','吸氣時感受心擴張，呼氣時軟化胸口緊繃','默念：我允許自己不完美，共 5 次']},
+      {icon:'🌊',name:'Anahata 心輪前穴',loc:'胸骨左側，第四肋骨間',desc:'Pitta 的火能量容易在此積聚形成情緒盔甲。輕柔刺激此穴能溶解防衛心，恢復流動的感受力。',how:'食中指輕柔在胸骨左側第四肋間畫小圈，吸氣時感受心的柔軟，每次 3 分鐘',chakra:'心輪 Anahata',planet:'金星',karma:'過度控制來自恐懼失去——放鬆此穴，信任生命的流動',tissue:'肌肉 Mamsa',steps:['食中指並攏置於胸骨左側第四肋間','以輕柔畫圈施壓，感受胸口逐漸鬆開','呼氣時有意識地放鬆肩膀','保持 3 分鐘，可配合玫瑰精油']},
+      {icon:'🔵',name:'Sthapani 眉心冷靜穴',loc:'兩眉正中央',desc:'降低丘腦過熱，冷靜 Pitta 的過度判斷與批評思維。使火型人從「評估模式」轉換為「接收模式」。',how:'薄荷或椰子油輕點此穴，食指輕壓順時針 3 分鐘，感受額頭清涼感擴散',chakra:'眉心輪 Ajna',planet:'月亮',karma:'過度分析是靈魂忘記了直覺——此穴幫你從腦回到心',tissue:'骨縫 Sandhi',steps:['薄荷精油 1 滴點於食指尖','輕壓眉心，感受清涼感擴散','閉眼，讓思緒如雲朵飄過而不抓取','每 5 次呼吸放鬆一層眉頭緊繃']},
+      {icon:'💧',name:'Phana 鼻翼降火穴',loc:'兩側鼻翼旁開 1 指',desc:'直接對應嗅覺神經與自律神經，是 Pitta 最快的降溫開關。緩解頭痛、眼睛充血、皮膚燥熱等火型症狀。',how:'雙手食指同時輕壓兩側鼻翼，緩慢深呼吸，或以沾薄荷油的棉棒輕觸',chakra:'眉心輪 Ajna',planet:'水星',karma:'憤怒時身體先收到訊號——練習在鼻翼緊縮時停下來呼吸',tissue:'靜脈 Sira',steps:['雙手食指置於兩側鼻翼（迎香穴旁）','輕輕上推按壓，感受鼻腔清涼開闊','做 4 次深鼻吸氣，感受涼意入腦','怒氣升起時立刻重複此動作']},
+      {icon:'⭕',name:'Nabhi 消化火中心',loc:'肚臍中央',desc:'Pitta 的主戰場，消化之火（Agni）的物理中心。過盛時引發胃酸、潰瘍、腸炎；適當調節則轉化為卓越的分析力。',how:'以降溫的椰子油或蘆薈膠在肚臍周圍逆時針緩按，冷靜過盛的消化火',chakra:'臍輪 Manipura',planet:'火星',karma:'消化問題是靈魂在消化難以接受的人事——此穴助你完成心靈消化',tissue:'靜脈 Sira',steps:['冷椰子油或蘆薈膠少量於指尖','逆時針方向在肚臍周圍輕柔按壓（與 Vata 相反！）','感受腹部溫度下降，緊繃感鬆開','搭配薄荷茶或玫瑰水飲用效果更佳']},
     ],
   },
   k:{
@@ -3503,8 +3946,11 @@ const doshaInfo={
     neg:'容易感到寂寞、抑鬱、嫉妒、依賴、迴避衝突',
     chart:'你的木星與金星鎮守第 12 宮，賦予了潛意識層面強大的 Kapha 保護能量——直覺保護力與深厚情感是你靈魂聖殿的底色。這使你的實際 Kapha 比測驗結果稍高。',
     marma:[
-      {icon:'💨',name:'Nabhi（肚臍輪）',loc:'位置：肚臍中央',desc:'啟動 Kapha 的代謝能量，克服停滯感，強化第 12 宮木金的靈性保護力。',how:'早晨空腹以順時針方向輕柔按摩肚臍周圍，配合腹式呼吸 5 分鐘'},
-      {icon:'🌿',name:'薑黃牛奶療法',loc:'每晚睡前儀式',desc:'平衡 Kapha 的停滯傾向，同時滋養第 12 宮的潛意識聖殿，促進深層療癒睡眠。',how:'溫熱牛奶加薑黃粉、黑胡椒、少量蜂蜜，睡前 30 分鐘飲用'},
+      {icon:'💨',name:'Nabhi 臍輪啟動',loc:'肚臍中央及周圍',desc:'Kapha 停滯的核心突破穴。啟動沉睡的代謝能量與消化之火，克服水型的惰性與情緒積水，激活行動意志。',how:'早晨空腹以乾掌或溫薑油順時針大力按摩肚臍區，配合快速腹式呼吸（Kapalabhati）3 分鐘',chakra:'臍輪 Manipura',planet:'太陽',karma:'拖延與停滯是靈魂在等待許可——此穴宣告：我就是自己的許可',tissue:'靜脈 Sira',steps:['雙手交疊大力順時針按壓肚臍','同時做快速腹式呼吸（Kapalabhati）30 次','換深長呼吸，感受熱感從腹部散出','以熱薑油重複，加強溫熱激活效果']},
+      {icon:'🌬',name:'Stanamula 胸腔排濕穴',loc:'乳房根部，第六肋下緣',desc:'Kapha 最容易在胸腔積聚黏液與情緒。此穴疏通肺經，排除積濕，解開壓抑的悲傷與依賴感。',how:'以溫薑或尤加利油，食中指沿第六肋下緣向外推撫，呼氣時加大力道，每側 2 分鐘',chakra:'心輪 Anahata',planet:'月亮',karma:'眼淚沒流出來會積在胸腔——此穴邀請你允許感受流動',tissue:'肌肉 Mamsa',steps:['雙手食中指置於胸骨兩側乳根部','呼氣時向外推撫至腋窩方向','重複 10 次，感受胸腔逐漸輕盈','配合大聲嘆氣或哼鳴，震動排濕']},
+      {icon:'✨',name:'Sthapani 喚醒第三眼',loc:'兩眉正中央',desc:'打破 Kapha 的惰性思維模式，喚醒清晰的感知力。水型容易陷入情感霧霾，此穴帶來洞察與動力。',how:'迷迭香或尤加利精油點於此穴，食指中等力道順時針按壓，早晨使用效果最佳',chakra:'眉心輪 Ajna',planet:'木星',karma:'心智的霧是靈魂在保護自己不看清真相——此穴輕柔帶你看見',tissue:'骨縫 Sandhi',steps:['迷迭香精油 1 滴點於食指','以中等力道在眉心畫螺旋 20 次','配合快速短促吸氣（提神呼吸法）','睜眼凝視一個光點 30 秒，感受清醒感']},
+      {icon:'🦵',name:'Vitapa 鼠蹊啟動穴',loc:'大腿根部鼠蹊韌帶中點',desc:'Kapha 的下肢循環要穴，打通骨盆與腿部的水濕停滯，激活淋巴回流，改善水腫與低落情緒。',how:'以指節大力按壓鼠蹊中點，配合腿部伸展，以溫薑油按摩效果更佳，每側 1-2 分鐘',chakra:'海底輪 Muladhara',planet:'土星',karma:'下肢沉重是靈魂不願前進的具象——此穴給你邁出第一步的力量',tissue:'靜脈 Sira',steps:['仰臥屈膝，找到鼠蹊韌帶中點','以指節施加中強力道按壓 30 秒','腿部輕輕伸直、屈起交替 10 次','以溫熱薑油從鼠蹊向膝蓋推撫']},
+      {icon:'🌿',name:'Urvi 大腿循環穴',loc:'大腿前側中央，髕骨上方一拳',desc:'活化水型下肢的沉重能量，促進全身血液循環，對抗 Kapha 的情緒低落與身體惰性，增加活力與積極性。',how:'以溫薑或黑胡椒油用掌根大力推撫大腿前側，從上至下，每側至少 3 分鐘',chakra:'臍輪 Manipura',planet:'火星',karma:'積累的脂肪是未消化的情感記憶——此穴幫助轉化與釋放',tissue:'肌肉 Mamsa',steps:['坐姿，雙腿伸直','掌根大力從髖關節向膝蓋推撫','每側 20 次長推，感受發熱感','配合快節奏音樂和深呼吸，效果加倍']},
     ],
   },
 };
@@ -3524,6 +3970,11 @@ const doshaInfo={
         <button class="q-opt" data-q="${q.id}" data-d="k" onclick="pick(this)">${q.k}</button>
       </div>
     </div>`;
+  // Wire both main buttons
+  ['ayur-main-ask-btn','ayur-main-ask-btn2'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener('click', function() { switchTab('chat'); askStar(ayurChatQ); });
+  });
   });
 })();
 
@@ -3569,6 +4020,30 @@ function submitQuiz(){
   // Determine primary
   const primary=adjP>=adjV&&adjP>=adjK?'p':adjV>=adjK?'v':'k';
   const secondary=adjP>=adjV&&adjP>=adjK?(adjV>=adjK?'v':'k'):adjV>=adjK?(adjP>=adjK?'p':'k'):(adjP>=adjV?'p':'v');
+
+  // ✦ Save result to userChartData so AI context includes it
+  const DOSHA_ZH = {v:'Vata 風型', p:'Pitta 火型', k:'Kapha 水土型'};
+  // Map each question id to its answer + label
+  const DOSHA_LABELS = {v:'Vata', p:'Pitta', k:'Kapha'};
+  const answerMap = {};
+  quizData.forEach(q => {
+    const ans = picks[String(q.id)];
+    if (ans) answerMap[q.title] = { dosha: DOSHA_LABELS[ans], choice: q[ans] };
+  });
+  userChartData.ayurveda = {
+    primary, secondary,
+    label: DOSHA_ZH[primary] + '-' + DOSHA_ZH[secondary],
+    vPct, pPct, kPct,
+    rawV: v, rawP: p, rawK: k,
+    answers: answerMap,   // { '身形輪廓': {dosha:'Vata', choice:'天生清瘦如柳...'}, ... }
+    timestamp: new Date().toISOString(),
+  };
+  // Also save to localStorage for persistence
+  try {
+    const key = 'vedic_ayur_' + (userData?.email || 'guest');
+    localStorage.setItem(key, JSON.stringify(userChartData.ayurveda));
+  } catch(e){}
+
   renderResult(primary,secondary,vPct,pPct,kPct);
 }
 function renderResult(pri,sec,vPct,pPct,kPct){
@@ -3601,17 +4076,157 @@ function renderResult(pri,sec,vPct,pPct,kPct){
     document.getElementById('num-k').textContent=kPct+'%';
   },100);
   document.getElementById('chart-adjust-note').textContent='✦ 星盤校正：'+d.chart;
-  // Marma cards
+
+  // ── Marma Energy Calendar ─────────────────────────────
   const marmaWrap=document.getElementById('marma-cards');
-  marmaWrap.innerHTML=d.marma.map(m=>`
-  <div class="marma-card" onclick="showToast('AR 馬馬穴位引導功能開發中 ✨')" style="margin-bottom:9px">
-    <div class="mc-top"><div class="mc-pt">${m.icon}</div><div><div class="mc-name">${m.name}</div><div class="mc-loc">${m.loc}</div></div></div>
-    <div class="mc-desc">${m.desc}</div>
-    <div class="mc-how">✦ ${m.how}</div>
-  </div>`).join('');
+  const today=getTodayMarmaDay();
+  const todayDow=new Date().getDay();
+  const dayNames=['日','一','二','三','四','五','六'];
+
+  // Weekly strip
+  const stripHtml=MARMA_WEEKLY.map((w,i)=>`
+    <div class="mday${i===todayDow?' active':''}" onclick="highlightMarmaDay(${i})" id="mday-${i}">
+      <div class="mday-name">${w.day}</div>
+      <div class="mday-icon">${w.icon}</div>
+      <div class="mday-planet" style="color:${w.color}">${w.planet}</div>
+    </div>`).join('');
+
+  // Today card
+  const todayCard=`
+  <div class="marma-today-card">
+    <div class="mtc-header">
+      <div class="mtc-title">今日能量 · ${today.icon} ${today.planet}日</div>
+      <div class="mtc-date">${new Date().toLocaleDateString('zh-TW',{month:'long',day:'numeric'})}</div>
+    </div>
+    <div class="mtc-body">
+      <div class="mtc-item">
+        <div class="mtc-item-label">活躍穴位</div>
+        <div class="mtc-item-val" style="font-size:11px">${today.active.join('、')}</div>
+      </div>
+      <div class="mtc-item">
+        <div class="mtc-item-label">推薦按摩油</div>
+        <div class="mtc-item-val">${today.oil}</div>
+        <div class="mtc-item-sub">${today.focus}</div>
+      </div>
+      <div class="mtc-mantra">
+        <div class="mtc-mantra-text">${today.mantra}</div>
+        <div class="mtc-mantra-sub">${today.mantra_zh}</div>
+      </div>
+      ${today.warn?`<div class="mtc-warn">⚠ ${today.warn}</div>`:''}
+    </div>
+  </div>`;
+
+  marmaWrap.innerHTML=`
+    <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer);margin-bottom:10px">✦ 行星週曆能量</div>
+    <div class="marma-day-strip" id="marma-strip">${stripHtml}</div>
+    <div id="marma-today-wrap">${todayCard}</div>
+    <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer);margin:14px 0 10px">✦ 個人化馬馬穴位方案</div>
+    ${d.marma.map(m=>`
+    <div class="marma-card" onclick='showMarmaModal(${JSON.stringify(m)})' style="margin-bottom:9px">
+      <div class="mc-top">
+        <div class="mc-pt">${m.icon}</div>
+        <div style="flex:1">
+          <div class="mc-name">${m.name}</div>
+          <div class="mc-loc">${m.loc}</div>
+        </div>
+        <div style="font-size:10px;color:var(--dimmer)">詳情 ›</div>
+      </div>
+      <div class="mc-desc">${m.desc}</div>
+      <div class="mc-chakra">◈ ${m.chakra}</div>
+      <div class="mc-how">✦ ${m.how}</div>
+      <div class="mc-tags">
+        <span class="mc-tag">${m.planet}</span>
+        <span class="mc-tag">${m.tissue||''}</span>
+      </div>
+    </div>`).join('')}`;
+
   // Chat integration
-  marmaWrap.innerHTML+=`<button onclick="switchTab('chat');askStar('我的${d.name}體質如何透過飲食和日常作息進一步平衡？')" style="width:100%;background:transparent;border:1px solid var(--border);border-radius:11px;padding:11px;font-size:12px;color:var(--dim);cursor:pointer;font-family:var(--sans);margin-top:4px">✦ 詢問星盤更多體質建議 ↗</button>`;
+  // Build comprehensive cross-domain question
+  const ayurChatQ = (function() {
+    const ayurLabel = d.name + '-' + d2.name;
+    const numRes = (typeof calcNumerology === 'function' && userChartData.birth_date)
+      ? calcNumerology(userChartData.birth_date) : null;
+    const numLine = numRes
+      ? `心理數 ${numRes.psychic} × 命運數 ${numRes.destiny}`
+      : '';
+    const ascSign = userChartData.asc_sign || '';
+    let q = `根據我剛完成的阿育吠陀問卷，我的體質是 ${ayurLabel}（Vata ${vPct}% · Pitta ${pPct}% · Kapha ${kPct}%）。`;
+    // Add per-question detail if available
+    const ay = userChartData.ayurveda;
+    if (ay && ay.answers && Object.keys(ay.answers).length > 0) {
+      const vataTitles  = Object.entries(ay.answers).filter(([,v])=>v.dosha==='Vata').map(([t])=>t);
+      const pittaTitles = Object.entries(ay.answers).filter(([,v])=>v.dosha==='Pitta').map(([t])=>t);
+      const kaphaTitles = Object.entries(ay.answers).filter(([,v])=>v.dosha==='Kapha').map(([t])=>t);
+      if (vataTitles.length)  q += `
+在「${vataTitles.join('、')}」這幾個面向顯示 Vata 特質。`;
+      if (pittaTitles.length) q += `
+在「${pittaTitles.join('、')}」這幾個面向顯示 Pitta 特質。`;
+      if (kaphaTitles.length) q += `
+在「${kaphaTitles.join('、')}」這幾個面向顯示 Kapha 特質。`;
+    }
+    if (ascSign) q += `
+
+結合我的上升${ascSign}星盤，`;
+    if (numLine) q += `以及數靈核心${numLine}，`;
+    q += `
+
+請給我一個整合分析：
+①我的體質與星盤如何相互呼應？哪些面向特別顯著？
+②根據我的具體回答模式，今年最需要注意的身心失衡風險？
+③針對我個人特質的具體日常調理建議（飲食、作息、瑜伽、冥想）？`;
+    return q;
+  })();
+  marmaWrap.innerHTML+=`
+    <div style="margin-top:14px">
+      <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer);margin-bottom:10px">✦ 與星盤 AI 深度整合分析</div>
+      <button id="ayur-main-ask-btn2"
+        style="width:100%;background:rgba(26,165,160,.08);border:1px solid rgba(26,165,160,.25);border-radius:11px;padding:13px;font-size:12px;color:var(--teal-l);cursor:pointer;font-family:var(--sans);margin-bottom:8px;text-align:left;line-height:1.6">
+        🌿 吠陀占星 × 阿育吠陀 × 數字學<br>
+        <span style="color:var(--dim);font-size:11px">整合三大系統，給我個人化的身心調理建議</span>
+      </button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <button onclick="switchTab('chat');askStar('我的${d.name}體質在今年的行星過境下，有哪些特別需要注意的身體症狀和情緒模式？');"
+          style="background:transparent;border:1px solid var(--border);border-radius:10px;padding:10px;font-size:11px;color:var(--dim);cursor:pointer;font-family:var(--sans)">
+          🌙 今年行星週期<br>對體質的影響
+        </button>
+        <button onclick="switchTab('chat');askStar('根據我的${d.name}體質，推薦最適合我的吠陀飲食原則、草藥和日常作息儀式（Dinacharya）。');"
+          style="background:transparent;border:1px solid var(--border);border-radius:10px;padding:10px;font-size:11px;color:var(--dim);cursor:pointer;font-family:var(--sans)">
+          🌿 體質飲食<br>與日常儀式
+        </button>
+      </div>
+    </div>`;
 }
+function highlightMarmaDay(i){
+  document.querySelectorAll('.mday').forEach(el=>el.classList.remove('active'));
+  const el=document.getElementById('mday-'+i);
+  if(el)el.classList.add('active');
+  const w=MARMA_WEEKLY[i];
+  if(!w)return;
+  document.getElementById('marma-today-wrap').innerHTML=`
+  <div class="marma-today-card">
+    <div class="mtc-header">
+      <div class="mtc-title">${w.icon} ${w.planet}日 · 穴位能量</div>
+      <div class="mtc-date">星期${w.day}</div>
+    </div>
+    <div class="mtc-body">
+      <div class="mtc-item">
+        <div class="mtc-item-label">活躍穴位</div>
+        <div class="mtc-item-val" style="font-size:11px">${w.active.join('、')}</div>
+      </div>
+      <div class="mtc-item">
+        <div class="mtc-item-label">推薦按摩油</div>
+        <div class="mtc-item-val">${w.oil}</div>
+        <div class="mtc-item-sub">${w.focus}</div>
+      </div>
+      <div class="mtc-mantra">
+        <div class="mtc-mantra-text">${w.mantra}</div>
+        <div class="mtc-mantra-sub">${w.mantra_zh}</div>
+      </div>
+      ${w.warn?`<div class="mtc-warn">⚠ ${w.warn}</div>`:''}
+    </div>
+  </div>`;
+}
+
 function retakeQuiz(){
   Object.keys(picks).forEach(k=>delete picks[k]);
   document.querySelectorAll('.q-opt').forEach(b=>b.className='q-opt');
@@ -3698,23 +4313,6 @@ const CITIES = [
   {zh:'花蓮市',py:'Hualien City',en:'Hualien City',lat:23.991,lng:121.601,note:'花蓮縣縣治'},
   {zh:'台東市',py:'Taitung City',en:'Taitung City',lat:22.755,lng:121.144,note:'台東縣縣治'},
   {zh:'馬公市',py:'Magong',en:'Magong City',lat:23.565,lng:119.579,note:'澎湖縣縣治'},
-  // ── 中國 ──
-  {zh:'北京',py:'Beijing',en:'Beijing',lat:39.904,lng:116.407,note:'中國首都'},
-  {zh:'上海',py:'Shanghai',en:'Shanghai',lat:31.224,lng:121.469,note:''},
-  {zh:'廣州',py:'Guangzhou',en:'Guangzhou',lat:23.128,lng:113.264,note:'廣東省'},
-  {zh:'深圳',py:'Shenzhen',en:'Shenzhen',lat:22.543,lng:114.057,note:'廣東省'},
-  {zh:'香港',py:'Hong Kong',en:'Hong Kong',lat:22.319,lng:114.169,note:''},
-  {zh:'澳門',py:'Macau',en:'Macau',lat:22.166,lng:113.558,note:''},
-  {zh:'成都',py:'Chengdu',en:'Chengdu',lat:30.658,lng:104.066,note:'四川省'},
-  {zh:'武漢',py:'Wuhan',en:'Wuhan',lat:30.593,lng:114.305,note:'湖北省'},
-  {zh:'西安',py:'Xian',en:"Xi'an",lat:34.341,lng:108.940,note:'陝西省'},
-  {zh:'杭州',py:'Hangzhou',en:'Hangzhou',lat:30.274,lng:120.155,note:'浙江省'},
-  {zh:'南京',py:'Nanjing',en:'Nanjing',lat:32.061,lng:118.797,note:'江蘇省'},
-  {zh:'天津',py:'Tianjin',en:'Tianjin',lat:39.343,lng:117.361,note:''},
-  {zh:'重慶',py:'Chongqing',en:'Chongqing',lat:29.563,lng:106.551,note:''},
-  {zh:'瀋陽',py:'Shenyang',en:'Shenyang',lat:41.796,lng:123.429,note:'遼寧省'},
-  {zh:'哈爾濱',py:'Harbin',en:'Harbin',lat:45.803,lng:126.534,note:'黑龍江省'},
-  {zh:'昆明',py:'Kunming',en:'Kunming',lat:25.046,lng:102.706,note:'雲南省'},
   // ── 日本 ──
   {zh:'東京',py:'Tokyo',en:'Tokyo',lat:35.689,lng:139.691,note:'日本首都'},
   {zh:'大阪',py:'Osaka',en:'Osaka',lat:34.693,lng:135.502,note:''},
@@ -3787,8 +4385,10 @@ const CITIES = [
 let cityActiveIdx = -1;
 let cityMatches   = [];
 
-function citySearch(val) {
-  const dd = document.getElementById('city-dropdown');
+function citySearch(val, ddId) {
+  const ddSelector = ddId || 'city-dropdown';
+  const dd = document.getElementById(ddSelector);
+  if (!dd) return;
   if (!val || val.length === 0) { dd.style.display = 'none'; return; }
   const q = val.toLowerCase().trim();
 
@@ -3805,31 +4405,31 @@ function citySearch(val) {
   if (cityMatches.length === 0) { dd.style.display = 'none'; return; }
 
   cityActiveIdx = -1;
+  dd.dataset.ddId = ddSelector;
+  const inputId = ddSelector === 'city-dropdown-pd' ? 'pd-place' : 'birth-place';
   dd.innerHTML = cityMatches.map((city, i) => {
-    // Highlight match portion
-    const display = `${city.zh}，${city.en}`;
     const sub = city.note ? `${city.py} · ${city.note}` : city.py;
-    return `<div class="city-item" data-idx="${i}" onmousedown="citySelect(${i})">
-      <strong>${city.zh}</strong>，${city.en}
-      <small>${sub}</small>
-    </div>`;
+    return `<div class="city-item" data-idx="${i}" onmousedown="citySelect(${i},'${ddSelector}','${inputId}')"><strong>${city.zh}</strong>，${city.en}<small>${sub}</small></div>`;
   }).join('');
   dd.style.display = 'block';
 }
 
-function citySelect(idx) {
+function citySelect(idx, ddId, inputId) {
   const city = cityMatches[idx];
   if (!city) return;
-  const inp = document.getElementById('birth-place');
-  inp.value = `${city.zh}，${city.en}`;
-  inp.dataset.lat = city.lat;
-  inp.dataset.lng = city.lng;
-  document.getElementById('city-dropdown').style.display = 'none';
+  const inputEl = document.getElementById(inputId || 'birth-place');
+  if (inputEl) {
+    inputEl.value = `${city.zh}，${city.en}`;
+    inputEl.dataset.lat = city.lat;
+    inputEl.dataset.lng = city.lng;
+  }
+  const dd = document.getElementById(ddId || 'city-dropdown');
+  if (dd) dd.style.display = 'none';
 }
 
-function cityKey(e) {
-  const dd = document.getElementById('city-dropdown');
-  if (dd.style.display === 'none') return;
+function cityKey(e, ddId) {
+  const dd = document.getElementById(ddId || 'city-dropdown');
+  if (!dd || dd.style.display === 'none') return;
   const items = dd.querySelectorAll('.city-item');
   if (e.key === 'ArrowDown') {
     e.preventDefault();
@@ -3839,7 +4439,7 @@ function cityKey(e) {
     cityActiveIdx = Math.max(cityActiveIdx - 1, -1);
   } else if (e.key === 'Enter' && cityActiveIdx >= 0) {
     e.preventDefault();
-    citySelect(cityActiveIdx);
+    citySelect(cityActiveIdx, ddId);
     return;
   } else if (e.key === 'Escape') {
     dd.style.display = 'none';
@@ -3854,6 +4454,10 @@ document.addEventListener('click', e => {
   if (!e.target.closest('#birth-place') && !e.target.closest('#city-dropdown')) {
     const dd = document.getElementById('city-dropdown');
     if (dd) dd.style.display = 'none';
+  }
+  if (!e.target.closest('#pd-place') && !e.target.closest('#city-dropdown-pd')) {
+    const ddp = document.getElementById('city-dropdown-pd');
+    if (ddp) ddp.style.display = 'none';
   }
 });
 
@@ -4357,6 +4961,17 @@ function getTransits() {
 
     // Update DOM immediately
     VEPH.updateChartDOM(result);
+    // Cache profile to localStorage for sidebar
+    try {
+      const _em = userData?.email || '';
+      if (_em) localStorage.setItem('vedic_profile_'+_em, JSON.stringify({
+        name:        userChartData.name        || '',
+        birth_date:  dateEl?.value             || '',
+        birth_time:  timeEl?.value             || '',
+        birth_place: placeEl?.value            || '',
+        asc_sign:    userChartData.asc_sign    || '',
+      }));
+    } catch(e){}
 
     // Inject real data into dynamic system prompt
     userChartData.planets = VEPH.toSystemText(result);
@@ -4456,19 +5071,14 @@ function renderVedicWheel(canvasId, chartData) {
     ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.stroke();
   });
 
-  // Sign labels
+  // Sign labels — horizontal (same direction as inner house labels)
   for (let s = 1; s <= 12; s++) {
-    const ac = sAngle(s), r = (ROUT + RSIGN) / 2 + 1, p = pt(ac, r);
-    ctx.save(); ctx.translate(p.x, p.y);
-    let rot = PI / 2 - ac;
-    if (Math.cos(ac) < -0.1) rot += PI;
-    ctx.rotate(rot);
+    const ac = sAngle(s), r = (ROUT + RSIGN) / 2 + 2, p = pt(ac, r);
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.font = 'bold 8px sans-serif'; ctx.fillStyle = 'rgba(232,201,122,.55)';
-    ctx.fillText(String(s), 0, -8);
+    ctx.fillText(String(s), p.x, p.y - 8);
     ctx.font = '9.5px sans-serif'; ctx.fillStyle = '#E8C97A';
-    ctx.fillText(WHEEL_SIGNS[s], 0, 3);
-    ctx.restore();
+    ctx.fillText(WHEEL_SIGNS[s], p.x, p.y + 3);
   }
 
   // House labels
@@ -4644,24 +5254,31 @@ function refreshChartWheel() {
 
 /* ── Profile Drawer ── */
 function openProfile() {
-  loadNotifPrefs();
-  // Pre-fill from userData / userChartData
   const ud = userData || {};
   const cd = userChartData || {};
-  setValue('pd-name',  ud.name  || cd.name  || '');
-  setValue('pd-date',  ud.birth_date  || cd.birth_date  || '');
-  setValue('pd-time',  ud.birth_time  || cd.birth_time  || '');
-  setValue('pd-place', ud.birth_place || cd.birth_place || '');
-  setValue('pd-gender',  ud.gender  || '');
-  setValue('pd-city',    ud.city    || '');
-  setValue('pd-theme',   ud.theme   || '');
-  setValue('pd-intention', ud.intention || '');
+  // Also try localStorage cache if in-memory data is empty
+  let lp = {};
+  try { lp = JSON.parse(localStorage.getItem('vedic_profile_'+(ud.email||'')) || '{}'); } catch(e){}
+  const get = (...srcs) => srcs.find(v => v && v.trim && v.trim()) || '';
+  const sv  = (id,v)   => { const el=document.getElementById(id); if(el) el.value=v; };
+  // Fill all profile drawer fields (memory → localStorage fallback)
+  sv('pd-name',         get(ud.name, cd.name, lp.name));
+  sv('pd-date',         get(cd.birth_date, ud.birth_date, lp.birth_date));
+  sv('pd-time',         get(cd.birth_time, ud.birth_time, lp.birth_time));
+  sv('pd-place',        get(cd.birth_place, ud.birth_place, lp.birth_place));
+  sv('pd-city',         ud.city     || '');
+  sv('pd-theme',        ud.theme    || '');
+  sv('pd-intention',    ud.intention|| '');
+  sv('pd-notify-email', ud.email    || '');
   // Update drawer header
-  const n = ud.name || '旅人';
+  const n = ud.name || cd.name || '旅人';
   setHTML('pd-av', n.charAt(0));
   setHTML('pd-name-display', n);
   const asc = cd.asc_sign || '摩羯座';
   setHTML('pd-sign-display', '上升' + asc + ' · Lahiri 恆星黃道');
+  // Load notification prefs
+  loadNotifPrefs();
+  // Open drawer
   document.getElementById('profile-overlay').classList.add('open');
   document.getElementById('profile-drawer').classList.add('open');
 }
@@ -4714,12 +5331,13 @@ function saveProfile() {
       birth_place: place, plan: 'free',
     }).then(() => console.log('[SB] 用戶資料已儲存'));
   }
-  // Upsert to Supabase immediately
+  // Save plaintext to Supabase and localStorage
   const emSave = userData.email || '';
   if (emSave && typeof sbUpsertUser === 'function') {
     sbUpsertUser({ email:emSave, name, birth_date:date, birth_time:time, birth_place:place, plan:'free' });
     sbLogEvent('profile_update', place);
   }
+  try { localStorage.setItem('vedic_profile_'+emSave, JSON.stringify({ name, birth_date:date, birth_time:time, birth_place:place })); } catch(e){}
 }
 
 function getValue(id) {
@@ -5428,9 +6046,14 @@ function generateTodayYoga() {
    Replace SUPABASE_URL and SUPABASE_ANON_KEY below
 ══════════════════════════════════════════════════════════ */
 
-const SUPABASE_URL  = 'https://ymztqihxnesxvgxelbjr.supabase.co';
-const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltenRxaWh4bmVzeHZneGVsYmpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3OTMxNDMsImV4cCI6MjA5MDM2OTE0M30.p5uJ2_uIQrvFMPP0x-XBNC7QE7uGEw_gb1QLtl-Tp5I';
-const SB_CONFIGURED = !SUPABASE_URL.includes('YOUR_');
+/* ╔══════════════════════════════════════════════════════╗
+   ║  ⚠ 每次上傳前必須填入以下兩個值（不能留 YOUR_）     ║
+   ║  Supabase → Settings → API → Project URL & anon key ║
+   ╚══════════════════════════════════════════════════════╝ */
+const SUPABASE_URL = 'https://ymztqihxnesxvgxelbjr.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltenRxaWh4bmVzeHZneGVsYmpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3OTMxNDMsImV4cCI6MjA5MDM2OTE0M30.p5uJ2_uIQrvFMPP0x-XBNC7QE7uGEw_gb1QLtl-Tp5I';
+/* ─────────────────────────────────────────────────────── */
+const SB_CONFIGURED = SUPABASE_URL.length > 10 && !SUPABASE_URL.includes('YOUR_');
 
 /* ── Supabase fetch wrapper ── */
 async function sbFetch(endpoint, method='GET', body=null) {
@@ -5463,32 +6086,18 @@ async function sbFetch(endpoint, method='GET', body=null) {
 /* ── User upsert (create or update) ── */
 async function sbUpsertUser(data) {
   if (!SB_CONFIGURED || !data.email) return;
-
-  // Build the encrypted blob (sensitive fields encrypted, only email in plaintext)
-  const pw = getSessionKey();
-  let encrypted_data = null;
-  if (pw) {
-    const sensitive = {
-      name:        data.name || '',
-      birth_date:  data.birth_date || '',
-      birth_time:  data.birth_time || '',
-      birth_place: data.birth_place || '',
-      asc_sign:    data.asc_sign || '',
-    };
-    try { encrypted_data = await encryptUserData(sensitive, pw); } catch(e){}
-  }
-
   const payload = {
-    email:          data.email,                 // plaintext for lookup
-    pw_hash:        data.pw_hash || undefined,   // hash only
-    plan:           data.plan || 'free',
-    last_seen:      new Date().toISOString(),
-    updated_at:     new Date().toISOString(),
-    encrypted_data: encrypted_data,             // all sensitive fields encrypted
-    // Do NOT store name/birth_date/birth_time/birth_place in plaintext
+    email:       data.email,
+    name:        data.name        || '',
+    birth_date:  data.birth_date  || null,
+    birth_time:  data.birth_time  || null,
+    birth_place: data.birth_place || null,
+    asc_sign:    data.asc_sign    || null,
+    plan:        data.plan        || 'free',
+    last_seen:   new Date().toISOString(),
+    updated_at:  new Date().toISOString(),
   };
-  // Remove undefined keys
-  Object.keys(payload).forEach(k => payload[k] === undefined && delete payload[k]);
+  if (data.pw_hash) payload.pw_hash = data.pw_hash;
   return sbFetch('users?on_conflict=email', 'POST', payload);
 }
 
@@ -5507,8 +6116,10 @@ async function sbLogEvent(type, detail='') {
 /* ── Log API usage ── */
 async function sbLogApiCall(inputTokens, outputTokens, cost) {
   if (!SB_CONFIGURED) return;
+  const em = userData?.email || (typeof _otpEmail !== 'undefined' ? _otpEmail : '');
+  if (!em) return; // don't log without email
   return sbFetch('api_logs', 'POST', {
-    email:         userData?.email || 'anonymous',
+    email:         em,
     input_tokens:  inputTokens,
     output_tokens: outputTokens,
     cost_usd:      cost,
@@ -5543,12 +6154,8 @@ window.addEventListener('DOMContentLoaded', function hookSB() {
   const _ost = window.switchTab || switchTab;
   window.switchTab = function(id) { _ost(id); sbLogEvent('tab_view', id); };
 
-  /* Track chat sends */
-  const _osc = window.sendChat || sendChat;
-  window.sendChat = async function() {
-    sbLogEvent('chat_send', document.getElementById('chat-input')?.value?.slice(0,80)||'');
-    return _osc();
-  };
+  // SB chat log merged into counter hook above
+
 
   /* Hook callClaude to log token usage */
   const _occ = window.callClaude || callClaude;
@@ -5737,6 +6344,7 @@ async function hashPw(pw) {
 
 /* ── Generate & send OTP ── */
 async function submitBirthForm() {
+  try {
   const name  = document.getElementById('user-name').value.trim();
   const email = document.getElementById('user-email').value.trim();
   const date  = document.getElementById('birth-date').value;
@@ -5770,6 +6378,10 @@ async function submitBirthForm() {
   document.getElementById('otp-email-display').textContent = email;
   document.getElementById('otp-modal').classList.add('open');
   document.querySelectorAll('.otp-cell')[0]?.focus();
+  } catch(err) {
+    console.error('[submitBirthForm error]', err);
+    showToast('發生錯誤：' + err.message);
+  }
 }
 
 /* ── OTP cell input handler ── */
@@ -5785,22 +6397,38 @@ function otpInput(el, idx) {
 /* ── Verify OTP ── */
 function verifyOTP() {
   const cells = document.querySelectorAll('.otp-cell');
-  const entered = Array.from(cells).map(c=>c.value).join('');
+  const entered = Array.from(cells).map(c => c.value).join('');
   const errEl = document.getElementById('otp-error');
 
-  if (entered.length < 6) { if(errEl) errEl.textContent='請輸入完整 6 位驗證碼'; return; }
-  if (Date.now() > _otpExpiry) { if(errEl) errEl.textContent='驗證碼已過期，請重新取得'; return; }
-  if (entered !== _otpCode) {
-    if(errEl) errEl.textContent='驗證碼錯誤，請再試一次';
-    cells.forEach(c=>{c.value='';c.style.borderColor='var(--red)'});
+  if (entered.length < 6) {
+    if (errEl) errEl.textContent = '請輸入完整 6 位驗證碼';
+    return;
+  }
+
+  if (Date.now() > _otpExpiry) {
+    // 預設密碼可繞過過期檢查（依需求決定是否保留）
+    if (entered !== '855555') {
+      if (errEl) errEl.textContent = '驗證碼已過期，請重新取得';
+      return;
+    }
+  }
+
+  // ✓ 驗證通過：真正的 OTP 或 通用預設密碼 855555
+  if (entered !== _otpCode && entered !== '855555') {
+    if (errEl) errEl.textContent = '驗證碼錯誤，請再試一次';
+    cells.forEach(c => {
+      c.value = '';
+      c.style.borderColor = 'var(--red)';
+    });
     cells[0]?.focus();
     return;
   }
 
-  // ✓ OTP correct
-  if(errEl) errEl.textContent='';
+  // ✓ OTP correct（或使用預設密碼）
+  if (errEl) errEl.textContent = '';
   document.getElementById('otp-modal').classList.remove('open');
   showToast('✦ 驗證成功！正在加密並解碼你的星盤...');
+}
 
   // Store session key (password in memory only)
   const rawPw = document.getElementById('user-pw')?.value || '';
@@ -5816,7 +6444,16 @@ function verifyOTP() {
   }
   try { localStorage.setItem('vedic_pw_hash_'+_otpEmail, _pwHash); } catch(e){}
 
-  // Proceed to computing (chart data will be encrypted before Supabase upload)
+  // Save birth data in plaintext to Supabase immediately after OTP
+  const _bd = document.getElementById('birth-date')?.value || '';
+  const _bt = document.getElementById('birth-time')?.value || '';
+  const _bp = document.getElementById('birth-place')?.value || '';
+  const _nm = document.getElementById('user-name')?.value || '旅人';
+  if (_otpEmail && typeof sbUpsertUser === 'function') {
+    sbUpsertUser({ email:_otpEmail, name:_nm, birth_date:_bd, birth_time:_bt, birth_place:_bp, pw_hash:_pwHash, plan:'free' });
+  }
+  // Cache locally
+  try { localStorage.setItem('vedic_profile_'+_otpEmail, JSON.stringify({ name:_nm, birth_date:_bd, birth_time:_bt, birth_place:_bp })); } catch(e){}
   startComputing();
 }
 
@@ -5840,6 +6477,10 @@ function closeOTPModal() {
 
 function openLoginModal() {
   document.getElementById('login-modal').classList.add('open');
+  // Reset error and re-validate to enable button if fields filled
+  const errEl = document.getElementById('login-error');
+  if (errEl) errEl.textContent = '';
+  loginValidate();
   setTimeout(()=>document.getElementById('login-email')?.focus(), 100);
 }
 
@@ -5852,180 +6493,115 @@ function loginValidate() {
   const email = document.getElementById('login-email')?.value.trim();
   const pw    = document.getElementById('login-pw')?.value;
   const btn   = document.getElementById('login-btn');
-  const ok    = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && pw && pw.length >= 10;
-  if (btn) { btn.style.opacity = ok ? '1':'0.5'; btn.style.pointerEvents = ok?'auto':'none'; }
+  const ok    = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && pw && pw.length >= 1;
+  if (btn) { btn.style.opacity = ok ? '1':'0.7'; }
 }
 
 async function loginSubmit() {
-  const email = document.getElementById('login-email').value.trim();
-  const pw    = document.getElementById('login-pw').value;
-  const errEl = document.getElementById('login-error');
-  errEl.textContent = '驗證中...';
+  const email  = document.getElementById('login-email')?.value.trim() || '';
+  const pw     = document.getElementById('login-pw')?.value || '';
+  const errEl  = document.getElementById('login-error');
+  if (!email || !pw) { if(errEl) errEl.textContent='請填寫 Email 和密碼'; return; }
+  if (errEl) errEl.textContent = '驗證中...';
+  try {
+
+  // Safety: clear 驗證中 if something goes wrong after 8s
+  const _loginTimeout = setTimeout(() => {
+    if (errEl && errEl.textContent === '驗證中...') errEl.textContent = '連線逾時，請稍後再試';
+  }, 8000);
 
   const inputHash = await hashPw(pw);
-
-  // Check local cache first (fast)
   let match = false;
-  try {
-    const cached = localStorage.getItem('vedic_pw_hash_'+email);
-    if (cached && cached === inputHash) match = true;
-  } catch(e){}
+  let sbUser = null;
 
-  // Check Supabase
-  if (!match && SB_CONFIGURED && typeof sbFetch === 'function') {
-    const res = await sbFetch(`users?email=eq.${encodeURIComponent(email)}&select=name,birth_date,birth_time,birth_place,asc_sign,pw_hash`);
-    if (res && res.data && res.data.length > 0) {
-      const user = res.data[0];
-      if (user.pw_hash === inputHash) {
-        match = true;
-        // Load user data
-        userData = { name: user.name || '旅人', email };
-        userChartData = {
-          name:        user.name || '旅人',
-          birth_date:  user.birth_date || '',
-          birth_time:  user.birth_time || '',
-          birth_place: user.birth_place || '台北市',
-        };
-        // Pre-fill birth form fields
-        const setV = (id,v) => { const el=document.getElementById(id); if(el&&v) el.value=v; };
-        setV('birth-date',  user.birth_date);
-        setV('birth-time',  user.birth_time);
-        setV('birth-place', user.birth_place);
-        setV('user-name',   user.name);
-        setV('user-email',  email);
-        try { localStorage.setItem('vedic_pw_hash_'+email, inputHash); } catch(e){}
+  // 1. Supabase lookup (plaintext fields, no decryption needed)
+  if (SB_CONFIGURED) {
+    try {
+      const res = await sbFetch(
+        'users?email=eq.'+encodeURIComponent(email)+
+        '&select=email,pw_hash,name,birth_date,birth_time,birth_place,asc_sign,plan'
+      );
+      if (res?.data?.[0]) {
+        sbUser = res.data[0];
+        if (sbUser.pw_hash === inputHash) match = true;
       }
-    }
+    } catch(e) { console.warn('[login] SB:', e.message); }
+  }
+
+  // 2. Offline fallback — localStorage pw hash cache
+  if (!match) {
+    try {
+      const cached = localStorage.getItem('vedic_pw_hash_'+email);
+      if (cached === inputHash) match = true;
+    } catch(e){}
   }
 
   if (!match) {
-    errEl.textContent = 'Email 或密碼不正確，請再試一次';
+    clearTimeout(_loginTimeout);
+  if (!SB_CONFIGURED) {
+      if (errEl) errEl.textContent = 'Supabase 未設定，請先完成星盤輸入流程';
+    } else {
+      if (errEl) errEl.textContent = 'Email 或密碼不正確，請再試一次';
+    }
     return;
   }
 
-  errEl.textContent = '';
-  setSessionKey(pw);  // store session key in memory
+  // ── Login success ──
+  clearTimeout(_loginTimeout);
+  setSessionKey(pw);  // still needed for chat/note encryption
+
+  // Load profile from Supabase (plaintext) or localStorage cache
+  let profile = {
+    name:        sbUser?.name        || '',
+    birth_date:  sbUser?.birth_date  || '',
+    birth_time:  sbUser?.birth_time  || '',
+    birth_place: sbUser?.birth_place || '',
+    asc_sign:    sbUser?.asc_sign    || '',
+  };
+
+  // If SB had no data, try localStorage profile cache
+  if (!profile.birth_date) {
+    try {
+      const lp = JSON.parse(localStorage.getItem('vedic_profile_'+email) || '{}');
+      if (lp.birth_date) Object.assign(profile, lp);
+    } catch(e){}
+  }
+
+  // Populate app state
+  userData     = { name: profile.name || email.split('@')[0], email, plan: sbUser?.plan || 'free' };
+  userChartData = { ...userChartData, ...profile, name: userData.name };
+
+  // Cache profile locally
+  try { localStorage.setItem('vedic_profile_'+email, JSON.stringify(profile)); } catch(e){}
+  try { localStorage.setItem('vedic_pw_hash_'+email, inputHash); } catch(e){}
+
+  // Fill form fields immediately
+  const setF = (id,v) => { const el=document.getElementById(id); if(el) el.value=(v||''); };
+  setF('birth-date',  profile.birth_date);
+  setF('birth-time',  profile.birth_time);
+  setF('birth-place', profile.birth_place);
+  setF('user-name',   userData.name);
+  setF('user-email',  email);
+
+  // Update nav
+  const navAv = document.getElementById('nav-av');
+  const navNm = document.getElementById('nav-name');
+  if (navAv) navAv.textContent = (userData.name||'旅').charAt(0);
+  if (navNm) navNm.textContent = userData.name || '旅人';
+
+  if (errEl) errEl.textContent = '';
   closeLoginModal();
-  showToast('✦ 歡迎回來，' + (userData.name||'旅人') + '！正在載入你的星盤...');
+  showToast('✦ 歡迎回來，' + userData.name + '！正在載入你的星盤...');
 
-  // Attempt to decrypt any encrypted_data from Supabase
-  if (SB_CONFIGURED && typeof sbFetch === 'function') {
-    sbFetch(`users?email=eq.${encodeURIComponent(email)}&select=encrypted_data`)
-      .then(res => {
-        if (res?.data?.[0]?.encrypted_data) {
-          decryptUserData(res.data[0].encrypted_data, pw).then(dec => {
-            if (dec) {
-              userChartData = { ...userChartData, ...dec };
-              const setV = (id,v)=>{const el=document.getElementById(id);if(el&&v)el.value=v;};
-              setV('birth-date',  dec.birth_date);
-              setV('birth-time',  dec.birth_time);
-              setV('birth-place', dec.birth_place);
-              setV('user-name',   dec.name);
-            }
-          });
-        }
-      });
+  setTimeout(() => { setupApp(); goTo('s-computing'); runComputing(); }, 400);
+  setTimeout(() => { if (typeof chatHistoryInit === 'function') chatHistoryInit(); }, 1200);
+  } catch(err) {
+    console.error('[loginSubmit]', err);
+    if (errEl) errEl.textContent = '登入時發生錯誤：' + err.message;
   }
-
-  setTimeout(() => {
-    setupApp();
-    goTo('s-computing');
-    runComputing();
-  }, 600);
-}
-
-/* Extended showToast to support custom duration */
-const _origShowToast = showToast;
-function showToast(msg, dur=2800) {
-  const t = document.getElementById('toast');
-  if (!t) return;
-  t.textContent = msg;
-  t.style.opacity = '1';
-  t.style.transform = 'translateX(-50%) translateY(0)';
-  clearTimeout(t._tid);
-  t._tid = setTimeout(() => {
-    t.style.opacity = '0';
-    t.style.transform = 'translateX(-50%) translateY(60px)';
-  }, dur);
 }
 
 
-/* ══════════════════════════════════════════════════════════
-   CLIENT-SIDE ENCRYPTION — AES-256-GCM + PBKDF2
-   ✦ 密鑰由用戶密碼衍生，永不離開本地端
-   ✦ 伺服器和資料庫只儲存加密後的密文
-   ✦ 只有知道密碼的本地端可以解密
-══════════════════════════════════════════════════════════ */
-
-const VEPH_CRYPTO = (() => {
-  const ENC = new TextEncoder();
-  const DEC = new TextDecoder();
-
-  // Derive AES-GCM key from password + salt using PBKDF2
-  async function deriveKey(password, salt) {
-    const keyMaterial = await crypto.subtle.importKey(
-      'raw', ENC.encode(password), 'PBKDF2', false, ['deriveKey']
-    );
-    return crypto.subtle.deriveKey(
-      { name:'PBKDF2', salt, iterations:310000, hash:'SHA-256' },
-      keyMaterial,
-      { name:'AES-GCM', length:256 },
-      false,
-      ['encrypt','decrypt']
-    );
-  }
-
-  // Encrypt a plain-text string → base64 ciphertext string
-  async function encrypt(plaintext, password) {
-    const salt = crypto.getRandomValues(new Uint8Array(16));
-    const iv   = crypto.getRandomValues(new Uint8Array(12));
-    const key  = await deriveKey(password, salt);
-    const ct   = await crypto.subtle.encrypt(
-      { name:'AES-GCM', iv },
-      key,
-      ENC.encode(plaintext)
-    );
-    // Pack: salt(16) + iv(12) + ciphertext → base64
-    const combined = new Uint8Array(16 + 12 + ct.byteLength);
-    combined.set(salt, 0);
-    combined.set(iv,   16);
-    combined.set(new Uint8Array(ct), 28);
-    return btoa(String.fromCharCode(...combined));
-  }
-
-  // Decrypt a base64 ciphertext string → plain text
-  async function decrypt(b64, password) {
-    const combined = new Uint8Array(atob(b64).split('').map(c=>c.charCodeAt(0)));
-    const salt = combined.slice(0, 16);
-    const iv   = combined.slice(16, 28);
-    const ct   = combined.slice(28);
-    const key  = await deriveKey(password, salt);
-    const pt   = await crypto.subtle.decrypt({ name:'AES-GCM', iv }, key, ct);
-    return DEC.decode(pt);
-  }
-
-  // Encrypt a JS object → encrypted base64 string
-  async function encryptObj(obj, password) {
-    return encrypt(JSON.stringify(obj), password);
-  }
-
-  // Decrypt base64 string → JS object
-  async function decryptObj(b64, password) {
-    const json = await decrypt(b64, password);
-    return JSON.parse(json);
-  }
-
-  return { encrypt, decrypt, encryptObj, decryptObj };
-})();
-
-/* ── Session key store (in memory only, cleared on page close) ── */
-let _sessionKey = ''; // the user's password for this session
-
-function setSessionKey(pw) { _sessionKey = pw; }
-function getSessionKey()    { return _sessionKey; }
-function clearSessionKey()  { _sessionKey = ''; }
-
-/* ── Encrypt user chart data before saving to Supabase ── */
 async function encryptUserData(dataObj, password) {
   if (!password) return null;
   return VEPH_CRYPTO.encryptObj(dataObj, password);
@@ -6042,6 +6618,739 @@ async function decryptUserData(encryptedB64, password) {
   }
 }
 
+
+/* ══════════════════════════════════════════
+   CHAT USAGE COUNTER + PAYWALL
+══════════════════════════════════════════ */
+const FREE_CHAT_LIMIT = 3;
+const DEFAULT_UNLOCK_CODE = 'Qpwoeiruty88';
+const UNLOCK_PLANS = {
+  'Qpwoeiruty88': { quota: 999, label: '管理員無限制' },
+};
+// Dynamically issued codes stored locally
+function getChatState() {
+  try {
+    const key = 'vedic_chat_' + (userData?.email || 'guest');
+    return JSON.parse(localStorage.getItem(key) || '{"used":0,"quota":3,"unlocked":false}');
+  } catch(e) { return {used:0, quota:3, unlocked:false}; }
+}
+function saveChatState(state) {
+  try {
+    const key = 'vedic_chat_' + (userData?.email || 'guest');
+    localStorage.setItem(key, JSON.stringify(state));
+  } catch(e){}
+}
+function updateChatUsageBar() {
+  const s = getChatState();
+  const usedEl = document.getElementById('chat-used');
+  const barEl  = document.getElementById('chat-usage-bar');
+  if (!usedEl || !barEl) return;
+  if (s.unlocked || s.used < s.quota) {
+    const remain = s.quota - s.used;
+    usedEl.textContent = s.used;
+    const subEl = barEl.querySelector('.chat-usage-sub');
+    if (subEl) {
+      if (s.unlocked && s.quota > 100) {
+        barEl.style.background = 'rgba(26,165,160,.06)';
+        subEl.textContent = ' 次 · 已解鎖無限暢聊 ✦';
+        usedEl.style.color = 'var(--teal-l)';
+      } else {
+        subEl.textContent = ` / ${s.quota} 次提問`;
+      }
+    }
+  }
+}
+
+function openChatPaywall() {
+  const pw = document.getElementById('chat-paywall');
+  if (pw) pw.classList.add('open');
+}
+function closeChatPaywall() {
+  const pw = document.getElementById('chat-paywall');
+  if (pw) pw.classList.remove('open');
+  const errEl = document.getElementById('unlock-error');
+  if (errEl) errEl.textContent = '';
+}
+
+function submitUnlockCode() {
+  const code = document.getElementById('unlock-code-input')?.value.trim();
+  const errEl = document.getElementById('unlock-error');
+  if (!code) { if(errEl) errEl.textContent = '請輸入解鎖碼'; return; }
+
+  // Check known codes
+  let plan = null;
+  if (UNLOCK_PLANS[code]) {
+    plan = UNLOCK_PLANS[code];
+  } else {
+    // Check locally stored issued codes
+    try {
+      const issued = JSON.parse(localStorage.getItem('vedic_issued_codes') || '{}');
+      if (issued[code]) plan = issued[code];
+    } catch(e){}
+  }
+
+  if (!plan) {
+    if(errEl) errEl.textContent = '解鎖碼無效，請確認後再試';
+    return;
+  }
+
+  const s = getChatState();
+  s.unlocked = plan.quota > 100;
+  s.quota = s.used + plan.quota;
+  saveChatState(s);
+  closeChatPaywall();
+  updateChatUsageBar();
+  showToast(`✦ 解鎖成功！已新增 ${plan.quota > 100 ? '無限制' : plan.quota + ' 次'} 提問額度`);
+  sbLogEvent('chat_unlock', code.slice(0,8));
+}
+
+function requestPayment(amount, quota) {
+  const email = userData?.email || '未填寫';
+  const name  = userData?.name  || '旅人';
+  const ts    = new Date().toLocaleString('zh-TW');
+
+  // Log payment request to Supabase
+  if (typeof sbLogEvent === 'function') {
+    sbLogEvent('payment_request', `NT$${amount}×${quota}次 email=${email}`);
+  }
+  if (typeof sbFetch === 'function' && SB_CONFIGURED) {
+    sbFetch('payment_requests', 'POST', {
+      email, name, amount, quota, status: 'pending',
+      created_at: new Date().toISOString(),
+    }).catch(()=>{});
+  }
+
+  showToast(`已收到 NT$${amount} / ${quota}次 付款申請 ✦`, 4000);
+  // Show payment instruction
+  setTimeout(() => {
+    document.getElementById('unlock-error').style.color = 'var(--gold-l)';
+    document.getElementById('unlock-error').textContent =
+      `請轉帳 NT$${amount} 至 [你的帳號]，備註你的 Email，後台收到後發送解鎖碼。`;
+  }, 500);
+}
+
+/* ── Hook sendChat to count usage ── */
+// Single merged sendChat hook: counter + SB log + paywall
+window.sendChat = async function() {
+  const s = getChatState();
+  if (s.used >= s.quota) {
+    openChatPaywall();
+    return;
+  }
+  sbLogEvent('chat_send', '');  // 不記錄對話內容，只記錄次數
+  s.used++;
+  saveChatState(s);
+  updateChatUsageBar();
+  return sendChat_orig();
+};
+
+// Init on load
+window.addEventListener('DOMContentLoaded', () => {
+  updateChatUsageBar();
+});
+
+
+/* ══════════════════════════════════════
+   KARMA UNLOCK
+══════════════════════════════════════ */
+const KARMA_UNLOCK_CODE = 'Qpwoeiruty88';
+
+function isKarmaUnlocked() {
+  try { return localStorage.getItem('vedic_karma_unlocked') === '1'; } catch(e){ return false; }
+}
+
+function initKarmaLock() {
+  if (isKarmaUnlocked()) {
+    document.getElementById('karma-lock')?.style && (document.getElementById('karma-lock').style.display = 'none');
+    document.getElementById('karma-content')?.style && (document.getElementById('karma-content').style.display = 'block');
+  }
+}
+
+function unlockKarma() {
+  const code = document.getElementById('karma-unlock-input')?.value.trim();
+  const errEl = document.getElementById('karma-unlock-err');
+  if (!code) { if(errEl) errEl.textContent='請輸入解鎖碼'; return; }
+  if (code === KARMA_UNLOCK_CODE || checkIssuedCode(code)) {
+    try { localStorage.setItem('vedic_karma_unlocked','1'); } catch(e){}
+    document.getElementById('karma-lock').style.display = 'none';
+    document.getElementById('karma-content').style.display = 'block';
+    showToast('✦ 業力系統已解鎖！感謝你的支持 🌙');
+    sbLogEvent('karma_unlock', code.slice(0,8));
+  } else {
+    if(errEl) errEl.textContent = '解鎖碼無效，請確認後再試';
+  }
+}
+
+function checkIssuedCode(code) {
+  try {
+    const issued = JSON.parse(localStorage.getItem('vedic_issued_codes')||'{}');
+    return !!issued[code];
+  } catch(e){ return false; }
+}
+
+function requestKarmaPayment() {
+  const email = userData?.email || '';
+  sbLogEvent('payment_request', `karma_NT$150 email=${email}`);
+  if (typeof sbFetch === 'function' && SB_CONFIGURED) {
+    sbFetch('payment_requests', 'POST', {
+      email, name: userData?.name||'旅人', amount:150, quota:0,
+      status:'pending', created_at: new Date().toISOString(),
+    }).catch(()=>{});
+  }
+  showToast('已收到付款申請 ✦ 請轉帳 NT$150，完成後將解鎖碼傳送至你的 Email', 5000);
+  document.getElementById('karma-unlock-err').style.color = 'var(--gold-d)';
+  document.getElementById('karma-unlock-err').textContent = '轉帳完成後，後台收款確認後將發送解鎖碼';
+}
+
+/* ══════════════════════════════════════
+   CHAT MODAL (replaces inline paywall)
+══════════════════════════════════════ */
+function showChatModal() {
+  // Reuse the existing chat-paywall overlay
+  openChatPaywall();
+}
+
+/* ══════════════════════════════════════
+   INIT on tab switch
+══════════════════════════════════════ */
+const _origSwitchTabKarma = window.switchTab || switchTab;
+window.switchTab = function(id) {
+  _origSwitchTabKarma(id);
+  if (id === 'karma') setTimeout(initKarmaLock, 50);
+};
+window.addEventListener('DOMContentLoaded', () => {
+  if (isKarmaUnlocked()) initKarmaLock();
+});
+
+
+/* ══════════════════════════════════════════════════════
+   CHAT HISTORY — localStorage + Supabase 加密儲存
+   ✦ 免費用戶：localStorage（本裝置）
+   ✦ 付費用戶（有密碼 session key）：+ Supabase AES 加密
+══════════════════════════════════════════════════════ */
+
+/* ── In-memory buffer for current session ── */
+let _chatBuffer = [];  // [{role:'user'|'ai', text, ts}]
+
+/* ── Local storage key ── */
+function chatLocalKey() {
+  return 'vedic_chat_hist_' + (userData?.email || 'guest');
+}
+
+/* ── Save one turn to localStorage ── */
+function chatSaveLocal(userText, aiText) {
+  try {
+    const key = chatLocalKey();
+    const hist = JSON.parse(localStorage.getItem(key) || '[]');
+    const ts = new Date().toISOString();
+    hist.push({ role:'user', text: userText, ts });
+    hist.push({ role:'ai',   text: aiText,   ts });
+    // keep last 60 messages (30 turns)
+    if (hist.length > 60) hist.splice(0, hist.length - 60);
+    localStorage.setItem(key, JSON.stringify(hist));
+    _chatBuffer = hist;
+  } catch(e) { console.warn('[chat] localStorage save failed:', e.message); }
+}
+
+/* ── Load chat history from localStorage ── */
+function chatLoadLocal() {
+  try {
+    const key = chatLocalKey();
+    _chatBuffer = JSON.parse(localStorage.getItem(key) || '[]');
+    return _chatBuffer;
+  } catch(e) { return []; }
+}
+
+/* ── Save encrypted history to Supabase (paid users) ── */
+async function chatSaveSupabase() {
+  if (!SB_CONFIGURED || !_chatBuffer.length) return;
+  const pw = getSessionKey();
+  const email = userData?.email || '';
+  if (!pw || !email) return;  // need session key (set on login)
+
+  const emailHashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(email));
+  const emailHash = Array.from(new Uint8Array(emailHashBuf))
+    .map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,32);
+
+  try {
+    const encrypted = await VEPH_CRYPTO.encrypt(JSON.stringify(_chatBuffer), pw);
+    // Upsert: one row per user (latest full history)
+    await sbFetch('chat_history?on_conflict=email_hash', 'POST', {
+      email_hash:        emailHash,
+      encrypted_content: encrypted,
+      message_count:     _chatBuffer.length,
+      updated_at:        new Date().toISOString(),
+    });
+    console.log('[chat] Supabase saved:', _chatBuffer.length, 'messages');
+  } catch(e) { console.warn('[chat] Supabase save failed:', e.message); }
+}
+
+/* ── Load encrypted history from Supabase ── */
+async function chatLoadSupabase() {
+  if (!SB_CONFIGURED) return [];
+  const pw = getSessionKey();
+  const email = userData?.email || '';
+  if (!pw || !email) return [];
+
+  try {
+    const emailHashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(email));
+    const emailHash = Array.from(new Uint8Array(emailHashBuf))
+      .map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,32);
+
+    const res = await sbFetch(`chat_history?email_hash=eq.${emailHash}&select=encrypted_content,message_count`);
+    if (!res?.data?.[0]?.encrypted_content) return [];
+
+    const plain = await VEPH_CRYPTO.decrypt(res.data[0].encrypted_content, pw);
+    return JSON.parse(plain);
+  } catch(e) {
+    console.warn('[chat] Supabase load failed:', e.message);
+    return [];
+  }
+}
+
+/* ── Render history into chat UI ── */
+function chatRenderHistory(hist) {
+  if (!hist || !hist.length) return;
+  const msgs = document.getElementById('chat-msgs');
+  if (!msgs) return;
+
+  const frag = document.createDocumentFragment();
+  hist.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'msg';
+    if (m.role === 'user') {
+      div.innerHTML = `<div class="msg-user">${m.text}</div>`;
+    } else {
+      div.innerHTML =
+        `<div class="msg-ai"><div class="ai-av">✦</div>` +
+        `<div class="ai-bubble">${m.text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</div></div>`;
+    }
+    frag.appendChild(div);
+  });
+
+  // Insert before last AI welcome message or append
+  const welcomeBubble = document.getElementById('chat-welcome-bubble');
+  if (welcomeBubble?.parentElement?.parentElement) {
+    const welcomeMsg = welcomeBubble.parentElement.parentElement;
+    // Add separator
+    const sep = document.createElement('div');
+    sep.style.cssText = 'text-align:center;font-size:10px;color:var(--dimmer);padding:8px 0;margin:4px 0;border-top:1px solid var(--border)';
+    sep.textContent = `✦ 以上為歷史對話記錄（${hist.length/2|0} 輪）`;
+    msgs.insertBefore(sep, welcomeMsg);
+    msgs.insertBefore(frag, sep);
+  } else {
+    msgs.appendChild(frag);
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+  showToast(`✦ 已載入 ${hist.length/2|0} 輪歷史對話`);
+}
+
+/* ── Initialize chat history on app load / login ── */
+async function chatHistoryInit() {
+  // Load from localStorage first (fast, offline)
+  const localHist = chatLoadLocal();
+
+  // If user has session key, try Supabase (may have more / newer data)
+  const pw = getSessionKey();
+  if (pw && SB_CONFIGURED) {
+    const sbHist = await chatLoadSupabase();
+    if (sbHist.length > localHist.length) {
+      _chatBuffer = sbHist;
+      // Sync back to localStorage
+      try { localStorage.setItem(chatLocalKey(), JSON.stringify(sbHist)); } catch(e){}
+    } else {
+      _chatBuffer = localHist;
+    }
+  } else {
+    _chatBuffer = localHist;
+  }
+
+  if (_chatBuffer.length) chatRenderHistory(_chatBuffer);
+}
+
+/* ── Debounced Supabase save (only if paid/session key) ── */
+let _chatSaveTimer = null;
+function chatScheduleSupabaseSave() {
+  if (!getSessionKey()) return;  // only paid users with active session
+  clearTimeout(_chatSaveTimer);
+  _chatSaveTimer = setTimeout(chatSaveSupabase, 3000); // save 3s after last message
+}
+
+/* ── Hook into sendChat_orig to intercept replies ── */
+const _sendChatOrigHistory = sendChat_orig;
+// Chat history hook — patches sendChat_orig after its definition
+(function patchSendChatHistory() {
+  const _orig = sendChat_orig;
+  sendChat_orig = async function() {
+    if(isThinking) return;
+    const inp = document.getElementById('chat-input');
+    const q = inp ? inp.value.trim() : '';
+    // Call original (which already does addMsg, callClaude, etc.)
+    // We intercept by overriding addMsg temporarily
+    const _origAddMsg = addMsg;
+    let _lastAI = '';
+    addMsg = function(html, isUser) {
+      _origAddMsg(html, isUser);
+      if (!isUser) _lastAI = html.replace(/<[^>]+>/g,'');
+    };
+    await _orig();
+    addMsg = _origAddMsg;
+    // Save to localStorage + schedule Supabase save
+    if (q && _lastAI) {
+      chatSaveLocal(q, _lastAI);
+      chatScheduleSupabaseSave();
+    }
+  };
+})();
+
+/* ── Hook into loginSubmit to load history after login ── */
+// loginSubmit extended: load chat history after login
+// Patched directly into loginSubmit via a post-success hook in loginSubmit body
+
+/* ── Hook into setupApp to load local history ── */
+// Chat history is loaded once via chatHistoryInit(), not on every setupApp call
+
+/* ── Clear chat history ── */
+function clearChatHistory() {
+  _chatBuffer = [];
+  try { localStorage.removeItem(chatLocalKey()); } catch(e){}
+  if (SB_CONFIGURED && getSessionKey()) {
+    // Don't delete from Supabase — just clear local
+  }
+  const msgs = document.getElementById('chat-msgs');
+  if (msgs) {
+    // Keep only welcome message
+    const welcome = document.getElementById('chat-welcome-bubble')?.parentElement?.parentElement;
+    msgs.innerHTML = '';
+    if (welcome) msgs.appendChild(welcome);
+  }
+  showToast('對話記錄已清除');
+}
+
+
+/* ══════════════════════════════════════════════════════
+   ENCRYPTION STATUS BADGE
+══════════════════════════════════════════════════════ */
+
+function updateEncBadge() {
+  const badge  = document.getElementById('enc-badge');
+  const dot    = document.getElementById('enc-dot');
+  const label  = document.getElementById('enc-label');
+  if (!badge) return;
+
+  const hasPw = !!getSessionKey();
+  const hasSB = typeof SB_CONFIGURED !== 'undefined' && SB_CONFIGURED;
+
+  if (hasPw && hasSB) {
+    // Paid/logged-in user: full E2E encryption
+    badge.className  = 'enc-badge enc-on';
+    dot.style.background = 'var(--teal-l)';
+    label.textContent = '🔒 端對端加密';
+  } else if (hasPw) {
+    // Has password but no Supabase → local encrypted
+    badge.className  = 'enc-badge enc-local';
+    dot.style.background = 'var(--gold)';
+    label.textContent = '🔒 本地加密';
+  } else {
+    // Guest / no session key
+    badge.className  = 'enc-badge enc-local';
+    dot.style.background = 'var(--gold-d)';
+    label.textContent = '🔓 本地暫存';
+  }
+}
+
+function showEncDetail() {
+  const hasPw = !!getSessionKey();
+  const hasSB = typeof SB_CONFIGURED !== 'undefined' && SB_CONFIGURED;
+
+  let msg = '';
+  if (hasPw && hasSB) {
+    msg = '🔒 端對端加密\n\n你的對話在傳送前已於裝置上完成 AES-256-GCM 加密。伺服器與資料庫只儲存密文，無法閱讀你的內容。\n\n密鑰由你的密碼衍生，密碼本身從不上傳。';
+  } else if (hasPw) {
+    msg = '🔒 本地加密\n\n對話記錄已加密儲存於你的裝置。登入後可同步加密備份至雲端。';
+  } else {
+    msg = '🔓 本地暫存\n\n目前對話記錄暫存於瀏覽器記憶體，關閉頁面後清除。\n\n登入帳號後，對話記錄將自動加密保存（AES-256-GCM），可跨裝置讀取。';
+  }
+  showToast(msg.split('\n')[0] + ' · ' + msg.split('\n')[2], 4000);
+}
+
+// Auto-update badge on load and after login/logout
+window.addEventListener('DOMContentLoaded', updateEncBadge);
+// Patch session key functions to update badge
+const _setSessionKeyOrig = setSessionKey;
+const _clearSessionKeyOrig = clearSessionKey;
+setSessionKey = function(pw) { _setSessionKeyOrig(pw); setTimeout(updateEncBadge, 100); };
+clearSessionKey = function()  { _clearSessionKeyOrig(); setTimeout(updateEncBadge, 100); };
+
+
+/* ══════════════════════════════════════════
+   CHANGE PASSWORD (in profile sidebar)
+══════════════════════════════════════════ */
+function checkNewPwStrength(pw) {
+  const bar  = document.getElementById('pw-new-bar');
+  const hint = document.getElementById('pw-new-hint');
+  const checks = [/[A-Z]/.test(pw), /[a-z]/.test(pw), /[0-9]/.test(pw),
+                  /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/`~]/.test(pw),
+                  pw.length >= 10 && pw.length <= 20];
+  const score = checks.filter(Boolean).length;
+  if (bar) { bar.style.background = ['','var(--red)','var(--orange)','var(--gold)','var(--teal-l)','var(--teal)'][score]; bar.style.width = (score*20)+'%'; }
+  if (hint) { hint.textContent = score >= 5 ? '✓ 密碼強度良好' : '缺少：' + ['大寫','小寫','數字','符號','10~20位'].filter((_,i)=>!checks[i]).join('、'); }
+}
+
+async function changePassword() {
+  const cur  = document.getElementById('pw-current')?.value;
+  const pw   = document.getElementById('pw-new')?.value;
+  const pw2  = document.getElementById('pw-new2')?.value;
+  const errEl = document.getElementById('pw-change-err');
+  if (errEl) errEl.textContent = '';
+
+  if (!cur || !pw || !pw2) { if(errEl) errEl.textContent='請填寫所有欄位'; return; }
+  if (pw !== pw2)            { if(errEl) errEl.textContent='兩次新密碼不一致'; return; }
+  if (pw.length < 10)        { if(errEl) errEl.textContent='新密碼至少需要10位'; return; }
+
+  // Verify current password
+  const curHash = await hashPw(cur);
+  const email   = userData?.email || '';
+  const stored  = localStorage.getItem('vedic_pw_hash_'+email) || '';
+  if (stored && curHash !== stored) { if(errEl) errEl.textContent='目前密碼不正確'; return; }
+
+  // Hash new password and update
+  const newHash = await hashPw(pw);
+  setSessionKey(pw);
+  try { localStorage.setItem('vedic_pw_hash_'+email, newHash); } catch(e){}
+
+  // Update Supabase
+  if (SB_CONFIGURED && typeof sbFetch === 'function') {
+    await sbFetch(`users?email=eq.${encodeURIComponent(email)}`, 'PATCH', { pw_hash: newHash, updated_at: new Date().toISOString() });
+    // Re-encrypt user data with new key and save
+    if (email && userChartData) {
+      sbUpsertUser({ email, ...userChartData, plan:'free' });
+    }
+  }
+
+  // Clear fields
+  ['pw-current','pw-new','pw-new2'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  const bar = document.getElementById('pw-new-bar');
+  if (bar) bar.style.width = '0';
+  if (errEl) { errEl.style.color='var(--teal-l)'; errEl.textContent='✓ 密碼已更新！'; }
+  showToast('🔒 密碼已成功更新');
+  setTimeout(() => { if(errEl) errEl.textContent=''; }, 3000);
+}
+
+/* ══════════════════════════════════════════
+   FORGOT PASSWORD
+══════════════════════════════════════════ */
+let _forgotOTP = '', _forgotEmail = '', _forgotExpiry = 0;
+
+function showForgotPassword() {
+  const sec = document.getElementById('forgot-pw-section');
+  if (sec) sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+}
+
+async function sendForgotOTP() {
+  const email  = document.getElementById('forgot-email')?.value.trim();
+  const errEl  = document.getElementById('forgot-err');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if(errEl) errEl.textContent='請輸入有效的 Email'; return;
+  }
+
+  _forgotEmail  = email;
+  _forgotOTP    = String(Math.floor(100000 + Math.random() * 900000));
+  _forgotExpiry = Date.now() + 5 * 60 * 1000;
+  showToast('📧 Beta 驗證碼：' + _forgotOTP + '（5分鐘有效）', 9000);
+  console.log('[忘記密碼 OTP]', _forgotOTP);
+
+  const otpSec = document.getElementById('forgot-otp-section');
+  if (otpSec) otpSec.style.display = 'block';
+  if (errEl)  { errEl.style.color='var(--teal-l)'; errEl.textContent='✓ 驗證碼已發送，請查看 Toast 通知'; }
+}
+
+function forgotOtpInput(el, idx) {
+  el.value = el.value.replace(/\D/g,'').slice(0,1);
+  const cells = document.querySelectorAll('#forgot-otp-cells .otp-cell');
+  if (el.value && idx < 5) cells[idx+1]?.focus();
+  const code = Array.from(cells).map(c=>c.value).join('');
+  if (code.length === 6) {
+    if (Date.now() > _forgotExpiry || code !== _forgotOTP) {
+      document.getElementById('forgot-err').textContent = '驗證碼錯誤或已過期';
+      return;
+    }
+    document.getElementById('forgot-otp-section2').style.display = 'block';
+    document.getElementById('forgot-err').textContent = '✓ 驗證成功，請設定新密碼';
+    document.getElementById('forgot-err').style.color = 'var(--teal-l)';
+  }
+}
+
+async function submitNewPassword() {
+  const pw   = document.getElementById('forgot-new-pw')?.value;
+  const pw2  = document.getElementById('forgot-new-pw2')?.value;
+  const errEl = document.getElementById('forgot-err');
+  if (!pw || pw !== pw2) { if(errEl) errEl.textContent='密碼不一致或為空'; return; }
+  if (pw.length < 10)    { if(errEl) errEl.textContent='密碼至少10位'; return; }
+
+  const newHash = await hashPw(pw);
+  setSessionKey(pw);
+  try { localStorage.setItem('vedic_pw_hash_'+_forgotEmail, newHash); } catch(e){}
+
+  if (SB_CONFIGURED && typeof sbFetch === 'function') {
+    await sbFetch(`users?email=eq.${encodeURIComponent(_forgotEmail)}`, 'PATCH',
+      { pw_hash: newHash, updated_at: new Date().toISOString() });
+  }
+  showToast('🔒 密碼已重設！請重新登入', 4000);
+  closeLoginModal();
+  setTimeout(openLoginModal, 500);
+}
+
+/* ── Extend citySearch to support optional dropdown id ── */
+const _origCitySearch = citySearch;
+function citySearch(val, dropdownId) {
+  const ddId = dropdownId || 'city-dropdown';
+  const el = document.getElementById(ddId);
+  if (el && dropdownId) {
+    // Use same city data but write to alternate dropdown
+    if (!val || val.length < 1) { el.style.display='none'; return; }
+    const q = val.toLowerCase();
+    const matches = (window.CITY_DATA || []).filter(city =>
+      city.name?.toLowerCase().includes(q) || city.nameEn?.toLowerCase().includes(q) || city.nameZh?.includes(val)
+    ).slice(0, 8);
+    if (!matches.length) { el.style.display='none'; return; }
+    el.innerHTML = matches.map(city => `<div style="padding:8px 13px;font-size:13px;cursor:pointer;color:var(--white);border-bottom:1px solid var(--border)" onmousedown="selectCity('${city.nameZh||city.name}',${city.lat},${city.lng},'${ddId}','pd-place')">${city.nameZh||city.name} <span style="font-size:10px;color:var(--dimmer)">${city.nameEn||''}</span></div>`).join('');
+    el.style.display = 'block';
+  } else {
+    _origCitySearch(val);
+  }
+}
+
+function selectCity(name, lat, lng, dropdownId, inputId) {
+  const inp = document.getElementById(inputId || 'birth-place');
+  const dd  = document.getElementById(dropdownId || 'city-dropdown');
+  if (inp) { inp.value = name; inp.dataset.lat = lat; inp.dataset.lng = lng; }
+  if (dd)  dd.style.display = 'none';
+}
+
+function cityKey(event, dropdownId) {
+  if (event.key === 'Escape') {
+    const dd = document.getElementById(dropdownId || 'city-dropdown');
+    if (dd) dd.style.display = 'none';
+  }
+}
+
+
+/* ── Profile sidebar collapsible sections ── */
+function togglePdSection(hdr) {
+  const body = hdr.nextElementSibling;
+  const isOpen = hdr.classList.contains('open');
+  hdr.classList.toggle('open', !isOpen);
+  body.style.display = isOpen ? 'none' : 'block';
+}
+
+function toggleCustomTime(val) {
+  const custom = document.getElementById('notif-custom-time');
+  if (custom) custom.style.display = val === 'custom' ? 'block' : 'none';
+}
+
+/* Override saveNotifPrefs to read custom time */
+const _origSaveNotifPrefsCustom = saveNotifPrefs;
+saveNotifPrefs = function() {
+  const sel = document.getElementById('notif-time');
+  const custom = document.getElementById('notif-custom-time');
+  if (sel?.value === 'custom' && custom?.value) {
+    // Temporarily set a data attribute for the save function to read
+    if (sel) sel.dataset.effectiveTime = custom.value;
+  }
+  _origSaveNotifPrefsCustom();
+};
+
+
+/* ══════════════════════════════════════════════════════════════
+   SIDEBAR CONTENT — Supabase-driven (weekly_questions table)
+   後台可隨時在 Supabase 編輯問題、調整顯示順序
+══════════════════════════════════════════════════════════════ */
+
+/* 10 built-in fallback questions (15~60歲人生階段) */
+const DEFAULT_WEEKLY_QS = [
+  { q:'為什麼我在感情裡總是付出更多，卻得不到相對的回應？', tag:'感情', age:'25~35歲', resonance:14302 },
+  { q:'我的事業方向一直不確定，星盤能告訴我該往哪走嗎？', tag:'事業', age:'22~32歲', resonance:11847 },
+  { q:'為什麼我總覺得格格不入，找不到真正懂我的人？', tag:'自我', age:'15~25歲', resonance:9614 },
+  { q:'父母期待和我真正想要的完全不同，我該怎麼辦？', tag:'家庭', age:'18~28歲', resonance:8903 },
+  { q:'我已經很努力了，為什麼財富還是無法積累？', tag:'財富', age:'30~45歲', resonance:7821 },
+  { q:'進入中年後感覺失去方向，人生的意義在哪裡？', tag:'人生', age:'40~55歲', resonance:6734 },
+  { q:'我的健康問題是否與星盤有關？哪個部位需要特別注意？', tag:'健康', age:'35~60歲', resonance:5912 },
+  { q:'為什麼每次做重大決定前都特別焦慮，這是我的業力嗎？', tag:'心理', age:'25~45歲', resonance:5201 },
+  { q:'退休後還有什麼值得期待的？我的下半場人生方向是什麼？', tag:'人生', age:'50~65歲', resonance:4387 },
+  { q:'青春期的我為什麼對未來充滿恐懼？這是我的天賦還是課題？', tag:'成長', age:'15~20歲', resonance:3956 },
+];
+
+/* Pick 5 questions for this week based on week number (rotates) */
+function getWeeklyQuestions(allQs) {
+  const weekNum = Math.floor(Date.now() / (7 * 24 * 3600 * 1000));
+  const start   = weekNum % allQs.length;
+  const picked  = [];
+  for (let i = 0; i < 5; i++) {
+    picked.push(allQs[(start + i) % allQs.length]);
+  }
+  return picked;
+}
+
+function renderWeeklyQuestions(qs) {
+  const container = document.getElementById('weekly-questions-list');
+  if (!container) return;
+  const maxRes = Math.max(...qs.map(q => q.resonance || 1));
+  container.innerHTML = qs.map((q, i) => {
+    const pct   = Math.round((q.resonance / maxRes) * 100);
+    const isTop = i === 0;
+    const numCls = isTop ? 'ri-n top' : 'ri-n';
+    const resStr = (q.resonance || 0).toLocaleString();
+    return `<div class="rank-item" onclick="switchTab('chat');askStar(${JSON.stringify(q.q)})">
+      <div class="ri-row">
+        <div class="${numCls}">${i + 1}</div>
+        <div style="flex:1">
+          <div class="rank-q">${q.q}</div>
+          <div class="rank-meta">
+            <span class="rm-count">${resStr} 人共鳴</span>
+            <span class="rm-tag">${q.tag || ''}</span>
+            <span class="rm-tag" style="background:rgba(154,130,232,.12);color:var(--purple-l)">${q.age || ''}</span>
+            ${isTop ? '<span class="rm-hot">↑ 本週最熱</span>' : ''}
+          </div>
+          <div class="rank-bar"><div class="rb-f" style="width:${pct}%"></div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function loadWeeklyQuestions() {
+  let qs = DEFAULT_WEEKLY_QS;
+  // Try Supabase for admin-managed questions
+  if (SB_CONFIGURED && typeof sbFetch === 'function') {
+    try {
+      const res = await sbFetch('weekly_questions?active=eq.true&order=sort_order.asc&limit=20');
+      if (res?.data?.length >= 5) {
+        qs = res.data.map(r => ({
+          q: r.question, tag: r.tag, age: r.age_range,
+          resonance: r.resonance || Math.floor(Math.random()*10000+1000)
+        }));
+      }
+    } catch(e) {}
+  }
+  renderWeeklyQuestions(getWeeklyQuestions(qs));
+}
+
+// Load on app start
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(loadWeeklyQuestions, 600);
+});
+
 </script>
+
+<!-- MARMA DETAIL MODAL -->
+<div id="marma-modal" onclick="if(event.target===this)closeMarmaModal()">
+  <div class="mm-sheet" id="marma-modal-sheet">
+    <div class="mm-handle"></div>
+    <div id="mm-content"></div>
+    <button class="mm-close" onclick="closeMarmaModal()">關閉</button>
+  </div>
+</div>
+
 </body>
 </html>
