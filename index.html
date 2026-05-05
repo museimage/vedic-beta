@@ -1100,10 +1100,10 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
     <div class="oc"></div>
   </div>
   <div class="comp-title">解碼你的<br>業力代碼</div>
-  <div class="comp-sub">Swiss Ephemeris 精密運算中<br>這是為你生成的唯一星盤</div>
+  <div class="comp-sub">興盤運算中<br>這是為你生成的唯一星盤</div>
   <div class="comp-progress-wrap"><div class="comp-progress" id="comp-prog"></div></div>
   <div class="comp-steps">
-    <div class="cs"><div class="cs-ind act" id="ci0">1</div><div class="cs-text act" id="ct0">計算行星精確座標與納沙特拉位置</div></div>
+    <div class="cs"><div class="cs-ind act" id="ci0">1</div><div class="cs-text act" id="ct0">計算行星精確座標</div></div>
     <div class="cs"><div class="cs-ind" id="ci1">2</div><div class="cs-text" id="ct1">分析數靈業力張力（心理數 × 命運數）</div></div>
     <div class="cs"><div class="cs-ind" id="ci2">3</div><div class="cs-text" id="ct2">識別四大關鍵星盤配置</div></div>
     <div class="cs"><div class="cs-ind" id="ci3">4</div><div class="cs-text" id="ct3">映射腦神經生理結構</div></div>
@@ -1131,7 +1131,6 @@ html,body{height:100%;overflow:hidden;background:var(--deep);color:var(--white);
       </div>
       <div class="rev-done-title">你的星盤<br>已完整解碼</div>
       <div class="rev-done-sub">
-        梵典占星 × 腦神經生理 × 阿育吠陀<br>
         一份只屬於你的業力代碼，正在等待你
       </div>
       <button class="rev-cta-btn" onclick="showPhilosophy()">
@@ -2325,12 +2324,13 @@ function setupApp(){
   document.getElementById('today-date').textContent=`${d.getFullYear()}年${ms[d.getMonth()]}${d.getDate()}日 · 月亮入射手座`;
 
   // Update dynamic system prompt with user's birth data
+  // Prefer already-loaded userChartData (from login decrypt), fallback to DOM fields
   userChartData = {
-    name: userData.name || '旅人',
-    birth_date: document.getElementById('birth-date')?.value || userData.birth_date || '',
-    birth_time: document.getElementById('birth-time')?.value || userData.birth_time || '',
-    birth_place: document.getElementById('birth-place')?.value || userData.birth_place || '',
-    planets: null,  // real ephemeris not yet connected
+    name:        userChartData?.name        || userData.name || '旅人',
+    birth_date:  userChartData?.birth_date  || document.getElementById('birth-date')?.value  || '',
+    birth_time:  userChartData?.birth_time  || document.getElementById('birth-time')?.value  || '',
+    birth_place: userChartData?.birth_place || document.getElementById('birth-place')?.value || '台北市',
+    planets:     userChartData?.planets     || null,
   };
 
   // Update chart display with user info
@@ -5479,16 +5479,16 @@ async function sbUpsertUser(data) {
   }
 
   const payload = {
-    email:          data.email,                 // plaintext for lookup
-    pw_hash:        data.pw_hash || undefined,   // hash only
-    plan:           data.plan || 'free',
-    last_seen:      new Date().toISOString(),
-    updated_at:     new Date().toISOString(),
-    encrypted_data: encrypted_data,             // all sensitive fields encrypted
-    // Do NOT store name/birth_date/birth_time/birth_place in plaintext
+    email:      data.email,
+    plan:       data.plan || 'free',
+    last_seen:  new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   };
-  // Remove undefined keys
-  Object.keys(payload).forEach(k => payload[k] === undefined && delete payload[k]);
+  // Only include pw_hash if provided (don't overwrite existing hash)
+  if (data.pw_hash) payload.pw_hash = data.pw_hash;
+  // Only include encrypted_data if successfully generated (never overwrite with null)
+  if (encrypted_data) payload.encrypted_data = encrypted_data;
+
   return sbFetch('users?on_conflict=email', 'POST', payload);
 }
 
@@ -5565,7 +5565,8 @@ window.addEventListener('DOMContentLoaded', function hookSB() {
   window.setupApp = function() {
     _osa();
     setTimeout(() => {
-      if (userData?.email) {
+      if (userData?.email && userChartData?.birth_date && getSessionKey()) {
+        // Only upsert when we have complete data AND a session key to encrypt with
         sbUpsertUser({ ...userData, ...userChartData, asc_sign: userChartData?.asc_sign||'', plan:'free' });
         sbLogEvent('session_start', userChartData?.birth_place||'');
       }
@@ -5868,53 +5869,43 @@ async function loginSubmit() {
 
   const inputHash = await hashPw(pw);
 
-  // Check local cache first (fast)
+  // ── Step 1: Verify password ──
   let match = false;
+
+  // Local cache check
   try {
     const cached = localStorage.getItem('vedic_pw_hash_'+email);
     if (cached && cached === inputHash) match = true;
   } catch(e){}
 
-  // Check Supabase
-  if (!match && SB_CONFIGURED && typeof sbFetch === 'function') {
-    errEl.textContent = '查詢資料庫中...';
-    const res = await sbFetch(`users?email=eq.${encodeURIComponent(email)}&select=pw_hash,encrypted_data`);
-    console.log('[Login] Supabase response:', res);
+  // Always fetch from Supabase to get latest data (even if cache matched)
+  let encryptedData = null;
+  if (SB_CONFIGURED && typeof sbFetch === 'function') {
+    errEl.textContent = '讀取星盤資料中...';
+    const res = await sbFetch(
+      `users?email=eq.${encodeURIComponent(email)}&select=pw_hash,encrypted_data`
+    );
+    console.log('[Login] SB response:', res);
 
-    if (res && Array.isArray(res.data) && res.data.length > 0) {
-      const user = res.data[0];
-      console.log('[Login] pw_hash in DB:', user.pw_hash ? user.pw_hash.slice(0,8)+'...' : 'null');
-      console.log('[Login] inputHash:', inputHash.slice(0,8)+'...');
-
-      if (user.pw_hash && user.pw_hash === inputHash) {
-        match = true;
-        userData = { name: '旅人', email };
-        userChartData = { birth_place: '台北市' };
-
-        // Decrypt stored data if available
-        if (user.encrypted_data) {
-          try {
-            const dec = await decryptUserData(user.encrypted_data, pw);
-            if (dec) {
-              userData.name = dec.name || '旅人';
-              userChartData = { ...dec };
-              const setV = (id,v)=>{ const el=document.getElementById(id); if(el&&v) el.value=v; };
-              setV('birth-date',  dec.birth_date);
-              setV('birth-time',  dec.birth_time);
-              setV('birth-place', dec.birth_place);
-              setV('user-name',   dec.name);
-              setV('user-email',  email);
-            }
-          } catch(e) { console.warn('[Login] Decrypt failed:', e.message); }
-        }
-        try { localStorage.setItem('vedic_pw_hash_'+email, inputHash); } catch(e){}
-      } else if (!user.pw_hash) {
-        errEl.textContent = '此帳號尚未設定密碼，請重新註冊';
+    if (res && Array.isArray(res.data)) {
+      if (res.data.length === 0) {
+        errEl.textContent = '找不到此 Email，請先加入 Beta';
         return;
       }
-    } else if (res && Array.isArray(res.data) && res.data.length === 0) {
-      errEl.textContent = '找不到此 Email 的帳號，請先加入 Beta';
-      return;
+      const user = res.data[0];
+      if (!user.pw_hash) {
+        errEl.textContent = '此帳號尚未完成設定密碼，請重新加入 Beta';
+        return;
+      }
+      if (user.pw_hash !== inputHash) {
+        // DB check overrides cache
+        match = false;
+        errEl.textContent = 'Email 或密碼不正確，請再試一次';
+        return;
+      }
+      match = true;
+      encryptedData = user.encrypted_data || null;
+      try { localStorage.setItem('vedic_pw_hash_'+email, inputHash); } catch(e){}
     }
   }
 
@@ -5923,35 +5914,54 @@ async function loginSubmit() {
     return;
   }
 
-  errEl.textContent = '';
-  setSessionKey(pw);  // store session key in memory
-  closeLoginModal();
-  showToast('✦ 歡迎回來，' + (userData.name||'旅人') + '！正在載入你的星盤...');
+  // ── Step 2: Decrypt user data BEFORE calling setupApp ──
+  setSessionKey(pw);
+  userData = { name: '旅人', email };
+  userChartData = { name:'旅人', birth_date:'', birth_time:'', birth_place:'台北市' };
 
-  // Attempt to decrypt any encrypted_data from Supabase
-  if (SB_CONFIGURED && typeof sbFetch === 'function') {
-    sbFetch(`users?email=eq.${encodeURIComponent(email)}&select=encrypted_data`)
-      .then(res => {
-        if (res?.data?.[0]?.encrypted_data) {
-          decryptUserData(res.data[0].encrypted_data, pw).then(dec => {
-            if (dec) {
-              userChartData = { ...userChartData, ...dec };
-              const setV = (id,v)=>{const el=document.getElementById(id);if(el&&v)el.value=v;};
-              setV('birth-date',  dec.birth_date);
-              setV('birth-time',  dec.birth_time);
-              setV('birth-place', dec.birth_place);
-              setV('user-name',   dec.name);
-            }
-          });
-        }
-      });
+  if (encryptedData) {
+    try {
+      const dec = await decryptUserData(encryptedData, pw);
+      console.log('[Login] Decrypted:', dec);
+      if (dec) {
+        userData.name             = dec.name        || '旅人';
+        userChartData.name        = dec.name        || '旅人';
+        userChartData.birth_date  = dec.birth_date  || '';
+        userChartData.birth_time  = dec.birth_time  || '';
+        userChartData.birth_place = dec.birth_place || '台北市';
+      }
+    } catch(e) { console.warn('[Login] Decrypt failed:', e.message); }
+  } else {
+    // encrypted_data is null — data was lost or not saved during registration
+    // Show warning and ask user to update their profile after login
+    console.warn('[Login] encrypted_data is null — user will need to re-enter birth data');
+    showToast('⚠ 請在設定頁補填出生資料，系統將重新儲存', 5000);
   }
 
+  // ── Step 3: Fill DOM fields with decrypted data ──
+  const setV = (id, v) => { const el = document.getElementById(id); if (el && v) el.value = v; };
+  setV('birth-date',  userChartData.birth_date);
+  setV('birth-time',  userChartData.birth_time);
+  setV('birth-place', userChartData.birth_place);
+  setV('user-name',   userChartData.name);
+  setV('user-email',  email);
+
+  errEl.textContent = '';
+  closeLoginModal();
+  showToast('✦ 歡迎回來，' + userData.name + '！正在載入你的星盤...');
+
+  // ── Step 4: Re-save encrypted_data if it was null (repairs old records) ──
+  if (!encryptedData && userChartData.birth_date && getSessionKey()) {
+    console.log('[Login] Re-saving encrypted_data for repaired record...');
+    sbUpsertUser({ ...userData, ...userChartData, plan:'free' });
+  }
+
+  // ── Step 5: setupApp reads from already-filled DOM + userChartData ──
   setTimeout(() => {
     setupApp();
     goTo('s-computing');
     runComputing();
-  }, 600);
+  }, 300);
 }
 
 /* Extended showToast to support custom duration */
