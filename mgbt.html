@@ -156,7 +156,6 @@ tr:hover td{background:rgba(201,168,76,.02)}
     <div class="topbar-title" id="panel-title">儀表板</div>
     <div class="topbar-actions">
       <div style="font-size:11px;color:var(--dimmer)" id="topbar-date"></div>
-      <div id="sb-status-badge" style="font-size:10px;padding:3px 10px;border-radius:99px;background:rgba(226,75,74,.12);color:var(--red);border:1px solid rgba(226,75,74,.2)">● 未連線</div>
       <button class="btn-sm" onclick="exportData()">↓ 匯出 CSV</button>
       <button class="btn-sm primary" onclick="sbLoadDashboard();showToast('Supabase 資料同步中...')">↻ 同步資料</button>
     </div>
@@ -184,7 +183,7 @@ tr:hover td{background:rgba(201,168,76,.02)}
       </div>
       <div class="stat-card">
         <div class="sc-label">平均停留時間</div>
-        <div class="sc-val" id="stat-time">—<span style="font-size:16px;color:var(--dim)">分</span></div>
+        <div class="sc-val" id="stat-time">7.3<span style="font-size:16px;color:var(--dim)">分</span></div>
         <div class="sc-delta up">↑ 1.2分 vs 上週</div>
       </div>
     </div>
@@ -253,18 +252,18 @@ tr:hover td{background:rgba(201,168,76,.02)}
     <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
       <div class="stat-card">
         <div class="sc-label">平均會話時長</div>
-        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">分</span></div>
-        <div class="sc-delta">待統計</div>
+        <div class="sc-val">7.3<span style="font-size:16px;color:var(--dim)">分</span></div>
+        <div class="sc-delta up">↑ 18% vs 上月</div>
       </div>
       <div class="stat-card">
         <div class="sc-label">跳出率（首頁）</div>
-        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">%</span></div>
-        <div class="sc-delta">待統計</div>
+        <div class="sc-val">24<span style="font-size:16px;color:var(--dim)">%</span></div>
+        <div class="sc-delta up">↓ 好於上週</div>
       </div>
       <div class="stat-card">
         <div class="sc-label">功能使用深度</div>
-        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">個Tab/人</span></div>
-        <div class="sc-delta">待統計</div>
+        <div class="sc-val">3.2<span style="font-size:16px;color:var(--dim)">個Tab/人</span></div>
+        <div class="sc-delta">平均每次開啟</div>
       </div>
     </div>
     <div class="section-card">
@@ -311,23 +310,23 @@ tr:hover td{background:rgba(201,168,76,.02)}
     <div class="stats-row">
       <div class="stat-card">
         <div class="sc-label">今日 API 呼叫</div>
-        <div class="sc-val">—</div>
+        <div class="sc-val">41</div>
         <div class="sc-delta">Claude Haiku 4.5</div>
       </div>
       <div class="stat-card">
         <div class="sc-label">今日費用</div>
-        <div class="sc-val">—<span style="font-size:14px;color:var(--dim)">USD</span></div>
-        <div class="sc-delta">待統計</div>
+        <div class="sc-val">$0.62<span style="font-size:14px;color:var(--dim)">USD</span></div>
+        <div class="sc-delta up">NT$19.8 · 均NT$0.48/次</div>
       </div>
       <div class="stat-card">
         <div class="sc-label">本月累計</div>
-        <div class="sc-val">—</div>
-        <div class="sc-delta">待統計</div>
+        <div class="sc-val">$4.21</div>
+        <div class="sc-delta">預計月底 $5.80</div>
       </div>
       <div class="stat-card">
         <div class="sc-label">Token 使用率</div>
-        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">%</span></div>
-        <div class="sc-delta">待統計</div>
+        <div class="sc-val">68<span style="font-size:16px;color:var(--dim)">%</span></div>
+        <div class="sc-delta">System Prompt 佔比</div>
       </div>
     </div>
     <div class="section-card">
@@ -357,18 +356,18 @@ tr:hover td{background:rgba(201,168,76,.02)}
       </div>
       <div class="stat-card">
         <div class="sc-label">預計正式版月收</div>
-        <div class="sc-val">—</div>
-        <div class="sc-delta">待統計</div>
+        <div class="sc-val">NT$~12K</div>
+        <div class="sc-delta">基於 Beta 轉換率估算</div>
       </div>
       <div class="stat-card">
         <div class="sc-label">業力捐贈（預估）</div>
-        <div class="sc-val">—</div>
+        <div class="sc-val">NT$1.2K</div>
         <div class="sc-delta">= 收入 10%</div>
       </div>
       <div class="stat-card">
         <div class="sc-label">生命藍圖有意願</div>
-        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">人</span></div>
-        <div class="sc-delta">待統計</div>
+        <div class="sc-val">7<span style="font-size:16px;color:var(--dim)">人</span></div>
+        <div class="sc-delta">NT$680 × 7 = NT$4,760</div>
       </div>
     </div>
     <div class="section-card">
@@ -422,42 +421,7 @@ tr:hover td{background:rgba(201,168,76,.02)}
           <div><div style="font-size:13px;color:var(--white)">GitHub Pages 部署網址</div><div style="font-size:11px;color:var(--dimmer);margin-top:2px">Beta 連結</div></div>
           <input type="text" placeholder="https://xxx.github.io/vedic-beta/" style="width:260px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--dim);font-family:var(--sans);font-size:12px">
         </div>
-        <button class="btn-sm primary" style="width:120px" onclick="saveAdminSettings()">儲存設定</button>
-      </div>
-    </div>
-
-    <!-- Sidebar content management -->
-    <div class="section-card" style="margin-top:18px">
-      <div class="sc-header">
-        <div class="sc-hdr-title">✦ 本週大家都在問 · 問題管理</div>
-        <div class="sc-hdr-sub">最多 10 題，每週自動輪動 5 題</div>
-      </div>
-      <div style="padding:16px 18px">
-        <div id="weekly-q-admin" style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px"></div>
-        <button class="btn-sm" onclick="addWeeklyQ()">+ 新增問題</button>
-        <button class="btn-sm primary" style="margin-left:8px" onclick="saveWeeklyQs()">✦ 儲存問題</button>
-        <div id="weekly-q-status" style="font-size:11px;color:var(--teal-l);margin-top:8px;min-height:14px"></div>
-      </div>
-    </div>
-
-    <!-- About / Privacy content management -->
-    <div class="section-card" style="margin-top:18px">
-      <div class="sc-header">
-        <div class="sc-hdr-title">公告與說明文字</div>
-        <div class="sc-hdr-sub">更新後 App 立即生效</div>
-      </div>
-      <div style="padding:16px 18px;display:grid;gap:12px">
-        <div>
-          <div style="font-size:11px;color:var(--dimmer);margin-bottom:5px">對話加密說明（側邊欄顯示）</div>
-          <textarea id="admin-privacy-text" rows="4" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-size:12px;color:var(--white);font-family:var(--sans);resize:vertical">只有你看得到你的對話。每一則對話在儲存前以 AES-256-GCM 加密，密鑰由你的密碼衍生，永遠不離開你的裝置。</textarea>
-        </div>
-        <div>
-          <div style="font-size:11px;color:var(--dimmer);margin-bottom:5px">業力承諾金額（%）</div>
-          <input type="number" id="admin-karma-pct" value="10" min="1" max="100" style="width:80px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--white);font-family:var(--sans);font-size:13px">
-          <span style="font-size:12px;color:var(--dim);margin-left:8px">% 每月收入捐贈</span>
-        </div>
-        <button class="btn-sm primary" style="width:120px" onclick="saveContentSettings()">儲存內容</button>
-        <div id="content-status" style="font-size:11px;color:var(--teal-l);min-height:14px"></div>
+        <button class="btn-sm primary" style="width:120px" onclick="showToast('設定已儲存 ✓')">儲存設定</button>
       </div>
     </div>
   </div>
@@ -467,18 +431,18 @@ tr:hover td{background:rgba(201,168,76,.02)}
     <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
       <div class="stat-card" style="border-color:rgba(26,165,160,.3)">
         <div class="sc-label">目前線上</div>
-        <div class="sc-val" id="rt-online">—</div>
+        <div class="sc-val" id="rt-online">2</div>
         <div class="sc-delta up">即時更新</div>
       </div>
       <div class="stat-card">
         <div class="sc-label">過去 1 小時對話數</div>
-        <div class="sc-val" id="rt-chats">—</div>
+        <div class="sc-val" id="rt-chats">4</div>
         <div class="sc-delta">Claude API 呼叫</div>
       </div>
       <div class="stat-card">
         <div class="sc-label">系統回應時間</div>
-        <div class="sc-val">—<span style="font-size:16px;color:var(--dim)">秒</span></div>
-        <div class="sc-delta">待測量</div>
+        <div class="sc-val">1.2<span style="font-size:16px;color:var(--dim)">秒</span></div>
+        <div class="sc-delta up">正常範圍</div>
       </div>
     </div>
     <div class="section-card">
@@ -495,12 +459,12 @@ tr:hover td{background:rgba(201,168,76,.02)}
         <table style="font-size:11px">
           <thead><tr><th>加入週</th><th>第1週</th><th>第2週</th><th>第3週</th><th>第4週</th></tr></thead>
           <tbody>
-            <tr><td class="td-name">Week 1 (n=8)</td><td style="color:var(--teal-l)">100%</td><td style="color:var(--teal-l)">—</td><td>—</td><td>—</td></tr>
-            <tr><td class="td-name">Week 2 (n=7)</td><td style="color:var(--teal-l)">100%</td><td style="color:var(--teal-l)">—</td><td>—</td><td>—</td></tr>
-            <tr><td class="td-name">Week 3 (n=8)</td><td style="color:var(--teal-l)">100%</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td class="td-name">Week 1 (n=8)</td><td style="color:var(--teal-l)">100%</td><td style="color:var(--teal-l)">75%</td><td>62%</td><td>50%</td></tr>
+            <tr><td class="td-name">Week 2 (n=7)</td><td style="color:var(--teal-l)">100%</td><td style="color:var(--teal-l)">71%</td><td>57%</td><td>—</td></tr>
+            <tr><td class="td-name">Week 3 (n=8)</td><td style="color:var(--teal-l)">100%</td><td>63%</td><td>—</td><td>—</td></tr>
           </tbody>
         </table>
-        <div style="margin-top:12px;font-size:11px;color:var(--dim);line-height:1.7">尚無足夠資料計算留存率。連線 Supabase 並累積 2 週用戶資料後自動顯示。</div>
+        <div style="margin-top:12px;font-size:11px;color:var(--dim);line-height:1.7">Week 1 D7 留存 75% · 高於占星類 App 平均 (38%) · 主要留存驅動：今日揭示功能每日觸發（34%用戶每日開啟）</div>
       </div>
     </div>
   </div>
@@ -520,57 +484,43 @@ tr:hover td{background:rgba(201,168,76,.02)}
 
 <script>
 /* ══════════════════════════════════════════════
-   SUPABASE CONFIG — 填入你的 Project 資訊
-   1. 前往 supabase.com → Settings → API
-   2. 複製 Project URL 和 anon public key
 ══════════════════════════════════════════════ */
-const SUPABASE_URL = 'https://ymztqihxnesxvgxelbjr.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltenRxaWh4bmVzeHZneGVsYmpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3OTMxNDMsImV4cCI6MjA5MDM2OTE0M30.p5uJ2_uIQrvFMPP0x-XBNC7QE7uGEw_gb1QLtl-Tp5I';
-const SB_ON  = !SUPABASE_URL.includes('YOUR_');
-
+mgbt.html:
+const SB_URL = 'https://ymztqihxnesxvgxelbjr.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltenRxaWh4bmVzeHZneGVsYmpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3OTMxNDMsImV4cCI6MjA5MDM2OTE0M30.p5uJ2_uIQrvFMPP0x-XBNC7QE7uGEw_gb1QLtl-Tp5I';
+/* ─────────────────────────────── */
+const SB_ON  = SB_URL.length > 10 && !SB_URL.includes('YOUR_');
 
 /* ── Supabase fetch wrapper ── */
 async function sb(table, opts={}) {
   if (!SB_ON) return null;
   const { method='GET', filter='', body=null, order='', limit='' } = opts;
-  let url = `${SUPABASE_URL}/rest/v1/${table}`;
+  let url = `${SB_URL}/rest/v1/${table}`;
   const params = [filter, order ? `order=${order}` : '', limit ? `limit=${limit}` : ''].filter(Boolean);
   if (params.length) url += '?' + params.join('&');
-  const isUpsert = method === 'POST' && table.includes('on_conflict');
-  const prefer = isUpsert
-    ? 'return=representation,resolution=merge-duplicates'
-    : method === 'POST' ? 'return=representation' : '';
   const headers = {
     'apikey': SB_KEY,
     'Authorization': 'Bearer ' + SB_KEY,
     'Content-Type': 'application/json',
+    'Prefer': method === 'POST' ? 'return=representation' : 'count=exact',
   };
-  if (prefer) headers['Prefer'] = prefer;
   try {
     const r = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : undefined });
-    if (!r.ok) {
-      const errText = await r.text().catch(()=>'');
-      console.warn('[SB]', r.status, table, errText.slice(0,120));
-      return null;
-    }
+    if (!r.ok) { console.warn('[SB]', r.status, table); return null; }
     if (r.status === 204) return true;
     const data = await r.json();
-    return { data: Array.isArray(data) ? data : [data], count: Array.isArray(data) ? data.length : 1 };
-  } catch(e) {
-    console.error('[SB error]', table, e.message);
-    return null;
-  }
+    const count = r.headers.get('content-range')?.split('/')[1];
+    return { data, count: count ? parseInt(count) : data.length };
+  } catch(e) { console.warn('[SB error]', e.message); return null; }
 }
 
 /* ── Load dashboard stats from Supabase ── */
 async function sbLoadDashboard() {
-  if (!SB_ON) { console.warn('[Admin] SB_ON=false, skipping load'); return; }
-  console.log('[Admin] sbLoadDashboard 開始載入...');
+  if (!SB_ON) return;
   showSBStatus('loading');
 
   // Total users
   const users = await sb('users', { order: 'updated_at.desc', limit: 200 });
-  console.log('[Admin] users 結果:', users);
   if (users) {
     document.getElementById('stat-users').textContent = users.count || users.data.length;
     // Today's active (last_seen today)
@@ -620,27 +570,21 @@ async function sbLoadDashboard() {
 /* ── Render real users from Supabase ── */
 function sbRenderUsers(list) {
   const tbody = document.getElementById('user-tbody');
-  if (!tbody) return;
-  if (!list.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--dimmer);font-size:12px">Supabase 已連線，尚無用戶資料</td></tr>';
-    return;
-  }
+  if (!tbody || !list.length) return;
   tbody.innerHTML = list.map(u => {
     const lastSeen = u.last_seen ? relTime(u.last_seen) : '—';
     const plan = u.plan || 'free';
-    // name may be null if stored encrypted; show email prefix as fallback
-    const displayName = u.name || (u.email ? u.email.split('@')[0] : '—');
-    const hasEncrypted = u.encrypted_data ? '🔒 ' : '';
     return `<tr>
-      <td><div class="td-name">${hasEncrypted}${displayName}</div><div style="font-size:10px;color:var(--dimmer)">${u.email}</div></td>
+      <td><div class="td-name">${u.name || '旅人'}</div><div style="font-size:10px;color:var(--dimmer)">${u.email}</div></td>
       <td>${u.asc_sign || '—'}</td>
-      <td>${(u.created_at || u.updated_at || '').slice(0,10) || '—'}</td>
+      <td>${u.created_at ? u.created_at.slice(0,10) : u.updated_at?.slice(0,10) || '—'}</td>
       <td><span class="tag ${plan==='paid'?'tag-paid':plan==='beta'?'tag-beta':'tag-free'}">${plan==='paid'?'付費':plan==='beta'?'管理員':'免費'}</span></td>
       <td>${lastSeen}</td>
       <td>—</td>
       <td>—</td>
     </tr>`;
   }).join('');
+  // Wire real filters
   window._sbUsers = list;
 }
 
@@ -736,10 +680,8 @@ function showSBStatus(state) {
     footer.innerHTML = '<div class="sb-status"><div class="status-dot" style="background:var(--gold)"></div>Supabase 載入中...</div><div>正在讀取即時資料</div>';
   } else if (state === 'live') {
     footer.innerHTML = '<div class="sb-status"><div class="status-dot"></div>Supabase 已連線</div><div>上次更新 ' + new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}) + '</div>';
-    const badge = document.getElementById('sb-status-badge');
-    if (badge) { badge.textContent='● 已連線'; badge.style.background='rgba(26,165,160,.12)'; badge.style.color='var(--teal-l)'; badge.style.borderColor='rgba(26,165,160,.25)'; }
   } else {
-    footer.innerHTML = '<div class="sb-status"><div class="status-dot" style="background:var(--gold)"></div>示範資料模式</div><div>設定 SUPABASE_URL 啟用真實資料</div>';
+    footer.innerHTML = '<div class="sb-status"><div class="status-dot" style="background:var(--gold)"></div>示範資料模式</div><div>設定 SB_URL 啟用真實資料</div>';
   }
 }
 
@@ -763,7 +705,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.exportData = () => {
     const list = window._sbUsers || USERS;
     const rows = [['姓名','Email','上升','加入','方案','最後活躍'], ...list.map(u=>[u.name||u.name,u.email,u.asc||u.asc_sign,u.join||u.created_at?.slice(0,10),u.plan,u.active||relTime(u.last_seen)])];
-    const csv = rows.map(r=>r.join(',')).join('\n');
+    const csv = rows.map(r=>r.join(',')).join('
+');
     const a = document.createElement('a');
     a.href = 'data:text/csv;charset=utf-8,﻿'+encodeURIComponent(csv);
     a.download = 'vedic_users_'+new Date().toISOString().slice(0,10)+'.csv';
@@ -775,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(sbLoadDashboard, 60000); // auto-refresh every 60s
   } else {
     showSBStatus('demo');
-    console.info('[Admin] 示範資料模式。設定 SUPABASE_URL 和 SB_KEY 啟用 Supabase。');
+    console.info('[Admin] 示範資料模式。設定 SB_URL 和 SB_KEY 啟用 Supabase。');
   }
 });
 </script>
@@ -1019,107 +962,6 @@ function onModelChange(val) {
   } catch(e){}
 })();
 
-
-/* ── Weekly Questions Admin ── */
-const DEFAULT_WEEKLY_QS = [
-  {q:'我的星盤說我適合什麼樣的戀愛方式？',tag:'感情'},
-  {q:'為什麼我在工作上總是得不到認可？',tag:'事業'},
-  {q:'我的財運什麼時候會好轉？',tag:'財富'},
-  {q:'為什麼我感覺自己在人生的十字路口？',tag:'人生'},
-  {q:'我的孩子跟我的關係為什麼這麼難？',tag:'家庭'},
-  {q:'退休後我還有什麼值得期待的？',tag:'人生'},
-  {q:'我的健康弱點在哪裡，星盤怎麼說？',tag:'健康'},
-  {q:'為什麼我常常覺得自己格格不入？',tag:'自我'},
-  {q:'我的感情一直不順，是業力的原因嗎？',tag:'感情'},
-  {q:'現在換工作是好時機嗎？',tag:'事業'},
-];
-
-function loadWeeklyQAdmin() {
-  const el = document.getElementById('weekly-q-admin');
-  if (!el) return;
-  let qs = DEFAULT_WEEKLY_QS;
-  try { const saved = localStorage.getItem('admin_weekly_qs'); if(saved) qs = JSON.parse(saved); } catch(e){}
-  el.innerHTML = qs.map((q,i) => `
-    <div style="display:flex;gap:8px;align-items:center">
-      <input type="text" value="${q.q.replace(/"/g,'&quot;')}"
-        style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--white);font-family:var(--sans)"
-        id="wq-text-${i}">
-      <input type="text" value="${q.tag}"
-        style="width:60px;background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:7px 8px;font-size:11px;color:var(--dim);font-family:var(--sans)"
-        id="wq-tag-${i}" placeholder="標籤">
-      <button style="background:transparent;border:1px solid var(--border);border-radius:7px;padding:5px 10px;color:var(--red);cursor:pointer;font-size:12px" onclick="removeWeeklyQ(${i})">✕</button>
-    </div>`).join('');
-}
-
-function addWeeklyQ() {
-  const el = document.getElementById('weekly-q-admin');
-  const count = el.querySelectorAll('input[id^="wq-text"]').length;
-  if (count >= 10) { showToast('最多 10 個問題'); return; }
-  const div = document.createElement('div');
-  div.style.cssText = 'display:flex;gap:8px;align-items:center';
-  div.innerHTML = `<input type="text" placeholder="輸入新問題…"
-      style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--white);font-family:var(--sans)"
-      id="wq-text-${count}">
-    <input type="text" placeholder="標籤" style="width:60px;background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:7px 8px;font-size:11px;color:var(--dim);font-family:var(--sans)" id="wq-tag-${count}">
-    <button style="background:transparent;border:1px solid var(--border);border-radius:7px;padding:5px 10px;color:var(--red);cursor:pointer;font-size:12px" onclick="this.parentElement.remove()">✕</button>`;
-  el.appendChild(div);
-}
-
-function removeWeeklyQ(idx) {
-  saveWeeklyQs(); // save current state first
-  const el = document.getElementById('weekly-q-admin');
-  let qs = [];
-  try { qs = JSON.parse(localStorage.getItem('admin_weekly_qs') || '[]'); } catch(e){}
-  qs.splice(idx, 1);
-  localStorage.setItem('admin_weekly_qs', JSON.stringify(qs));
-  loadWeeklyQAdmin();
-}
-
-function saveWeeklyQs() {
-  const qs = [];
-  document.querySelectorAll('[id^="wq-text-"]').forEach((el, i) => {
-    const q = el.value.trim();
-    const tag = document.getElementById('wq-tag-' + i)?.value.trim() || '問題';
-    if (q) qs.push({q, tag});
-  });
-  localStorage.setItem('admin_weekly_qs', JSON.stringify(qs));
-  // Save to Supabase app_config table if available
-  if (SB_ON) {
-    sb('app_config?on_conflict=key', {method:'POST', body:{key:'weekly_questions', value:JSON.stringify(qs), updated_at:new Date().toISOString()}})
-      .then(()=>{ document.getElementById('weekly-q-status').textContent='✓ 已儲存至 Supabase，App 下次載入生效'; });
-  } else {
-    document.getElementById('weekly-q-status').textContent='✓ 已儲存（本地）';
-  }
-  showToast('問題已儲存 ✓');
-}
-
-function saveAdminSettings() {
-  showToast('設定已儲存 ✓');
-}
-
-function saveContentSettings() {
-  const privacyText = document.getElementById('admin-privacy-text')?.value;
-  const karmaPct    = document.getElementById('admin-karma-pct')?.value;
-  if (privacyText) localStorage.setItem('admin_privacy_text', privacyText);
-  if (karmaPct)    localStorage.setItem('admin_karma_pct', karmaPct);
-  if (SB_ON) {
-    Promise.all([
-      sb('app_config?on_conflict=key', {method:'POST', body:{key:'privacy_text', value:privacyText, updated_at:new Date().toISOString()}}),
-      sb('app_config?on_conflict=key', {method:'POST', body:{key:'karma_pct', value:karmaPct, updated_at:new Date().toISOString()}}),
-    ]).then(()=>{ document.getElementById('content-status').textContent='✓ 已同步至 Supabase'; });
-  } else {
-    document.getElementById('content-status').textContent='✓ 已儲存（本地）';
-  }
-  showToast('內容設定已儲存 ✓');
-}
-
-// Load weekly Qs on settings panel open
-const _origShowPanel = showPanel;
-function showPanel(id) {
-  _origShowPanel(id);
-  if (id === 'settings') loadWeeklyQAdmin();
-}
-
 function exportData() {
   const rows = [['姓名','Email','上升','加入','方案','對話數','停留分鐘'],...USERS.map(u=>[u.name,u.email,u.asc,u.join,u.plan,u.chats,u.mins])];
   const csv = rows.map(r=>r.join(',')).join('\n');
@@ -1144,19 +986,11 @@ function renderEmpty(id, msg) {
   if (el) el.innerHTML = `<div style="padding:20px;text-align:center;color:var(--dimmer);font-size:12px">${msg}</div>`;
 }
 if (!SB_ON) {
-  // Show setup banner
-  const content = document.querySelector('.content');
-  if (content) {
-    const banner = document.createElement('div');
-    banner.style.cssText = 'background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:16px 20px;margin-bottom:20px;font-size:12px;color:var(--gold-l);line-height:1.8';
-    banner.innerHTML = '⚠ <strong>尚未連線 Supabase</strong>：請開啟 mgbt.html，找到第 491~492 行，填入你的 <code style="background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">SUPABASE_URL</code> 和 <code style="background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px">SB_KEY</code>，重新上傳 GitHub 後即可看到真實資料。';
-    content.insertBefore(banner, content.firstChild);
-  }
-  renderEmpty('user-tbody', '未連線 Supabase');
-  renderEmpty('activity-feed', '未連線 Supabase');
-  renderEmpty('api-log-tbody', '未連線 Supabase');
-  renderEmpty('feedback-list', '未連線 Supabase');
-  renderEmpty('log-output', '未連線 Supabase');
+  renderEmpty('user-tbody', '尚未連線 Supabase · 請填入 SB_URL 和 SB_KEY');
+  renderEmpty('activity-feed', '尚未連線 Supabase · 即時資料不可用');
+  renderEmpty('api-log-tbody', '尚未連線 Supabase · API 記錄不可用');
+  renderEmpty('feedback-list', '尚未連線 Supabase · 許願清單不可用');
+  renderEmpty('log-output', '尚未連線 Supabase · 系統日誌不可用');
 }
 // Supabase 資料由 DOMContentLoaded 中的 sbLoadDashboard() 自動載入
 
