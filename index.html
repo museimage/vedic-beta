@@ -5783,7 +5783,7 @@ function otpInput(el, idx) {
 }
 
 /* ── Verify OTP ── */
-function verifyOTP() {
+async function verifyOTP() {
   const cells = document.querySelectorAll('.otp-cell');
   const entered = Array.from(cells).map(c=>c.value).join('');
   const errEl = document.getElementById('otp-error');
@@ -5797,26 +5797,30 @@ function verifyOTP() {
     return;
   }
 
-  // ✓ OTP correct
+  // ✓ OTP correct — disable button to prevent double-submit
   if(errEl) errEl.textContent='';
-  document.getElementById('otp-modal').classList.remove('open');
-  showToast('✦ 驗證成功！正在加密並解碼你的星盤...');
+  const verifyBtn = document.querySelector('#otp-modal .btn-p');
+  if (verifyBtn) { verifyBtn.disabled=true; verifyBtn.textContent='驗證中...'; }
 
-  // Store session key (password in memory only)
+  // Store session key in memory (never persisted)
   const rawPw = document.getElementById('user-pw')?.value || '';
   setSessionKey(rawPw);
 
-  // Save password hash to Supabase (hash only, not the password itself)
+  // ── AWAIT pw_hash save before proceeding (prevents race condition) ──
+  try { localStorage.setItem('vedic_pw_hash_'+_otpEmail, _pwHash); } catch(e){}
   if (SB_CONFIGURED && typeof sbFetch === 'function') {
-    sbFetch(`users?on_conflict=email`, 'POST', {
-      email: _otpEmail,
-      pw_hash: _pwHash,
+    await sbFetch('users?on_conflict=email', 'POST', {
+      email:      _otpEmail,
+      pw_hash:    _pwHash,
+      plan:       'free',
+      last_seen:  new Date().toISOString(),
       updated_at: new Date().toISOString(),
     });
+    console.log('[居心地] pw_hash saved for', _otpEmail);
   }
-  try { localStorage.setItem('vedic_pw_hash_'+_otpEmail, _pwHash); } catch(e){}
 
-  // Proceed to computing (chart data will be encrypted before Supabase upload)
+  document.getElementById('otp-modal').classList.remove('open');
+  showToast('✦ 驗證成功！正在加密並解碼你的星盤...');
   startComputing();
 }
 
@@ -5873,28 +5877,44 @@ async function loginSubmit() {
 
   // Check Supabase
   if (!match && SB_CONFIGURED && typeof sbFetch === 'function') {
-    const res = await sbFetch(`users?email=eq.${encodeURIComponent(email)}&select=name,birth_date,birth_time,birth_place,asc_sign,pw_hash`);
-    if (res && res.data && res.data.length > 0) {
+    errEl.textContent = '查詢資料庫中...';
+    const res = await sbFetch(`users?email=eq.${encodeURIComponent(email)}&select=pw_hash,encrypted_data`);
+    console.log('[Login] Supabase response:', res);
+
+    if (res && Array.isArray(res.data) && res.data.length > 0) {
       const user = res.data[0];
-      if (user.pw_hash === inputHash) {
+      console.log('[Login] pw_hash in DB:', user.pw_hash ? user.pw_hash.slice(0,8)+'...' : 'null');
+      console.log('[Login] inputHash:', inputHash.slice(0,8)+'...');
+
+      if (user.pw_hash && user.pw_hash === inputHash) {
         match = true;
-        // Load user data
-        userData = { name: user.name || '旅人', email };
-        userChartData = {
-          name:        user.name || '旅人',
-          birth_date:  user.birth_date || '',
-          birth_time:  user.birth_time || '',
-          birth_place: user.birth_place || '台北市',
-        };
-        // Pre-fill birth form fields
-        const setV = (id,v) => { const el=document.getElementById(id); if(el&&v) el.value=v; };
-        setV('birth-date',  user.birth_date);
-        setV('birth-time',  user.birth_time);
-        setV('birth-place', user.birth_place);
-        setV('user-name',   user.name);
-        setV('user-email',  email);
+        userData = { name: '旅人', email };
+        userChartData = { birth_place: '台北市' };
+
+        // Decrypt stored data if available
+        if (user.encrypted_data) {
+          try {
+            const dec = await decryptUserData(user.encrypted_data, pw);
+            if (dec) {
+              userData.name = dec.name || '旅人';
+              userChartData = { ...dec };
+              const setV = (id,v)=>{ const el=document.getElementById(id); if(el&&v) el.value=v; };
+              setV('birth-date',  dec.birth_date);
+              setV('birth-time',  dec.birth_time);
+              setV('birth-place', dec.birth_place);
+              setV('user-name',   dec.name);
+              setV('user-email',  email);
+            }
+          } catch(e) { console.warn('[Login] Decrypt failed:', e.message); }
+        }
         try { localStorage.setItem('vedic_pw_hash_'+email, inputHash); } catch(e){}
+      } else if (!user.pw_hash) {
+        errEl.textContent = '此帳號尚未設定密碼，請重新註冊';
+        return;
       }
+    } else if (res && Array.isArray(res.data) && res.data.length === 0) {
+      errEl.textContent = '找不到此 Email 的帳號，請先加入 Beta';
+      return;
     }
   }
 
