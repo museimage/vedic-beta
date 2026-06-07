@@ -2324,15 +2324,13 @@ function setupApp(){
   const ms=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
   document.getElementById('today-date').textContent=`${d.getFullYear()}年${ms[d.getMonth()]}${d.getDate()}日 · 月亮入射手座`;
 
-  // Update dynamic system prompt with user's birth data
-  // Prefer already-loaded userChartData (from login decrypt), fallback to DOM fields
-  userChartData = {
-    name:        userChartData?.name        || userData.name || '旅人',
-    birth_date:  userChartData?.birth_date  || document.getElementById('birth-date')?.value  || '',
-    birth_time:  userChartData?.birth_time  || document.getElementById('birth-time')?.value  || '',
-    birth_place: userChartData?.birth_place || document.getElementById('birth-place')?.value || '台北市',
-    planets:     userChartData?.planets     || null,
-  };
+  // Update dynamic system prompt — PATCH only missing fields (never wipe existing values)
+  if (!userChartData) userChartData = {};
+  if (!userChartData.name)        userChartData.name        = userData.name || '旅人';
+  if (!userChartData.birth_date)  userChartData.birth_date  = document.getElementById('birth-date')?.value  || '';
+  if (!userChartData.birth_time)  userChartData.birth_time  = document.getElementById('birth-time')?.value  || '';
+  if (!userChartData.birth_place) userChartData.birth_place = document.getElementById('birth-place')?.value || '台北市';
+  if (!userChartData.planets)     userChartData.planets     = null;
 
   // Update chart display with user info
   const chartDet = document.getElementById('chart-det');
@@ -4339,19 +4337,21 @@ function getTransits() {
   window.setupApp = function() {
     _orig();
 
-  const dateEl  = document.getElementById('birth-date');
-  const timeEl  = document.getElementById('birth-time');
-  const placeEl = document.getElementById('birth-place');
-  if (!dateEl || !dateEl.value) return;
+  // Prefer userChartData (login decrypt) over DOM
+  const bDate  = userChartData?.birth_date  || document.getElementById('birth-date')?.value  || '';
+  const bTime  = userChartData?.birth_time  || document.getElementById('birth-time')?.value  || '';
+  const bPlace = userChartData?.birth_place || document.getElementById('birth-place')?.value || '';
+  if (!bDate) return;
 
+  const placeEl = document.getElementById('birth-place');
   const lat = parseFloat(placeEl?.dataset?.lat || '0') || null;
   const lon = parseFloat(placeEl?.dataset?.lng || '0') || null;
 
   try {
     const result = VEPH.calculate(
-      dateEl.value,
-      timeEl?.value || '12:00',
-      placeEl?.value || '台北市',
+      bDate,
+      bTime || '12:00',
+      bPlace || '台北市',
       lat !== 0 ? lat : null,
       lon !== 0 ? lon : null
     );
@@ -4359,11 +4359,11 @@ function getTransits() {
     // Update DOM immediately
     VEPH.updateChartDOM(result);
 
-    // Inject real data into dynamic system prompt
+    // Inject real data into dynamic system prompt — preserve decrypted values
     userChartData.planets = VEPH.toSystemText(result);
-    userChartData.birth_date  = dateEl.value;
-    userChartData.birth_time  = timeEl?.value || '';
-    userChartData.birth_place = placeEl?.value || '';
+    if (!userChartData.birth_date)  userChartData.birth_date  = bDate;
+    if (!userChartData.birth_time)  userChartData.birth_time  = bTime;
+    if (!userChartData.birth_place) userChartData.birth_place = bPlace;
 
     console.log('[居心地 Ephemeris] 計算完成:', result.planets.map(p=>p.zh+' '+p.pos.str).join(', '));
 
