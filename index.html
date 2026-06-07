@@ -5996,48 +5996,40 @@ async function loginSubmit() {
     if (el) el.value = (v || '');
   };
 
-  if (!encryptedData || !userChartData.birth_date) {
-    // ── encrypted_data is null: ask user to re-enter birth data ──
-    errEl.textContent = '';
-    closeLoginModal();
-    showToast('✦ 歡迎回來！請補填出生資料以載入星盤', 5000);
-
-    // Pre-fill email, name; let user fill birth fields
-    forceSetV('user-email', email);
-    forceSetV('user-name',  userData.name !== '旅人' ? userData.name : '');
-    // Clear birth fields so browser won't show misleading defaults
-    forceSetV('birth-date',  '');
-    forceSetV('birth-time',  '');
-    forceSetV('birth-place', '');
-
-    // Show birth form, skip OTP (already verified)
-    _skipOTP = true;
-    goTo('s-birth');
-    // Highlight the empty fields
-    setTimeout(() => {
-      document.getElementById('birth-date')?.focus();
-      showToast('請填入出生日期、時間、地點後點擊「取得 OTP 驗證碼」', 6000);
-    }, 600);
-    return;
-  }
-
-  // ── encrypted_data OK: fill all fields ──
+  // Fill all DOM fields (s-birth screen + main app references)
   forceSetV('birth-date',  userChartData.birth_date);
   forceSetV('birth-time',  userChartData.birth_time);
   forceSetV('birth-place', userChartData.birth_place);
   forceSetV('user-name',   userChartData.name);
   forceSetV('user-email',  email);
 
+  // Pre-fill profile drawer fields too
+  forceSetV('pd-date',  userChartData.birth_date);
+  forceSetV('pd-time',  userChartData.birth_time);
+  forceSetV('pd-place', userChartData.birth_place);
+  forceSetV('pd-name',  userChartData.name);
+
+  console.log('[Login] userData:', userData);
+  console.log('[Login] userChartData:', userChartData);
+
   errEl.textContent = '';
   closeLoginModal();
-  showToast('✦ 歡迎回來，' + userData.name + '！正在載入你的星盤...');
 
-  // ── Step 5: setupApp ──
-  setTimeout(() => {
-    setupApp();
-    goTo('s-computing');
-    runComputing();
-  }, 300);
+  if (userChartData.birth_date) {
+    showToast('✦ 歡迎回來，' + userData.name + '！正在載入你的星盤...');
+    setTimeout(() => {
+      setupApp();
+      goTo('s-computing');
+      runComputing();
+    }, 300);
+  } else {
+    // No birth data anywhere — show toast asking user to update profile after entering app
+    showToast('⚠ 出生資料未找到，請進入主畫面後在「設定」中補填', 5000);
+    setTimeout(() => {
+      setupApp();
+      goTo('s-main');
+    }, 600);
+  }
 }
 
 /* Extended showToast to support custom duration */
