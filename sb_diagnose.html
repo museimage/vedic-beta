@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>居心地 · Supabase 診斷工具</title>
+<style>
+  body{font-family:-apple-system,'Microsoft JhengHei',sans-serif;background:#0a0e26;color:#e8e6d6;padding:24px;max-width:780px;margin:0 auto;line-height:1.7}
+  h1{font-size:18px;font-weight:300;color:#c9a84c;margin-bottom:6px}
+  .sub{font-size:12px;color:#888;margin-bottom:20px}
+  .field{margin-bottom:14px}
+  label{display:block;font-size:11px;color:#aaa;margin-bottom:4px}
+  input{width:100%;background:#161a3a;border:1px solid #2a2f5a;border-radius:7px;padding:10px;color:#fff;font-size:13px;font-family:inherit}
+  button{background:#c9a84c;border:none;color:#0a0e26;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;margin-top:8px;width:100%}
+  pre{background:#06091c;border:1px solid #2a2f5a;border-radius:8px;padding:14px;font-size:11px;overflow-x:auto;color:#9fd5d2;white-space:pre-wrap;word-break:break-all;margin-top:14px;font-family:Menlo,monospace}
+  .ok{color:#4dc9c4} .err{color:#e8696e} .warn{color:#e0b34a}
+  .section{border-top:1px solid #1a1f4a;padding-top:18px;margin-top:24px}
+</style>
+</head>
+<body>
+<h1>居心地 · Supabase 診斷工具</h1>
+<div class="sub">直接讀取你帳號的 Supabase 記錄，看資料庫實際存了什麼</div>
+
+<div class="field"><label>你的 Email（必填）</label><input id="email" placeholder="your@email.com"></div>
+<div class="field"><label>你的密碼（必填，用於嘗試解密）</label><input id="pw" type="password" placeholder="登入密碼"></div>
+<button onclick="diagnose()">執行診斷</button>
+
+<pre id="output">等待診斷...</pre>
+
+<script>
+const SB_URL = 'https://ymztqihxnesxvgxelbjr.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltenRxaWh4bmVzeHZneGVsYmpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3OTMxNDMsImV4cCI6MjA5MDM2OTE0M30.p5uJ2_uIQrvFMPP0x-XBNC7QE7uGEw_gb1QLtl-Tp5I';
+
+const out = document.getElementById('output');
+function log(msg, cls='') {
+  const span = `<span class="${cls}">${msg}</span>`;
+  out.innerHTML += span + '\n';
+}
+
+async function diagnose() {
+  out.innerHTML = '';
+  const email = document.getElementById('email').value.trim();
+  const pw    = document.getElementById('pw').value;
+  if (!email) { log('✗ 請輸入 Email', 'err'); return; }
+
+  log('═══════════════════════════════════════');
+  log('步驟 1：查詢 Supabase users 表');
+  log('═══════════════════════════════════════');
+
+  const url = `${SB_URL}/rest/v1/users?email=eq.${encodeURIComponent(email)}&select=*`;
+  let row;
+  try {
+    const r = await fetch(url, {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    log(`HTTP 狀態：${r.status} ${r.ok ? '✓' : '✗'}`, r.ok ? 'ok' : 'err');
+    const data = await r.json();
+    log(`回傳記錄數：${Array.isArray(data) ? data.length : 'N/A'}`);
+
+    if (!Array.isArray(data) || data.length === 0) {
+      log('✗ 找不到此 Email 的記錄', 'err');
+      log('  → 表示你沒有成功註冊，或 email 拼錯', 'warn');
+      return;
+    }
+
+    row = data[0];
+    log('\n--- 找到的記錄欄位 ---');
+    for (const k of Object.keys(row)) {
+      const v = row[k];
+      const display = v === null ? '<NULL>'
+                    : typeof v === 'string' && v.length > 60 ? v.slice(0, 60) + '...(' + v.length + ' chars)'
+                    : JSON.stringify(v);
+      const cls = v === null ? 'err' : 'ok';
+      log(`  ${k}: ${display}`, cls);
+    }
+  } catch(e) {
+    log('✗ Supabase 連線失敗：' + e.message, 'err');
+    return;
+  }
+
+  log('\n═══════════════════════════════════════');
+  log('步驟 2：分析關鍵欄位');
+  log('═══════════════════════════════════════');
+
+  if (row.pw_hash) {
+    log('✓ pw_hash 存在（長度 ' + row.pw_hash.length + '）', 'ok');
+  } else {
+    log('✗ pw_hash 是 NULL → 登入會失敗', 'err');
+  }
+
+  if (row.encrypted_data) {
+    log('✓ encrypted_data 存在（長度 ' + row.encrypted_data.length + '）', 'ok');
+    log('  → 出生資料應該可以解密載入');
+  } else {
+    log('✗ encrypted_data 是 NULL → 登入後星盤資料為空', 'err');
+    log('  → 註冊時加密資料未成功寫入', 'warn');
+  }
+
+  if (!pw) {
+    log('\n（沒輸入密碼，跳過解密測試）', 'warn');
+    return;
+  }
+
+  log('\n═══════════════════════════════════════');
+  log('步驟 3：嘗試用你的密碼解密');
+  log('═══════════════════════════════════════');
+
+  // Compare pw_hash
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+  const inputHash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  log('輸入密碼的 SHA-256: ' + inputHash.slice(0,16) + '...');
+  log('Supabase pw_hash:   ' + (row.pw_hash ? row.pw_hash.slice(0,16) + '...' : 'NULL'));
+  if (row.pw_hash === inputHash) {
+    log('✓ 密碼比對成功', 'ok');
+  } else {
+    log('✗ 密碼不一致 → 登入會失敗', 'err');
+  }
+
+  if (!row.encrypted_data) {
+    log('\n沒有 encrypted_data 可解密', 'warn');
+    return;
+  }
+
+  try {
+    const combined = new Uint8Array(atob(row.encrypted_data).split('').map(c=>c.charCodeAt(0)));
+    const salt = combined.slice(0, 16);
+    const iv   = combined.slice(16, 28);
+    const ct   = combined.slice(28);
+    const keyMat = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey(
+      { name:'PBKDF2', salt, iterations:310000, hash:'SHA-256' },
+      keyMat, { name:'AES-GCM', length:256 }, false, ['decrypt']
+    );
+    const pt = await crypto.subtle.decrypt({ name:'AES-GCM', iv }, key, ct);
+    const json = new TextDecoder().decode(pt);
+    log('✓ 解密成功！', 'ok');
+    log('\n--- 解密後的內容 ---');
+    log(JSON.stringify(JSON.parse(json), null, 2), 'ok');
+  } catch(e) {
+    log('✗ 解密失敗：' + e.message, 'err');
+    log('  → 密碼與註冊時不一致，或 encrypted_data 損壞', 'warn');
+  }
+}
+</script>
+</body>
+</html>
