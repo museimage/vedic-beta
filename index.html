@@ -2317,39 +2317,44 @@ function startComputing(){
 }
 
 function setupApp(){
-  const av=userData.name?userData.name.charAt(0):'旅';
-  document.getElementById('nav-av').textContent=av;
-  document.getElementById('chart-name').textContent=userData.name+'的靈魂藍圖';
-  const d=new Date();
-  const ms=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
-  document.getElementById('today-date').textContent=`${d.getFullYear()}年${ms[d.getMonth()]}${d.getDate()}日 · 月亮入射手座`;
+  // Priority: userChartData (from login) > userData > DOM
+  const finalName = userChartData?.name || userData?.name || document.getElementById('user-name')?.value || '旅人';
+  const finalDate = userChartData?.birth_date || userData?.birth_date || document.getElementById('birth-date')?.value || '';
+  const finalTime = userChartData?.birth_time || userData?.birth_time || document.getElementById('birth-time')?.value || '';
+  const finalPlace = userChartData?.birth_place || userData?.birth_place || document.getElementById('birth-place')?.value || '台北市';
 
-  // Update dynamic system prompt — PATCH only missing fields (never wipe existing values)
-  if (!userChartData) userChartData = {};
-  if (!userChartData.name)        userChartData.name        = userData.name || '旅人';
-  if (!userChartData.birth_date)  userChartData.birth_date  = document.getElementById('birth-date')?.value  || '';
-  if (!userChartData.birth_time)  userChartData.birth_time  = document.getElementById('birth-time')?.value  || '';
-  if (!userChartData.birth_place) userChartData.birth_place = document.getElementById('birth-place')?.value || '台北市';
-  if (!userChartData.planets)     userChartData.planets     = null;
+  userData = { ...userData, name: finalName, email: userData?.email || '' };
+  userChartData = { 
+    ...userChartData, 
+    name: finalName, 
+    birth_date: finalDate, 
+    birth_time: finalTime, 
+    birth_place: finalPlace 
+  };
 
-  // Update chart display with user info
+  // Update UI
+  const av = finalName.charAt(0) || '旅';
+  document.getElementById('nav-av').textContent = av;
+  document.getElementById('chart-name').textContent = finalName + '的靈魂藍圖';
+
   const chartDet = document.getElementById('chart-det');
-  if(chartDet && userChartData.birth_date) {
-    chartDet.textContent = `${userChartData.birth_date} ${userChartData.birth_time} · ${userChartData.birth_place} · 吠陀恆星黃道`;
+  if (chartDet && finalDate) {
+    chartDet.textContent = `${finalDate} ${finalTime} · ${finalPlace} · 吠陀恆星黃道`;
   }
-  const chartName = document.getElementById('chart-name');
-  if(chartName) chartName.textContent = userChartData.name + ' 的靈魂藍圖';
 
-  // Show a note in chat that AI knows their birth data
-  const welcome = document.getElementById('chat-welcome-note');
-  if(welcome) {
-    welcome.textContent = `✦ 星盤 AI 已載入 ${userChartData.name} 的出生資料（${userChartData.birth_date} · ${userChartData.birth_place}）。目前為示範星盤模式，正式版將接入真實行星計算。`;
-    welcome.style.display = 'block';
+  // ... 保留原本其他更新邏輯（nav-name, welcome 等）
+  const navN = document.getElementById('nav-name');
+  if (navN) navN.textContent = finalName;
+
+  // Trigger real calculation if we have birth data
+  if (finalDate && typeof VEPH !== 'undefined') {
+    setTimeout(() => refreshChartWheel(), 100);
   }
-  // Render circular wheel chart
-  setTimeout(refreshChartWheel, 100);
+
   setTimeout(generateDailyReveal, 200);
   setTimeout(generateTodayYoga, 250);
+  if (finalDate) updateNumerologyTab(finalDate);
+}
   // Update numerology tab
   const numDate = userChartData.birth_date || (document.getElementById('birth-date') && document.getElementById('birth-date').value);
   if (numDate) updateNumerologyTab(numDate);
@@ -5921,8 +5926,8 @@ async function loginSubmit() {
 
   const inputHash = await hashPw(pw);
 
-  // ── Step 1: Verify password ──
   let match = false;
+  let dbUser = null;
 
   // Local cache check
   try {
@@ -5930,34 +5935,24 @@ async function loginSubmit() {
     if (cached && cached === inputHash) match = true;
   } catch(e){}
 
-  // Always fetch from Supabase to get latest data (even if cache matched)
-  let encryptedData = null;
+  // Always fetch from Supabase (priority)
   if (SB_CONFIGURED && typeof sbFetch === 'function') {
     errEl.textContent = '讀取星盤資料中...';
     const res = await sbFetch(
-      `users?email=eq.${encodeURIComponent(email)}&select=pw_hash,encrypted_data`
+      `users?email=eq.${encodeURIComponent(email)}&select=pw_hash,encrypted_data,name,birth_date,birth_time,birth_place,asc_sign,plan`
     );
-    console.log('[Login] SB response:', res);
 
-    if (res && Array.isArray(res.data)) {
-      if (res.data.length === 0) {
-        errEl.textContent = '找不到此 Email，請先加入 Beta';
-        return;
-      }
-      const user = res.data[0];
-      if (!user.pw_hash) {
-        errEl.textContent = '此帳號尚未完成設定密碼，請重新加入 Beta';
-        return;
-      }
-      if (user.pw_hash !== inputHash) {
-        // DB check overrides cache
-        match = false;
+    if (res && Array.isArray(res.data) && res.data.length > 0) {
+      dbUser = res.data[0];
+      if (dbUser.pw_hash === inputHash) {
+        match = true;
+      } else {
         errEl.textContent = 'Email 或密碼不正確，請再試一次';
         return;
       }
-      match = true;
-      encryptedData = user.encrypted_data || null;
-      try { localStorage.setItem('vedic_pw_hash_'+email, inputHash); } catch(e){}
+    } else if (res && Array.isArray(res.data) && res.data.length === 0) {
+      errEl.textContent = '找不到此 Email，請先加入 Beta';
+      return;
     }
   }
 
@@ -5966,62 +5961,65 @@ async function loginSubmit() {
     return;
   }
 
-  // ── Step 2: Decrypt user data BEFORE calling setupApp ──
+  // Success — set session
   setSessionKey(pw);
-  userData = { name: '旅人', email };
-  userChartData = { name:'旅人', birth_date:'', birth_time:'', birth_place:'台北市' };
+  userData = { name: dbUser?.name || '旅人', email };
 
-  if (encryptedData) {
+  // Initialize userChartData with DB data (priority) or fallback
+  userChartData = {
+    name:        dbUser?.name || '旅人',
+    birth_date:  dbUser?.birth_date || '',
+    birth_time:  dbUser?.birth_time || '',
+    birth_place: dbUser?.birth_place || '台北市',
+    asc_sign:    dbUser?.asc_sign || '',
+    plan:        dbUser?.plan || 'free'
+  };
+
+  // Decrypt encrypted_data if exists
+  if (dbUser && dbUser.encrypted_data) {
     try {
-      const dec = await decryptUserData(encryptedData, pw);
-      console.log('[Login] Decrypted:', dec);
+      const dec = await decryptUserData(dbUser.encrypted_data, pw);
       if (dec) {
-        userData.name             = dec.name        || '旅人';
-        userChartData.name        = dec.name        || '旅人';
-        userChartData.birth_date  = dec.birth_date  || '';
-        userChartData.birth_time  = dec.birth_time  || '';
-        userChartData.birth_place = dec.birth_place || '台北市';
+        userData.name = dec.name || userData.name;
+        userChartData.name        = dec.name        || userChartData.name;
+        userChartData.birth_date  = dec.birth_date  || userChartData.birth_date;
+        userChartData.birth_time  = dec.birth_time  || userChartData.birth_time;
+        userChartData.birth_place = dec.birth_place || userChartData.birth_place;
+        console.log('[Login] Decrypted data merged successfully');
       }
-    } catch(e) { console.warn('[Login] Decrypt failed:', e.message); }
-  } else {
-    // encrypted_data is null — data was lost or not saved during registration
-    // Show warning and ask user to update their profile after login
-    console.warn('[Login] encrypted_data is null — user will need to re-enter birth data');
-    showToast('⚠ 請在設定頁補填出生資料，系統將重新儲存', 5000);
+    } catch(e) {
+      console.warn('[Login] Decrypt failed:', e.message);
+      showToast('⚠ 部分資料解密失敗，請檢查密碼或在設定中更新', 4000);
+    }
+  } else if (!userChartData.birth_date) {
+    showToast('⚠ 出生資料未找到，請在設定中補填', 5000);
   }
 
-  // ── Step 3: Set DOM fields (always set, even if empty string) ──
+  // Fill all DOM fields
   const forceSetV = (id, v) => {
     const el = document.getElementById(id);
     if (el) el.value = (v || '');
   };
-
-  // Fill all DOM fields (s-birth screen + main app references)
   forceSetV('birth-date',  userChartData.birth_date);
   forceSetV('birth-time',  userChartData.birth_time);
   forceSetV('birth-place', userChartData.birth_place);
   forceSetV('user-name',   userChartData.name);
   forceSetV('user-email',  email);
-
-  // Pre-fill profile drawer fields too
-  forceSetV('pd-date',  userChartData.birth_date);
-  forceSetV('pd-time',  userChartData.birth_time);
-  forceSetV('pd-place', userChartData.birth_place);
-  forceSetV('pd-name',  userChartData.name);
-
-  console.log('[Login] userData:', userData);
-  console.log('[Login] userChartData:', userChartData);
+  forceSetV('pd-date',     userChartData.birth_date);
+  forceSetV('pd-time',     userChartData.birth_time);
+  forceSetV('pd-place',    userChartData.birth_place);
+  forceSetV('pd-name',     userChartData.name);
 
   errEl.textContent = '';
   closeLoginModal();
 
-  if (userChartData.birth_date) {
-    showToast('✦ 歡迎回來，' + userData.name + '！正在載入你的星盤...');
-    setTimeout(() => {
-      setupApp();
-      goTo('s-computing');
-      runComputing();
-    }, 300);
+  showToast(`✦ 歡迎回來，${userData.name}！正在載入你的星盤...`, 2500);
+
+  setTimeout(() => {
+    setupApp();           // 這會觸發 VEPH 計算與 DOM 更新
+    goTo('s-computing');
+    runComputing();
+  }, 400);
   } else {
     // No birth data anywhere — show toast asking user to update profile after entering app
     showToast('⚠ 出生資料未找到，請進入主畫面後在「設定」中補填', 5000);
